@@ -1,11 +1,11 @@
 import React from "react";
 import Head from "next/head";
+import { useRouter } from "next/router";
 import {
   Container,
   FormErrorMessage,
   FormLabel,
   FormControl,
-  Button,
   Select,
   Textarea,
   VStack,
@@ -19,11 +19,14 @@ import {
   ChakraProvider,
   FormHelperText,
   Box,
+  IconButton,
 } from "@chakra-ui/react";
+import { AddIcon } from "@chakra-ui/icons";
 import { useForm } from "react-hook-form";
 
 import Header from "../components/Header";
 import FilterOptions from "../constans/FilterOptions";
+import { db } from "../lib/firebase";
 
 const activeLabelStyles = {
   transform: "scale(0.85) translateY(-24px)",
@@ -64,14 +67,37 @@ export const theme = extendTheme({
 });
 
 export default function Create() {
+  const router = useRouter();
   const {
     handleSubmit,
     register,
-    formState: { errors, isSubmitting },
+    formState: { errors },
   } = useForm();
 
-  const onSubmit = (data: any) => {
-    console.log(data);
+  const onSubmit = ({
+    genre,
+    content,
+    optionA,
+    optionB,
+    optionC,
+    optionD,
+    answer,
+    description,
+  }: any) => {
+    // 自動採番のドキュメントIDを事前に取得
+    const quizID = db.collection("quizzes").doc().id;
+    db.collection("quizzes").doc(quizID).set({
+      id: quizID,
+      genre,
+      content,
+      optionA,
+      optionB,
+      optionC,
+      optionD,
+      answer,
+      description,
+    });
+    router.push("/");
   };
 
   return (
@@ -120,9 +146,7 @@ export default function Create() {
                   },
                 })}
               />
-              <FormHelperText>
-                {!errors.content && "40文字以内"}
-              </FormHelperText>
+              <FormHelperText>{!errors.content && "40文字以内"}</FormHelperText>
               <FormErrorMessage>
                 {errors.content && errors.content.message}
               </FormErrorMessage>
@@ -255,16 +279,36 @@ export default function Create() {
               </Text>
               <RadioGroup defaultValue="1">
                 <Stack spacing={5} direction="row">
-                  <Radio size="lg" colorScheme="red" value="1" {...register("answer")}>
+                  <Radio
+                    size="lg"
+                    colorScheme="red"
+                    value="1"
+                    {...register("answer")}
+                  >
                     A
                   </Radio>
-                  <Radio size="lg" colorScheme="green" value="2" {...register("answer")}>
+                  <Radio
+                    size="lg"
+                    colorScheme="green"
+                    value="2"
+                    {...register("answer")}
+                  >
                     B
                   </Radio>
-                  <Radio size="lg" colorScheme="yellow" value="3" {...register("answer")}>
+                  <Radio
+                    size="lg"
+                    colorScheme="yellow"
+                    value="3"
+                    {...register("answer")}
+                  >
                     C
                   </Radio>
-                  <Radio size="lg" colorScheme="blue" value="4" {...register("answer")}>
+                  <Radio
+                    size="lg"
+                    colorScheme="blue"
+                    value="4"
+                    {...register("answer")}
+                  >
                     D
                   </Radio>
                 </Stack>
@@ -295,14 +339,15 @@ export default function Create() {
             </FormControl>
 
             <Center>
-              <Button
-                mt={4}
-                colorScheme="teal"
-                isLoading={isSubmitting}
+              <IconButton
+                aria-label="add"
+                shadow="lg"
+                bg="white"
+                color="gray.400"
+                rounded="full"
+                icon={<AddIcon />}
                 type="submit"
-              >
-                送信
-              </Button>
+              />
             </Center>
           </form>
         </VStack>
