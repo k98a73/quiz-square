@@ -19,9 +19,8 @@ import {
   ChakraProvider,
   FormHelperText,
   Box,
-  IconButton,
+  Button,
 } from "@chakra-ui/react";
-import { AddIcon } from "@chakra-ui/icons";
 import { useForm } from "react-hook-form";
 
 import Header from "../components/Header";
@@ -339,15 +338,9 @@ export default function Create() {
             </FormControl>
 
             <Center>
-              <IconButton
-                aria-label="add"
-                shadow="lg"
-                bg="white"
-                color="gray.400"
-                rounded="full"
-                icon={<AddIcon />}
-                type="submit"
-              />
+              <Button type="submit" colorScheme="blackAlpha" variant="solid">
+                問題の作成
+              </Button>
             </Center>
           </form>
         </VStack>

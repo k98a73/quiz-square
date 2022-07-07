@@ -1,29 +1,48 @@
 import React from "react";
-import { Flex, Heading, IconButton, Spacer } from "@chakra-ui/react";
-import { FaSignOutAlt } from "react-icons/fa";
+import {
+  ButtonGroup,
+  Flex,
+  Heading,
+  IconButton,
+  Spacer,
+} from "@chakra-ui/react";
+import { FaSignInAlt } from "react-icons/fa";
+import { HiOutlineUserAdd } from "react-icons/hi";
 import NextLink from "next/link";
 
 const Header = () => {
   return (
     <>
       <Flex
-        textAlign="center"
-        w="full"
-        p="2"
+        alignItems="center"
+        minWidth="max-content"
         bgColor="cyan.600"
         color="gray.50"
       >
         <NextLink href="/" passHref>
-          <Heading as="a">Quiz Square</Heading>
+          <Heading ml="2" p="2" as="a">
+            Quiz Square
+          </Heading>
         </NextLink>
         <Spacer />
-        <IconButton
-          aria-label="logout"
-          bg="cyan.600"
-          color="gray.50"
-          rounded="full"
-          icon={<FaSignOutAlt />}
-        />
+        <ButtonGroup mr="5" gap="2">
+          <IconButton
+            aria-label="logout"
+            bg="cyan.600"
+            color="gray.50"
+            rounded="full"
+            size="lg"
+            icon={<HiOutlineUserAdd />}
+          />
+          <IconButton
+            aria-label="logout"
+            bg="cyan.600"
+            color="gray.50"
+            rounded="full"
+            size="lg"
+            icon={<FaSignInAlt />}
+          />
+        </ButtonGroup>
       </Flex>
     </>
   );
