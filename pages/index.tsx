@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import type { NextPage } from "next";
 import Head from "next/head";
 import NextLink from "next/link";
+import { useRouter } from "next/router";
 import {
   Avatar,
   Box,
@@ -17,20 +18,55 @@ import {
   WrapItem,
 } from "@chakra-ui/react";
 import { AddIcon } from "@chakra-ui/icons";
+import { useRecoilState } from "recoil";
 
 import Header from "../components/Header";
 import { db } from "../lib/firebase";
+import { quizItemState } from "../constans/atom";
 
 interface QuizItem {
   id: string;
   genre: string;
   content: string;
+  optionA: string;
+  optionB: string;
+  optionC: string;
+  optionD: string;
+  answer: string;
+  description: string;
 }
 
 const Home: NextPage = () => {
   const [quizzes, setQuizzes] = useState<QuizItem[]>([]);
   const [filteredQuizzes, setFilteredQuizzes] = useState<QuizItem[]>([]);
   const [genreFilter, setGenreFilter] = useState("全て");
+  const [quizItem, setQuizItem] = useRecoilState(quizItemState);
+  const router = useRouter();
+
+  const handleSelectQuiz = (
+    id: string,
+    genre: string,
+    content: string,
+    optionA: string,
+    optionB: string,
+    optionC: string,
+    optionD: string,
+    answer: string,
+    description: string
+  ) => {
+    setQuizItem({
+      id,
+      genre,
+      content,
+      optionA,
+      optionB,
+      optionC,
+      optionD,
+      answer,
+      description,
+    });
+    router.push(`/${id}`);
+  };
 
   useEffect(() => {
     const unSub = db.collection("quizzes").onSnapshot((snapshot) => {
@@ -39,6 +75,12 @@ const Home: NextPage = () => {
           id: doc.data().id,
           genre: doc.data().genre,
           content: doc.data().content,
+          optionA: doc.data().optionA,
+          optionB: doc.data().optionB,
+          optionC: doc.data().optionC,
+          optionD: doc.data().optionD,
+          answer: doc.data().answer,
+          description: doc.data().description,
         }))
       );
     });
@@ -129,19 +171,31 @@ const Home: NextPage = () => {
                     borderWidth="1px"
                     borderRadius="lg"
                     boxShadow="md"
+                    _hover={{ cursor: "pointer", opacity: 0.8 }}
+                    onClick={() =>
+                      handleSelectQuiz(
+                        quiz.id,
+                        quiz.genre,
+                        quiz.content,
+                        quiz.optionA,
+                        quiz.optionB,
+                        quiz.optionC,
+                        quiz.optionD,
+                        quiz.answer,
+                        quiz.description
+                      )
+                    }
                   >
                     <HStack>
                       <Text fontSize="lg" color="gray.800" py="1">
                         作成者：
                       </Text>
-                      <Avatar
-                        size="md"
-                        src="https://bit.ly/sage-adebayo"
-                      />
+                      <Avatar size="md" src="https://bit.ly/sage-adebayo" />
                     </HStack>
                     <Text fontSize="lg" color="gray.800" py="1">
                       ジャンル：{quiz.genre}
-                      <br />
+                    </Text>
+                    <Text fontSize="lg" color="gray.800" py="1">
                       問題文：{quiz.content}
                     </Text>
                   </Box>

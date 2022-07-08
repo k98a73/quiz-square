@@ -2,12 +2,15 @@ import type { AppProps } from "next/app";
 import { ChakraProvider } from "@chakra-ui/react";
 
 import "../styles/globals.css";
+import { RecoilRoot } from "recoil";
 
 function MyApp({ Component, pageProps }: any) {
   return (
-    <ChakraProvider>
-      <Component {...pageProps} />
-    </ChakraProvider>
+    <RecoilRoot>
+      <ChakraProvider>
+        <Component {...pageProps} />
+      </ChakraProvider>
+    </RecoilRoot>
   );
 }
 
