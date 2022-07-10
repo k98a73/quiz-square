@@ -26,16 +26,18 @@ const Header = () => {
         </NextLink>
         <Spacer />
         <ButtonGroup mr="5" gap="2">
+          <NextLink href="/signup" passHref>
+            <IconButton
+              aria-label="signUp"
+              bg="cyan.600"
+              color="gray.50"
+              rounded="full"
+              size="lg"
+              icon={<HiOutlineUserAdd />}
+            />
+          </NextLink>
           <IconButton
-            aria-label="logout"
-            bg="cyan.600"
-            color="gray.50"
-            rounded="full"
-            size="lg"
-            icon={<HiOutlineUserAdd />}
-          />
-          <IconButton
-            aria-label="logout"
+            aria-label="signIn"
             bg="cyan.600"
             color="gray.50"
             rounded="full"
