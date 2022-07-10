@@ -16,7 +16,6 @@ import {
   Input,
   InputGroup,
   InputRightElement,
-  Text,
   VStack,
 } from "@chakra-ui/react";
 
@@ -47,18 +46,24 @@ export default function SignUp() {
     formState: { errors },
   } = useForm();
 
-  const onSubmit = ({ email, password, userName, image }: any) => {
-    auth.createUserWithEmailAndPassword(email, password).then(async (user) => {
-      const uid = user.user?.uid;
-      const imageName = new Date().toISOString() + image[0].name;
-      const imageUrl = await uploadTaskPromise(image[0], imageName, uid);
-      db.collection("users").doc(user.user?.uid).set({
-        uid,
-        userName,
-        imageUrl,
-      });
-      router.push("/");
-    });
+  const onSubmit = async ({ email, password, userName, image }: any) => {
+    try {
+      await auth
+        .createUserWithEmailAndPassword(email, password)
+        .then(async (user) => {
+          const uid = user.user?.uid;
+          const imageName = new Date().toISOString() + image[0].name;
+          const imageUrl = await uploadTaskPromise(image[0], imageName, uid);
+          db.collection("users").doc(user.user?.uid).set({
+            uid,
+            userName,
+            imageUrl,
+          });
+          router.push("/");
+        });
+    } catch (error: any) {
+      alert(error.message);
+    }
   };
 
   async function uploadTaskPromise(image: any, imageName: any, uid: any) {
@@ -67,8 +72,8 @@ export default function SignUp() {
       uploadTask.on(
         firebase.storage.TaskEvent.STATE_CHANGED,
         null,
-        (err) => {
-          console.log("error", err);
+        (error) => {
+          alert(error.message);
           reject();
         },
         () => {

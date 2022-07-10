@@ -33,17 +33,21 @@ const Header = () => {
               color="gray.50"
               rounded="full"
               size="lg"
+              as="a"
               icon={<HiOutlineUserAdd />}
             />
           </NextLink>
-          <IconButton
-            aria-label="signIn"
-            bg="cyan.600"
-            color="gray.50"
-            rounded="full"
-            size="lg"
-            icon={<FaSignInAlt />}
-          />
+          <NextLink href="/signin" passHref>
+            <IconButton
+              aria-label="signIn"
+              bg="cyan.600"
+              color="gray.50"
+              rounded="full"
+              size="lg"
+              as="a"
+              icon={<FaSignInAlt />}
+            />
+          </NextLink>
         </ButtonGroup>
       </Flex>
     </>
