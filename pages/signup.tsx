@@ -36,6 +36,8 @@ export default function SignUp() {
     if (event.target.files[0]) {
       const blobUrl = window.URL.createObjectURL(event.target.files[0]);
       setSelectedImage(blobUrl);
+    } else {
+      setSelectedImage("");
     }
   };
 
@@ -117,22 +119,28 @@ export default function SignUp() {
               mt="5"
               isInvalid={errors.image ? true : false}
             >
-              <Text mb="3" fontSize="lg" color="gray.600">
-                アバター画像
+              <FormLabel>
+                画像を選択
                 <span style={{ color: "red", paddingLeft: "2px" }}>*</span>
-              </Text>
-              <Button mr="3">
-                <FormLabel m="0">画像を選択</FormLabel>
-              </Button>
-              <input
-                id="image"
-                type="file"
-                accept="image/*"
-                hidden
-                {...register("image")}
-                onChange={handleChange}
-              />
-              <Avatar size="md" src={selectedImage} />
+              </FormLabel>
+              <Box>
+                <input
+                  id="image"
+                  type="file"
+                  accept="image/*"
+                  style={{
+                    margin: "9px 0",
+                    padding: "0px",
+                    color: "white",
+                    width: "128px",
+                  }}
+                  {...register("image", {
+                    required: "画像を選択してください",
+                  })}
+                  onChange={handleChange}
+                />
+                <Avatar ml="3" size="md" src={selectedImage} />
+              </Box>
               <FormErrorMessage>
                 {errors.image && errors.image.message}
               </FormErrorMessage>
