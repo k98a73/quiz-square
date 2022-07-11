@@ -6,9 +6,10 @@ import {
   IconButton,
   Spacer,
 } from "@chakra-ui/react";
-import { FaSignInAlt } from "react-icons/fa";
+import { FaSignInAlt, FaSignOutAlt } from "react-icons/fa";
 import { HiOutlineUserAdd } from "react-icons/hi";
 import NextLink from "next/link";
+import useSignOut from "../hooks/useSignOut";
 
 const Header = () => {
   return (
@@ -48,6 +49,15 @@ const Header = () => {
               icon={<FaSignInAlt />}
             />
           </NextLink>
+          <IconButton
+            aria-label="signOut"
+            bg="cyan.600"
+            color="gray.50"
+            rounded="full"
+            size="lg"
+            icon={<FaSignOutAlt />}
+            onClick={useSignOut()}
+          />
         </ButtonGroup>
       </Flex>
     </>
