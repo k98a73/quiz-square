@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import Head from "next/head";
 import { useRouter } from "next/router";
 import {
@@ -24,7 +24,7 @@ import { useForm } from "react-hook-form";
 
 import Header from "../components/Header";
 import FilterOptions from "../constans/FilterOptions";
-import { db } from "../lib/firebase";
+import { auth, db } from "../lib/firebase";
 import { theme } from "../constans/theme";
 
 export default function Create() {
@@ -34,6 +34,13 @@ export default function Create() {
     register,
     formState: { errors },
   } = useForm();
+
+  useEffect(() => {
+    const unSub = auth.onAuthStateChanged((user) => {
+      !user && router.push("/signin");
+    });
+    return () => unSub(); /* アンマウントしたら、firebaseの監視を停止 */
+  });
 
   const onSubmit = ({
     genre,
