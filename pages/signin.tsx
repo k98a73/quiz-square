@@ -10,6 +10,7 @@ import {
   FormErrorMessage,
   FormHelperText,
   FormLabel,
+  IconButton,
   Input,
   InputGroup,
   InputRightElement,
@@ -20,6 +21,7 @@ import { useForm } from "react-hook-form";
 import { theme } from "../constans/theme";
 import Header from "../components/Header";
 import { auth } from "../lib/firebase";
+import { ViewIcon, ViewOffIcon } from "@chakra-ui/icons";
 
 export default function SignIn() {
   const router = useRouter();
@@ -34,12 +36,12 @@ export default function SignIn() {
   const handleClick = () => setShow(!show);
 
   const onSubmit = async ({ email, password }: any) => {
-      try {
-        await auth.signInWithEmailAndPassword(email, password);
-        router.push("/");
-      } catch (error: any) {
-        alert(error.message);
-      }
+    try {
+      await auth.signInWithEmailAndPassword(email, password);
+      router.push("/");
+    } catch (error: any) {
+      alert(error.message);
+    }
   };
 
   return (
@@ -105,9 +107,13 @@ export default function SignIn() {
                   })}
                 />
                 <InputRightElement width="4.5rem">
-                  <Button h="1.75rem" size="sm" onClick={handleClick}>
-                    {show ? "非表示" : "表示"}
-                  </Button>
+                  <IconButton
+                    h="1.75rem"
+                    size="lg"
+                    onClick={handleClick}
+                    aria-label="passwordView"
+                    icon={show ? <ViewOffIcon /> : <ViewIcon />}
+                  ></IconButton>
                 </InputRightElement>
               </InputGroup>
               <FormHelperText>

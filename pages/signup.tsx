@@ -13,6 +13,7 @@ import {
   FormErrorMessage,
   FormHelperText,
   FormLabel,
+  IconButton,
   Input,
   InputGroup,
   InputRightElement,
@@ -23,6 +24,7 @@ import Header from "../components/Header";
 import { db, auth } from "../lib/firebase";
 import firebase, { storage } from "../lib/firebase";
 import { theme } from "../constans/theme";
+import { ViewIcon, ViewOffIcon } from "@chakra-ui/icons";
 
 export default function SignUp() {
   const router = useRouter();
@@ -205,9 +207,13 @@ export default function SignUp() {
                   })}
                 />
                 <InputRightElement width="4.5rem">
-                  <Button h="1.75rem" size="sm" onClick={handleClick}>
-                    {show ? "非表示" : "表示"}
-                  </Button>
+                  <IconButton
+                    h="1.75rem"
+                    size="lg"
+                    onClick={handleClick}
+                    aria-label="passwordView"
+                    icon={show ? <ViewOffIcon /> : <ViewIcon />}
+                  ></IconButton>
                 </InputRightElement>
               </InputGroup>
               <FormHelperText>
