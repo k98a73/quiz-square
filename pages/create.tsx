@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import Head from "next/head";
 import { useRouter } from "next/router";
 import {
@@ -21,6 +21,7 @@ import {
   Button,
 } from "@chakra-ui/react";
 import { useForm } from "react-hook-form";
+import firebase from "firebase";
 
 import Header from "../components/Header";
 import FilterOptions from "../constans/FilterOptions";
@@ -29,6 +30,7 @@ import { theme } from "../constans/theme";
 
 export default function Create() {
   const router = useRouter();
+  const [userId, setUserId] = useState<any>("");
   const {
     handleSubmit,
     register,
@@ -37,6 +39,7 @@ export default function Create() {
 
   useEffect(() => {
     const unSub = auth.onAuthStateChanged((user) => {
+      setUserId(user?.uid);
       !user && router.push("/signin");
     });
     return () => unSub(); /* アンマウントしたら、firebaseの監視を停止 */
@@ -56,6 +59,7 @@ export default function Create() {
     const quizID = db.collection("quizzes").doc().id;
     db.collection("quizzes").doc(quizID).set({
       id: quizID,
+      uid: userId,
       genre,
       content,
       optionA,
@@ -64,6 +68,7 @@ export default function Create() {
       optionD,
       answer,
       description,
+      createdAt: firebase.firestore.FieldValue.serverTimestamp(),
     });
     router.push("/");
   };

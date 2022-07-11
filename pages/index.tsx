@@ -69,21 +69,24 @@ const Home: NextPage = () => {
   };
 
   useEffect(() => {
-    const unSub = db.collection("quizzes").onSnapshot((snapshot) => {
-      setQuizzes(
-        snapshot.docs.map((doc) => ({
-          id: doc.data().id,
-          genre: doc.data().genre,
-          content: doc.data().content,
-          optionA: doc.data().optionA,
-          optionB: doc.data().optionB,
-          optionC: doc.data().optionC,
-          optionD: doc.data().optionD,
-          answer: doc.data().answer,
-          description: doc.data().description,
-        }))
-      );
-    });
+    const unSub = db
+      .collection("quizzes")
+      .orderBy("createdAt", "desc")
+      .onSnapshot((snapshot) => {
+        setQuizzes(
+          snapshot.docs.map((doc) => ({
+            id: doc.data().id,
+            genre: doc.data().genre,
+            content: doc.data().content,
+            optionA: doc.data().optionA,
+            optionB: doc.data().optionB,
+            optionC: doc.data().optionC,
+            optionD: doc.data().optionD,
+            answer: doc.data().answer,
+            description: doc.data().description,
+          }))
+        );
+      });
     return () => unSub(); /* アンマウントしたら、firebaseの監視を停止 */
   }, []);
 
