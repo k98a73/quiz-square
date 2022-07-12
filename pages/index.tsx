@@ -41,7 +41,7 @@ const Home: NextPage = () => {
   const [filteredQuizzes, setFilteredQuizzes] = useState<QuizItem[]>([]);
   const [genreFilter, setGenreFilter] = useState("全て");
   const [quizItem, setQuizItem] = useRecoilState(quizItemState);
-  const [userName, setUserName] = useState<any>("");
+  // const [userName, setUserName] = useState<any>("");
   const router = useRouter();
 
   const handleSelectQuiz = (
@@ -77,7 +77,7 @@ const Home: NextPage = () => {
       .get()
       .then((doc) => {
         if (doc.exists) {
-          setUserName(doc.data()?.userName);
+          // setUserName(doc.data()?.userName);
         } else {
           console.log("else: No such document!");
         }
@@ -85,7 +85,7 @@ const Home: NextPage = () => {
       .catch((error) => {
         console.log("error", error);
       });
-    return userName;
+    // return userName;
   };
 
   useEffect(() => {

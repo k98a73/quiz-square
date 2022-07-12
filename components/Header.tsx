@@ -2,10 +2,12 @@ import React, { useEffect, useState } from "react";
 import {
   Avatar,
   ButtonGroup,
+  Center,
   Flex,
   Heading,
   IconButton,
   Spacer,
+  Spinner,
 } from "@chakra-ui/react";
 import { FaSignInAlt, FaSignOutAlt } from "react-icons/fa";
 import { HiOutlineUserAdd } from "react-icons/hi";
@@ -31,7 +33,15 @@ const SignOutContainer = ({ uid }: any) => {
 
   return (
     <>
-      <Avatar ml="3" size="md" src={avatarUrl} />
+      {avatarUrl ? (
+        <NextLink href="/mypage" passHref>
+          <Avatar as="a" ml="3" size="md" src={avatarUrl} />
+        </NextLink>
+      ) : (
+        <Center>
+          <Spinner size="lg" />
+        </Center>
+      )}
       <IconButton
         aria-label="signOut"
         bg="cyan.600"
