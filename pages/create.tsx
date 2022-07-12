@@ -21,11 +21,10 @@ import {
   Button,
 } from "@chakra-ui/react";
 import { useForm } from "react-hook-form";
-import firebase from "firebase";
 
 import Header from "../components/Header";
 import FilterOptions from "../constans/FilterOptions";
-import { auth, db } from "../lib/firebase";
+import { auth, date, db } from "../lib/firebase";
 import { theme } from "../constans/theme";
 
 export default function Create() {
@@ -68,7 +67,7 @@ export default function Create() {
       optionD,
       answer,
       description,
-      createdAt: firebase.firestore.FieldValue.serverTimestamp(),
+      createdAt: date.FieldValue.serverTimestamp(),
     });
     router.push("/");
   };

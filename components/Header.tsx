@@ -13,7 +13,7 @@ import NextLink from "next/link";
 import useSignOut from "../hooks/useSignOut";
 import { auth, db } from "../lib/firebase";
 
-const SignOutContainer = ({uid}: any) => {
+const SignOutContainer = ({ uid }: any) => {
   const [avatarUrl, setAvatarUrl] = useState<any>("");
   const docRef = db.collection("users").doc(uid);
   docRef
@@ -49,9 +49,10 @@ const Header = () => {
   const [user, setUser] = useState<any>("");
 
   useEffect(() => {
-    auth.onAuthStateChanged((user) => {
+    const unSub = auth.onAuthStateChanged((user) => {
       setUser(user);
     });
+    return () => unSub(); /* アンマウントしたら、firebaseの監視を停止 */
   }, []);
 
   return (

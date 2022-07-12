@@ -4,7 +4,6 @@ import Head from "next/head";
 import NextLink from "next/link";
 import { useRouter } from "next/router";
 import {
-  Avatar,
   Box,
   Container,
   Flex,
@@ -26,6 +25,7 @@ import { quizItemState } from "../constans/atom";
 
 interface QuizItem {
   id: string;
+  uid: string;
   genre: string;
   content: string;
   optionA: string;
@@ -41,10 +41,12 @@ const Home: NextPage = () => {
   const [filteredQuizzes, setFilteredQuizzes] = useState<QuizItem[]>([]);
   const [genreFilter, setGenreFilter] = useState("全て");
   const [quizItem, setQuizItem] = useRecoilState(quizItemState);
+  // const [userName, setUserName] = useState<any>("");
   const router = useRouter();
 
   const handleSelectQuiz = (
     id: string,
+    uid: string,
     genre: string,
     content: string,
     optionA: string,
@@ -56,6 +58,7 @@ const Home: NextPage = () => {
   ) => {
     setQuizItem({
       id,
+      uid,
       genre,
       content,
       optionA,
@@ -68,6 +71,23 @@ const Home: NextPage = () => {
     router.push(`/${id}`);
   };
 
+  const userNameGet = (uid: any) => {
+    const docRef = db.collection("users").doc(uid);
+    docRef
+      .get()
+      .then((doc) => {
+        if (doc.exists) {
+          // setUserName(doc.data()?.userName);
+        } else {
+          console.log("else: No such document!");
+        }
+      })
+      .catch((error) => {
+        console.log("error", error);
+      });
+    // return userName;
+  };
+
   useEffect(() => {
     const unSub = db
       .collection("quizzes")
@@ -76,6 +96,7 @@ const Home: NextPage = () => {
         setQuizzes(
           snapshot.docs.map((doc) => ({
             id: doc.data().id,
+            uid: doc.data().uid,
             genre: doc.data().genre,
             content: doc.data().content,
             optionA: doc.data().optionA,
@@ -178,6 +199,7 @@ const Home: NextPage = () => {
                     onClick={() =>
                       handleSelectQuiz(
                         quiz.id,
+                        quiz.uid,
                         quiz.genre,
                         quiz.content,
                         quiz.optionA,
@@ -191,15 +213,14 @@ const Home: NextPage = () => {
                   >
                     <HStack>
                       <Text fontSize="lg" color="gray.800" py="1">
-                        作成者：
+                        {`作成者：${userNameGet(quiz.uid)}`}
                       </Text>
-                      <Avatar size="md" src="https://bit.ly/sage-adebayo" />
                     </HStack>
                     <Text fontSize="lg" color="gray.800" py="1">
-                      ジャンル：{quiz.genre}
+                      {`ジャンル：${quiz.genre}`}
                     </Text>
                     <Text fontSize="lg" color="gray.800" py="1">
-                      問題文：{quiz.content}
+                      {`問題文：${quiz.content}`}
                     </Text>
                   </Box>
                 </WrapItem>
