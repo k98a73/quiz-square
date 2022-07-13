@@ -19,6 +19,8 @@ import {
 } from "@chakra-ui/react";
 import { useRecoilValue } from "recoil";
 import { useForm } from "react-hook-form";
+import useWindowSize from "react-use/lib/useWindowSize";
+import Confetti from "react-confetti";
 
 import Header from "../../components/Header";
 import { quizItemState } from "../../constans/atom";
@@ -28,6 +30,7 @@ const Index = () => {
   const { register, getValues } = useForm();
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [isClient, setIsClient] = useState(false);
+  const { width, height } = useWindowSize();
 
   useEffect(() => {
     const unSub = () => {
@@ -109,8 +112,16 @@ const Index = () => {
                       </ModalHeader>
                       <ModalCloseButton />
                       <ModalBody>
-                        {getValues("answer") === quizItem.answer &&
-                          `解説：${quizItem.description}`}
+                        {getValues("answer") === quizItem.answer && (
+                          <>
+                            <Text color="blue.400">{`解説：${quizItem.description}`}</Text>
+                            <Confetti
+                              width={width}
+                              height={height}
+                              recycle={true}
+                            />
+                          </>
+                        )}
                       </ModalBody>
                       <ModalFooter>
                         <Button colorScheme="blue" mr={3} onClick={onClose}>
