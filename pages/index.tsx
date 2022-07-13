@@ -26,6 +26,7 @@ import { quizItemState } from "../constans/atom";
 interface QuizItem {
   id: string;
   uid: string;
+  userName: string;
   genre: string;
   content: string;
   optionA: string;
@@ -47,6 +48,7 @@ const Home: NextPage = () => {
   const handleSelectQuiz = (
     id: string,
     uid: string,
+    userName: string,
     genre: string,
     content: string,
     optionA: string,
@@ -59,6 +61,7 @@ const Home: NextPage = () => {
     setQuizItem({
       id,
       uid,
+      userName,
       genre,
       content,
       optionA,
@@ -71,23 +74,6 @@ const Home: NextPage = () => {
     router.push(`/${id}`);
   };
 
-  const userNameGet = (uid: any) => {
-    const docRef = db.collection("users").doc(uid);
-    docRef
-      .get()
-      .then((doc) => {
-        if (doc.exists) {
-          // setUserName(doc.data()?.userName);
-        } else {
-          console.log("else: No such document!");
-        }
-      })
-      .catch((error) => {
-        console.log("error", error);
-      });
-    // return userName;
-  };
-
   useEffect(() => {
     const unSub = db
       .collection("quizzes")
@@ -97,6 +83,7 @@ const Home: NextPage = () => {
           snapshot.docs.map((doc) => ({
             id: doc.data().id,
             uid: doc.data().uid,
+            userName: doc.data().userName,
             genre: doc.data().genre,
             content: doc.data().content,
             optionA: doc.data().optionA,
@@ -137,6 +124,8 @@ const Home: NextPage = () => {
       }
     };
     filteringQuizzesGenre();
+    // クリーンアップ時の処理の記載がないとエラーが出るので追加
+    return console.log("clean up");
   }, [genreFilter, quizzes]);
 
   return (
@@ -200,6 +189,7 @@ const Home: NextPage = () => {
                       handleSelectQuiz(
                         quiz.id,
                         quiz.uid,
+                        quiz.userName,
                         quiz.genre,
                         quiz.content,
                         quiz.optionA,
@@ -213,7 +203,7 @@ const Home: NextPage = () => {
                   >
                     <HStack>
                       <Text fontSize="lg" color="gray.800" py="1">
-                        {`作成者：${userNameGet(quiz.uid)}`}
+                        {`作成者：${(quiz.userName)}`}
                       </Text>
                     </HStack>
                     <Text fontSize="lg" color="gray.800" py="1">

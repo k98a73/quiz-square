@@ -30,8 +30,8 @@ import { theme } from "../constans/theme";
 
 export default function Create() {
   const router = useRouter();
-  const [userId, setUserId] = useState<any>("");
   const [user, setUser] = useState<any>("");
+  const [userName, setUserName] = useState<any>("");
   const {
     handleSubmit,
     register,
@@ -40,12 +40,28 @@ export default function Create() {
 
   useEffect(() => {
     const unSub = auth.onAuthStateChanged((user) => {
-      setUserId(user?.uid);
+      setUser(user);
       !user && router.push("/signin");
     });
     return () => unSub(); /* アンマウントしたら、firebaseの監視を停止 */
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+  const docRef = db.collection("users").doc(user?.uid);
+  if (user) {
+    docRef
+      .get()
+      .then((doc) => {
+        if (doc.exists) {
+          setUserName(doc.data()?.userName);
+        } else {
+          alert("No such document!");
+        }
+      })
+      .catch((error) => {
+        alert(error);
+      });
+  }
 
   const onSubmit = ({
     genre,
@@ -61,7 +77,8 @@ export default function Create() {
     const quizID = db.collection("quizzes").doc().id;
     db.collection("quizzes").doc(quizID).set({
       id: quizID,
-      uid: userId,
+      uid: user?.uid,
+      userName,
       genre,
       content,
       optionA,

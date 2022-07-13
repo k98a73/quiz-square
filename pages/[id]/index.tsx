@@ -32,6 +32,7 @@ const Index = () => {
   // サーバーとクライアントで表示が異なるエラーへの対処のため導入
   useEffect(() => {
     if (typeof window !== "undefined") setIsClient(true);
+    // クリーンアップ時の処理の記載がないとエラーが出るので追加
     return console.log("clean up");
   }, []);
 
