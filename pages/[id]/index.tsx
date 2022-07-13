@@ -4,6 +4,8 @@ import {
   Button,
   Center,
   Container,
+  HStack,
+  IconButton,
   Modal,
   ModalBody,
   ModalCloseButton,
@@ -24,6 +26,9 @@ import Confetti from "react-confetti";
 
 import Header from "../../components/Header";
 import { quizItemState } from "../../constans/atom";
+import { auth, db } from "../../lib/firebase";
+import { DeleteIcon, EditIcon } from "@chakra-ui/icons";
+import { useRouter } from "next/router";
 
 const Index = () => {
   const quizItem = useRecoilValue(quizItemState);
@@ -31,6 +36,19 @@ const Index = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [isClient, setIsClient] = useState(false);
   const { width, height } = useWindowSize();
+  const [user, setUser] = useState<any>("");
+  const router = useRouter();
+
+  const deleteQuiz = (e: any) => {
+    e.preventDefault();
+    const result = window.confirm(
+      "クイズを本当に削除しても良いですか？"
+    );
+    if (result) {
+      db.collection("quizzes").doc(quizItem.id).delete();
+      router.push("/");
+    }
+  };
 
   useEffect(() => {
     const unSub = () => {
@@ -38,6 +56,14 @@ const Index = () => {
       if (typeof window !== "undefined") setIsClient(true);
     };
     return unSub();
+  }, []);
+
+  useEffect(() => {
+    const unSub = auth.onAuthStateChanged((user) => {
+      setUser(user);
+    });
+    return () => unSub();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (
@@ -132,6 +158,31 @@ const Index = () => {
                   </Modal>
                 </Center>
               </RadioGroup>
+              {user && (
+                <>
+                  <HStack>
+                    <IconButton
+                      as="a"
+                      aria-label="edit"
+                      shadow="lg"
+                      bg="white"
+                      color="gray.400"
+                      rounded="full"
+                      icon={<EditIcon />}
+                    ></IconButton>
+                    <IconButton
+                      aria-label="delete"
+                      as="a"
+                      shadow="lg"
+                      bg="white"
+                      color="gray.400"
+                      rounded="full"
+                      icon={<DeleteIcon />}
+                      onClick={deleteQuiz}
+                    />
+                  </HStack>
+                </>
+              )}
             </VStack>
           </Container>
         </>
