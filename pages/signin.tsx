@@ -112,6 +112,7 @@ export default function SignIn() {
                     size="lg"
                     onClick={handleClick}
                     aria-label="passwordView"
+                    _focus={{ boxShadow: "none" }}
                     icon={show ? <ViewOffIcon /> : <ViewIcon />}
                   ></IconButton>
                 </InputRightElement>
