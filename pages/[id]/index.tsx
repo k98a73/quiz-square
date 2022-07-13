@@ -16,6 +16,7 @@ import {
   Radio,
   RadioGroup,
   Text,
+  Tooltip,
   useDisclosure,
   VStack,
 } from "@chakra-ui/react";
@@ -30,7 +31,7 @@ import { auth, db } from "../../lib/firebase";
 import { DeleteIcon, EditIcon } from "@chakra-ui/icons";
 import { useRouter } from "next/router";
 
-const Index = () => {
+export default function QuizIndex() {
   const quizItem = useRecoilValue(quizItemState);
   const { register, getValues } = useForm();
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -41,9 +42,7 @@ const Index = () => {
 
   const deleteQuiz = (e: any) => {
     e.preventDefault();
-    const result = window.confirm(
-      "クイズを本当に削除しても良いですか？"
-    );
+    const result = window.confirm("クイズを本当に削除しても良いですか？");
     if (result) {
       db.collection("quizzes").doc(quizItem.id).delete();
       router.push("/");
@@ -126,7 +125,7 @@ const Index = () => {
                   >
                     回答
                   </Button>
-                  <Modal isOpen={isOpen} onClose={onClose}>
+                  <Modal size="full" isOpen={isOpen} onClose={onClose}>
                     <ModalOverlay />
                     <ModalContent>
                       <ModalHeader textAlign="center">
@@ -140,7 +139,9 @@ const Index = () => {
                       <ModalBody>
                         {getValues("answer") === quizItem.answer && (
                           <>
-                            <Text color="blue.400">{`解説：${quizItem.description}`}</Text>
+                            <Center>
+                              <Text color="blue.400">{`解説：${quizItem.description}`}</Text>
+                            </Center>
                             <Confetti
                               width={width}
                               height={height}
@@ -161,25 +162,44 @@ const Index = () => {
               {user && (
                 <>
                   <HStack>
-                    <IconButton
-                      as="a"
-                      aria-label="edit"
-                      shadow="lg"
-                      bg="white"
-                      color="gray.400"
-                      rounded="full"
-                      icon={<EditIcon />}
-                    ></IconButton>
-                    <IconButton
-                      aria-label="delete"
-                      as="a"
-                      shadow="lg"
-                      bg="white"
-                      color="gray.400"
-                      rounded="full"
-                      icon={<DeleteIcon />}
-                      onClick={deleteQuiz}
-                    />
+                    <Tooltip
+                      label="編集"
+                      fontSize="md"
+                      bg="gray.500"
+                      color="white"
+                      placement="bottom-end"
+                      hasArrow
+                    >
+                      <IconButton
+                        as="a"
+                        aria-label="edit"
+                        shadow="lg"
+                        bg="white"
+                        color="gray.400"
+                        rounded="full"
+                        icon={<EditIcon />}
+                        onClick={() => router.push(`/${quizItem.id}/edit`)}
+                      ></IconButton>
+                    </Tooltip>
+                    <Tooltip
+                      label="削除"
+                      fontSize="md"
+                      bg="gray.500"
+                      color="white"
+                      placement="bottom-start"
+                      hasArrow
+                    >
+                      <IconButton
+                        aria-label="delete"
+                        as="a"
+                        shadow="lg"
+                        bg="white"
+                        color="gray.400"
+                        rounded="full"
+                        icon={<DeleteIcon />}
+                        onClick={deleteQuiz}
+                      />
+                    </Tooltip>
                   </HStack>
                 </>
               )}
@@ -190,5 +210,3 @@ const Index = () => {
     </>
   );
 };
-
-export default Index;
