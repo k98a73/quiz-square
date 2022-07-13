@@ -24,7 +24,7 @@ export default function MyPage() {
       setUser(user);
       !user && router.push("/signin");
     });
-    return () => unSub(); /* アンマウントしたら、firebaseの監視を停止 */
+    return () => unSub();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 

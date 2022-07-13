@@ -62,7 +62,7 @@ const Header = () => {
     const unSub = auth.onAuthStateChanged((user) => {
       setUser(user);
     });
-    return () => unSub(); /* アンマウントしたら、firebaseの監視を停止 */
+    return () => unSub();
   }, []);
 
   return (

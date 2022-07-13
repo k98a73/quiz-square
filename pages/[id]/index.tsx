@@ -29,43 +29,17 @@ const Index = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [isClient, setIsClient] = useState(false);
 
-  // サーバーとクライアントで表示が異なるエラーへの対処のため導入
   useEffect(() => {
-    if (typeof window !== "undefined") setIsClient(true);
-    // クリーンアップ時の処理の記載がないとエラーが出るので追加
-    return console.log("clean up");
+    const unSub = () => {
+      //  window オブジェクトが存在する場合に、isClientをtrueにする
+      if (typeof window !== "undefined") setIsClient(true);
+    };
+    return unSub();
   }, []);
-
-  const answerAnnouncement = () => {
-    if (quizItem.answer === "1") {
-      return (
-        <Text fontSize="lg" lineHeight="2" color="gray.600">
-          {`正解は「Ａ：${quizItem.optionA}」`}
-        </Text>
-      );
-    } else if (quizItem.answer === "2") {
-      return (
-        <Text fontSize="lg" lineHeight="2" color="gray.600">
-          {`正解は「Ｂ：${quizItem.optionB}」`}
-        </Text>
-      );
-    } else if (quizItem.answer === "3") {
-      return (
-        <Text fontSize="lg" lineHeight="2" color="gray.600">
-          {`正解は「Ｃ：${quizItem.optionC}」`}
-        </Text>
-      );
-    } else if (quizItem.answer === "4") {
-      return (
-        <Text fontSize="lg" lineHeight="2" color="gray.600">
-          {`正解は「Ｄ：${quizItem.optionD}」`}
-        </Text>
-      );
-    }
-  };
 
   return (
     <>
+      {/* window オブジェクトが存在する場合にのみ以下を表示することにより、サーバーでの表示と不一致防止 */}
       {isClient && (
         <>
           <Head>
@@ -135,9 +109,8 @@ const Index = () => {
                       </ModalHeader>
                       <ModalCloseButton />
                       <ModalBody>
-                        {answerAnnouncement()}
-                        <br />
-                        解説：{quizItem.description}
+                        {getValues("answer") === quizItem.answer &&
+                          `解説：${quizItem.description}`}
                       </ModalBody>
                       <ModalFooter>
                         <Button colorScheme="blue" mr={3} onClick={onClose}>

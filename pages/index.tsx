@@ -42,7 +42,6 @@ const Home: NextPage = () => {
   const [filteredQuizzes, setFilteredQuizzes] = useState<QuizItem[]>([]);
   const [genreFilter, setGenreFilter] = useState("全て");
   const [quizItem, setQuizItem] = useRecoilState(quizItemState);
-  // const [userName, setUserName] = useState<any>("");
   const router = useRouter();
 
   const handleSelectQuiz = (
@@ -95,7 +94,7 @@ const Home: NextPage = () => {
           }))
         );
       });
-    return () => unSub(); /* アンマウントしたら、firebaseの監視を停止 */
+    return () => unSub();
   }, []);
 
   useEffect(() => {
@@ -123,9 +122,7 @@ const Home: NextPage = () => {
           setFilteredQuizzes(quizzes);
       }
     };
-    filteringQuizzesGenre();
-    // クリーンアップ時の処理の記載がないとエラーが出るので追加
-    return console.log("clean up");
+    return filteringQuizzesGenre();
   }, [genreFilter, quizzes]);
 
   return (
@@ -203,7 +200,7 @@ const Home: NextPage = () => {
                   >
                     <HStack>
                       <Text fontSize="lg" color="gray.800" py="1">
-                        {`作成者：${(quiz.userName)}`}
+                        {`作成者：${quiz.userName}`}
                       </Text>
                     </HStack>
                     <Text fontSize="lg" color="gray.800" py="1">
