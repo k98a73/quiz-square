@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import type { NextPage } from "next";
 import Head from "next/head";
 import NextLink from "next/link";
@@ -70,9 +70,7 @@ const Home: NextPage = () => {
       answer,
       description,
     });
-    setTimeout(() => {
-      router.push(`/${quizItem.id}`);
-    }, 400);
+    router.push(`/${quizItem.id}`);
   };
 
   useEffect(() => {

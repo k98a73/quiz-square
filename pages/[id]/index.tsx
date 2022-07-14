@@ -50,19 +50,14 @@ export default function QuizIndex() {
   };
 
   useEffect(() => {
-    const unSub = () => {
+    const unSubWindow = () => {
       //  window オブジェクトが存在する場合に、isClientをtrueにする
       if (typeof window !== "undefined") setIsClient(true);
     };
-    return unSub();
-  }, []);
-
-  useEffect(() => {
-    const unSub = auth.onAuthStateChanged((user) => {
+    const unSubAuth = auth.onAuthStateChanged((user) => {
       setUser(user);
     });
-    return () => unSub();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+    return unSubWindow(), unSubAuth();
   }, []);
 
   return (
@@ -209,4 +204,4 @@ export default function QuizIndex() {
       )}
     </>
   );
-};
+}
