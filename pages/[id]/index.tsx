@@ -3,7 +3,9 @@ import Head from "next/head";
 import {
   Button,
   Center,
+  ChakraProvider,
   Container,
+  extendTheme,
   HStack,
   IconButton,
   Modal,
@@ -30,6 +32,19 @@ import { quizItemState } from "../../constans/atom";
 import { auth, db } from "../../lib/firebase";
 import { DeleteIcon, EditIcon } from "@chakra-ui/icons";
 import { useRouter } from "next/router";
+
+const theme = extendTheme({
+  components: {
+    Modal: {
+      baseStyle: () => ({
+        dialog: {
+          maxWidth: "100%",
+          minWidth: "95%",
+        }
+      })
+    }
+  }
+});
 
 export default function QuizIndex() {
   const quizItem = useRecoilValue(quizItemState);
@@ -61,7 +76,7 @@ export default function QuizIndex() {
   }, []);
 
   return (
-    <>
+    <ChakraProvider theme={theme}>
       {/* window オブジェクトが存在する場合にのみ以下を表示することにより、サーバーでの表示と不一致防止 */}
       {isClient && (
         <>
@@ -120,7 +135,7 @@ export default function QuizIndex() {
                   >
                     回答
                   </Button>
-                  <Modal size="full" isOpen={isOpen} onClose={onClose}>
+                  <Modal isOpen={isOpen} onClose={onClose}>
                     <ModalOverlay />
                     <ModalContent>
                       <ModalHeader textAlign="center">
@@ -202,6 +217,6 @@ export default function QuizIndex() {
           </Container>
         </>
       )}
-    </>
+    </ChakraProvider>
   );
 }
