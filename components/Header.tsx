@@ -74,6 +74,11 @@ const SignOutContainer = ({ uid, router }: any) => {
           color="gray.50"
           rounded="full"
           size="lg"
+          _hover={{
+            cursor: "pointer",
+            backgroundColor: "#f4f4f4",
+            color: "#c0ccce",
+          }}
           icon={<FaSignOutAlt />}
           onClick={useSignOut()}
         />
@@ -116,26 +121,52 @@ const Header = () => {
             <SignOutContainer uid={user?.uid} router={router} />
           ) : (
             <>
-              <IconButton
-                aria-label="signUp"
-                bg="cyan.600"
-                color="gray.50"
-                rounded="full"
-                size="lg"
-                as="a"
-                icon={<HiOutlineUserAdd />}
-                onClick={() => router.push("/signup")}
-              />
-              <IconButton
-                aria-label="signIn"
-                bg="cyan.600"
-                color="gray.50"
-                rounded="full"
-                size="lg"
-                as="a"
-                icon={<FaSignInAlt />}
-                onClick={() => router.push("/signin")}
-              />
+              <Tooltip
+                label="新規登録"
+                fontSize="md"
+                bg="gray.500"
+                color="white"
+                placement="bottom"
+                hasArrow
+              >
+                <IconButton
+                  aria-label="signUp"
+                  bg="cyan.600"
+                  color="gray.50"
+                  rounded="full"
+                  size="lg"
+                  _hover={{
+                    cursor: "pointer",
+                    backgroundColor: "#f4f4f4",
+                    color: "#c0ccce",
+                  }}
+                  icon={<HiOutlineUserAdd />}
+                  onClick={() => router.push("/signup")}
+                />
+              </Tooltip>
+              <Tooltip
+                label="ログイン"
+                fontSize="md"
+                bg="gray.500"
+                color="white"
+                placement="bottom-end"
+                hasArrow
+              >
+                <IconButton
+                  aria-label="signIn"
+                  bg="cyan.600"
+                  color="gray.50"
+                  rounded="full"
+                  size="lg"
+                  _hover={{
+                    cursor: "pointer",
+                    backgroundColor: "#f4f4f4",
+                    color: "#c0ccce",
+                  }}
+                  icon={<FaSignInAlt />}
+                  onClick={() => router.push("/signin")}
+                />
+              </Tooltip>
             </>
           )}
         </ButtonGroup>

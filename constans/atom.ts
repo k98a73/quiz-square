@@ -4,9 +4,11 @@ import { recoilPersist } from "recoil-persist";
 const { persistAtom } = recoilPersist();
 
 export const quizItemState = atom<any>({
-  key: "quiz",
+  key: "quizItem",
   default: {
     id: "",
+    uid: "",
+    userName: "",
     genre: "",
     content: "",
     optionA: "",

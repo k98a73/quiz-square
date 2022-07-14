@@ -44,7 +44,7 @@ const Home: NextPage = () => {
   const [quizItem, setQuizItem] = useRecoilState(quizItemState);
   const router = useRouter();
 
-  const handleSelectQuiz = async(
+  const handleSelectQuiz = (
     id: string,
     uid: string,
     userName: string,
@@ -57,23 +57,22 @@ const Home: NextPage = () => {
     answer: string,
     description: string
   ) => {
-    const quizFunc = () => {
-      setQuizItem({
-        id,
-        uid,
-        userName,
-        genre,
-        content,
-        optionA,
-        optionB,
-        optionC,
-        optionD,
-        answer,
-        description,
-      });
-    };
-    await quizFunc();
-    router.push(`/${id}`);
+    setQuizItem({
+      id,
+      uid,
+      userName,
+      genre,
+      content,
+      optionA,
+      optionB,
+      optionC,
+      optionD,
+      answer,
+      description,
+    });
+    setTimeout(() => {
+      router.push(`/${quizItem.id}`);
+    }, 400);
   };
 
   useEffect(() => {
