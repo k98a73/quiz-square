@@ -1,7 +1,7 @@
 import React from "react";
 
-import QuizInpuForm from "../components/QuizInpuForm";
+import QuizInputForm from "../components/QuizInputForm";
 
 export default function Create() {
-  return <QuizInpuForm />;
+  return <QuizInputForm genreDefaultValue={"その他"} />;
 }

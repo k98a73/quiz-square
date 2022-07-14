@@ -23,12 +23,16 @@ import {
 } from "@chakra-ui/react";
 import { useForm } from "react-hook-form";
 
-import Header from "../components/Header";
+import Header from "./Header";
 import FilterOptions from "../constans/FilterOptions";
 import { auth, date, db } from "../lib/firebase";
 import { theme } from "../constans/theme";
 
-const QuizInpuForm = () => {
+interface PROPS {
+  genreDefaultValue: string;
+}
+
+const QuizInputForm: React.FC<PROPS> = ({genreDefaultValue}) => {
   const router = useRouter();
   const [user, setUser] = useState<any>("");
   const [userName, setUserName] = useState<string>("");
@@ -118,6 +122,7 @@ const QuizInpuForm = () => {
                     fontWeight="bold"
                     textAlign="center"
                     variant="filled"
+                    defaultValue={genreDefaultValue}
                     {...register("genre")}
                   >
                     {FilterOptions.map(({ value, label }) => (
@@ -374,4 +379,4 @@ const QuizInpuForm = () => {
   );
 };
 
-export default QuizInpuForm;
+export default QuizInputForm;
