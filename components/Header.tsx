@@ -1,96 +1,18 @@
 import React, { useEffect, useState } from "react";
 import {
-  Avatar,
   ButtonGroup,
-  Center,
   Flex,
   Heading,
   IconButton,
   Spacer,
-  Spinner,
   Tooltip,
 } from "@chakra-ui/react";
-import { FaSignInAlt, FaSignOutAlt } from "react-icons/fa";
+import { FaSignInAlt } from "react-icons/fa";
 import { HiOutlineUserAdd } from "react-icons/hi";
-import useSignOut from "../hooks/useSignOut";
-import { auth, db } from "../lib/firebase";
 import { useRouter } from "next/router";
-import useIsMounted from "../hooks/useIsMounted";
 
-const SignOutContainer = ({ uid, router }: any) => {
-  const [avatarUrl, setAvatarUrl] = useState<any>("");
-  // マウントを監視するカスタムフック
-  const isMountedRef = useIsMounted();
-
-  const docRef = db.collection("users").doc(uid);
-  docRef
-    .get()
-    .then((doc) => {
-      if (doc.exists) {
-        // マウント時のみアバター画像を更新
-        if (isMountedRef.current) setAvatarUrl(doc.data()?.imageUrl);
-      } else {
-        alert("No such document!");
-      }
-    })
-    .catch((error) => {
-      alert(error);
-    });
-
-  return (
-    <>
-      {avatarUrl ? (
-        <Tooltip
-          label="ユーザー詳細"
-          fontSize="md"
-          bg="gray.500"
-          color="white"
-          placement="bottom"
-          hasArrow
-        >
-          <Avatar
-            ml="3"
-            size="md"
-            src={avatarUrl}
-            _hover={{
-              cursor: "pointer",
-              backgroundColor: "white",
-              transform: "scale(1.1, 1.1)",
-            }}
-            onClick={() => router.push("/mypage")}
-          />
-        </Tooltip>
-      ) : (
-        <Center>
-          <Spinner size="lg" />
-        </Center>
-      )}
-      <Tooltip
-        label="ログアウト"
-        fontSize="md"
-        bg="gray.500"
-        color="white"
-        placement="bottom-end"
-        hasArrow
-      >
-        <IconButton
-          aria-label="signOut"
-          bg="cyan.600"
-          color="gray.50"
-          rounded="full"
-          size="lg"
-          _hover={{
-            cursor: "pointer",
-            backgroundColor: "#f4f4f4",
-            color: "#c0ccce",
-          }}
-          icon={<FaSignOutAlt />}
-          onClick={useSignOut()}
-        />
-      </Tooltip>
-    </>
-  );
-};
+import { auth } from "../lib/firebase";
+import MyPageSignOutContainer from "./MyPageSignOutContainer";
 
 const Header = () => {
   const [user, setUser] = useState<any>("");
@@ -123,7 +45,7 @@ const Header = () => {
         <Spacer />
         <ButtonGroup mr="5" gap="2">
           {user ? (
-            <SignOutContainer uid={user?.uid} router={router} />
+            <MyPageSignOutContainer uid={user?.uid} router={router} />
           ) : (
             <>
               <Tooltip
