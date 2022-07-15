@@ -19,26 +19,23 @@ import useIsMounted from "../hooks/useIsMounted";
 
 const SignOutContainer = ({ uid, router }: any) => {
   const [avatarUrl, setAvatarUrl] = useState<any>("");
-  // マウントを監視するuseHook
+  // マウントを監視するカスタムフック
   const isMountedRef = useIsMounted();
 
-  useEffect(() => {
-    const docRef = db.collection("users").doc(uid);
-    docRef
-      .get()
-      .then((doc) => {
-        if (doc.exists) {
-          // マウント時のみアバター画像を更新
-          if (isMountedRef.current) setAvatarUrl(doc.data()?.imageUrl);
-        } else {
-          alert("No such document!");
-        }
-      })
-      .catch((error) => {
-        alert(error);
-      });
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  const docRef = db.collection("users").doc(uid);
+  docRef
+    .get()
+    .then((doc) => {
+      if (doc.exists) {
+        // マウント時のみアバター画像を更新
+        if (isMountedRef.current) setAvatarUrl(doc.data()?.imageUrl);
+      } else {
+        alert("No such document!");
+      }
+    })
+    .catch((error) => {
+      alert(error);
+    });
 
   return (
     <>
