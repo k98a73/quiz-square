@@ -20,3 +20,13 @@ export const quizItemState = atom<any>({
   },
   effects_UNSTABLE: [persistAtom],
 });
+
+export const userDataState = atom<any>({
+  key: "userData",
+  default: {
+    uid: "",
+    userName: "",
+    avatarUrl: "",
+  },
+  effects_UNSTABLE: [persistAtom],
+});
