@@ -18,10 +18,10 @@ import {
 } from "@chakra-ui/react";
 import { useForm } from "react-hook-form";
 
-import { theme } from "../constans/theme";
 import Header from "../components/Header";
 import { auth } from "../lib/firebase";
 import { ViewIcon, ViewOffIcon } from "@chakra-ui/icons";
+import { inputTheme } from "../constans/inputTheme";
 
 export default function SignIn() {
   const router = useRouter();
@@ -45,7 +45,7 @@ export default function SignIn() {
   };
 
   return (
-    <ChakraProvider theme={theme}>
+    <ChakraProvider theme={inputTheme}>
       <Head>
         <title>Quiz Square</title>
       </Head>

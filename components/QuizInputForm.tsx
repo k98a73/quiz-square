@@ -24,10 +24,10 @@ import {
 import { useForm } from "react-hook-form";
 
 import Header from "./Header";
-import FilterOptions from "../constans/FilterOptions";
 import { auth, date, db } from "../lib/firebase";
-import { theme } from "../constans/theme";
+import { inputTheme } from "../constans/inputTheme";
 import useIsMounted from "../hooks/useIsMounted";
+import filterOptions from "../constans/FilterOptions";
 
 interface PROPS {
   quizID: string;
@@ -121,7 +121,7 @@ const QuizInputForm: React.FC<PROPS> = ({
   return (
     <>
       {user ? (
-        <ChakraProvider theme={theme}>
+        <ChakraProvider theme={inputTheme}>
           <Head>
             <title>Quiz Square</title>
           </Head>
@@ -144,7 +144,7 @@ const QuizInputForm: React.FC<PROPS> = ({
                     defaultValue={genreDefaultValue}
                     {...register("genre")}
                   >
-                    {FilterOptions.map(({ value, label }) => (
+                    {filterOptions.map(({ value, label }) => (
                       <option key={label} value={value}>
                         {value}
                       </option>

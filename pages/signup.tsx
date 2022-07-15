@@ -23,8 +23,8 @@ import {
 import Header from "../components/Header";
 import { db, auth } from "../lib/firebase";
 import firebase, { storage } from "../lib/firebase";
-import { theme } from "../constans/theme";
 import { ViewIcon, ViewOffIcon } from "@chakra-ui/icons";
+import { inputTheme } from "../constans/inputTheme";
 
 export default function SignUp() {
   const router = useRouter();
@@ -88,7 +88,7 @@ export default function SignUp() {
   }
 
   return (
-    <ChakraProvider theme={theme}>
+    <ChakraProvider theme={inputTheme}>
       <Head>
         <title>Quiz Square</title>
       </Head>

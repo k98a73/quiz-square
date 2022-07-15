@@ -1,4 +1,4 @@
-const FilterOptions = [
+const filterOptions = [
   { label: "japanese", value: "国語" },
   { label: "arithmetic", value: "算数" },
   { label: "science", value: "理科" },
@@ -7,4 +7,4 @@ const FilterOptions = [
   { label: "other", value: "その他" },
 ];
 
-export default FilterOptions;
+export default filterOptions;
