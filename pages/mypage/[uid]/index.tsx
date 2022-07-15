@@ -5,13 +5,17 @@ import {
   Avatar,
   Center,
   Container,
+  HStack,
+  IconButton,
   Spinner,
   Text,
+  Tooltip,
   VStack,
 } from "@chakra-ui/react";
 
-import Header from "../../components/Header";
-import { auth, db } from "../../lib/firebase";
+import Header from "../../../components/Header";
+import { auth, db } from "../../../lib/firebase";
+import { EditIcon } from "@chakra-ui/icons";
 
 export default function MyPage() {
   const [user, setUser] = useState<any>("");
@@ -63,7 +67,31 @@ export default function MyPage() {
                 fontSize="lg"
                 color="gray.600"
               >{`ユーザーネーム：${userName}`}</Text>
-              <Avatar ml="3" size="md" src={avatarUrl} />
+              <HStack>
+                <Text fontSize="lg" color="gray.600">
+                  アバター画像：
+                </Text>
+                <Avatar ml="3" size="md" src={avatarUrl} />
+              </HStack>
+              <Tooltip
+                label="編集"
+                fontSize="md"
+                bg="gray.500"
+                color="white"
+                placement="bottom-end"
+                hasArrow
+              >
+                <IconButton
+                  as="a"
+                  aria-label="edit"
+                  shadow="lg"
+                  bg="white"
+                  color="gray.400"
+                  rounded="full"
+                  icon={<EditIcon />}
+                  onClick={() => router.push(`/mypage/${user?.uid}/edit`)}
+                ></IconButton>
+              </Tooltip>
             </VStack>
           </Container>
         </>
