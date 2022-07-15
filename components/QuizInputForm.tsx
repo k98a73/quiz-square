@@ -30,6 +30,7 @@ import { theme } from "../constans/theme";
 import useIsMounted from "../hooks/useIsMounted";
 
 interface PROPS {
+  quizID: string;
   genreDefaultValue: string;
   contentDefaultValue: string;
   optionADefaultValue: string;
@@ -38,9 +39,11 @@ interface PROPS {
   optionDDefaultValue: string;
   answerDefaultValue: string;
   descriptionDefaultValue: string;
+  buttonSentence: string;
 }
 
 const QuizInputForm: React.FC<PROPS> = ({
+  quizID,
   genreDefaultValue,
   contentDefaultValue,
   optionADefaultValue,
@@ -49,6 +52,7 @@ const QuizInputForm: React.FC<PROPS> = ({
   optionDDefaultValue,
   answerDefaultValue,
   descriptionDefaultValue,
+  buttonSentence,
 }) => {
   const router = useRouter();
   const [user, setUser] = useState<any>("");
@@ -71,8 +75,6 @@ const QuizInputForm: React.FC<PROPS> = ({
     answer,
     description,
   }: any) => {
-    // 自動採番のドキュメントIDを事前に取得
-    const quizID = db.collection("quizzes").doc().id;
     db.collection("quizzes").doc(quizID).set({
       id: quizID,
       uid: user?.uid,
@@ -386,7 +388,7 @@ const QuizInputForm: React.FC<PROPS> = ({
                     colorScheme="blackAlpha"
                     variant="solid"
                   >
-                    問題の作成
+                    {buttonSentence}
                   </Button>
                 </Center>
               </form>
