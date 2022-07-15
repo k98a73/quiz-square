@@ -27,15 +27,34 @@ import Header from "./Header";
 import FilterOptions from "../constans/FilterOptions";
 import { auth, date, db } from "../lib/firebase";
 import { theme } from "../constans/theme";
+import useIsMounted from "../hooks/useIsMounted";
 
 interface PROPS {
   genreDefaultValue: string;
+  contentDefaultValue: string;
+  optionADefaultValue: string;
+  optionBDefaultValue: string;
+  optionCDefaultValue: string;
+  optionDDefaultValue: string;
+  answerDefaultValue: string;
+  descriptionDefaultValue: string;
 }
 
-const QuizInputForm: React.FC<PROPS> = ({genreDefaultValue}) => {
+const QuizInputForm: React.FC<PROPS> = ({
+  genreDefaultValue,
+  contentDefaultValue,
+  optionADefaultValue,
+  optionBDefaultValue,
+  optionCDefaultValue,
+  optionDDefaultValue,
+  answerDefaultValue,
+  descriptionDefaultValue,
+}) => {
   const router = useRouter();
   const [user, setUser] = useState<any>("");
   const [userName, setUserName] = useState<string>("");
+  // マウントを監視するカスタムフック
+  const isMountedRef = useIsMounted();
   const {
     handleSubmit,
     register,
@@ -80,24 +99,22 @@ const QuizInputForm: React.FC<PROPS> = ({genreDefaultValue}) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  useEffect(() => {
-    const docRef = db.collection("users").doc(user?.uid);
-    if (user) {
-      docRef
-        .get()
-        .then((doc) => {
-          if (doc.exists) {
-            setUserName(doc.data()?.userName);
-          } else {
-            alert("No such document!");
-          }
-        })
-        .catch((error) => {
-          alert(error);
-        });
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  const docRef = db.collection("users").doc(user?.uid);
+  if (user) {
+    docRef
+      .get()
+      .then((doc) => {
+        if (doc.exists) {
+          // マウント時のみユーザーネームを更新
+          if (isMountedRef.current) setUserName(doc.data()?.userName);
+        } else {
+          alert("No such document!");
+        }
+      })
+      .catch((error) => {
+        alert(error);
+      });
+  }
 
   return (
     <>
@@ -140,6 +157,7 @@ const QuizInputForm: React.FC<PROPS> = ({genreDefaultValue}) => {
                   </FormLabel>
                   <Textarea
                     id="content"
+                    defaultValue={contentDefaultValue}
                     {...register("content", {
                       required: "文字を入力してください",
                       maxLength: {
@@ -165,6 +183,7 @@ const QuizInputForm: React.FC<PROPS> = ({genreDefaultValue}) => {
                     <Input
                       id="optinA"
                       placeholder=" "
+                      defaultValue={optionADefaultValue}
                       {...register("optionA", {
                         required: "文字を入力してください",
                         maxLength: {
@@ -197,6 +216,7 @@ const QuizInputForm: React.FC<PROPS> = ({genreDefaultValue}) => {
                     <Input
                       id="optionB"
                       placeholder=" "
+                      defaultValue={optionBDefaultValue}
                       {...register("optionB", {
                         required: "文字を入力してください",
                         maxLength: {
@@ -229,6 +249,7 @@ const QuizInputForm: React.FC<PROPS> = ({genreDefaultValue}) => {
                     <Input
                       id="optionC"
                       placeholder=" "
+                      defaultValue={optionCDefaultValue}
                       {...register("optionC", {
                         required: "文字を入力してください",
                         maxLength: {
@@ -261,6 +282,7 @@ const QuizInputForm: React.FC<PROPS> = ({genreDefaultValue}) => {
                     <Input
                       id="optionD"
                       placeholder=" "
+                      defaultValue={optionDDefaultValue}
                       {...register("optionD", {
                         required: "文字を入力してください",
                         maxLength: {
@@ -289,7 +311,7 @@ const QuizInputForm: React.FC<PROPS> = ({genreDefaultValue}) => {
                     正解
                     <span style={{ color: "red", paddingLeft: "2px" }}>*</span>
                   </Text>
-                  <RadioGroup defaultValue="1">
+                  <RadioGroup defaultValue={answerDefaultValue}>
                     <Stack spacing={5} direction="row">
                       <Radio
                         size="lg"
@@ -341,6 +363,7 @@ const QuizInputForm: React.FC<PROPS> = ({genreDefaultValue}) => {
                   </FormLabel>
                   <Textarea
                     id="description"
+                    defaultValue={descriptionDefaultValue}
                     {...register("description", {
                       required: "文字を入力してください",
                       maxLength: {
