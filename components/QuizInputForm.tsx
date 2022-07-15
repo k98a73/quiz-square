@@ -27,7 +27,8 @@ import Header from "./Header";
 import { auth, date, db } from "../lib/firebase";
 import { inputTheme } from "../constans/inputTheme";
 import useIsMounted from "../hooks/useIsMounted";
-import filterOptions from "../constans/FilterOptions";
+import filterOptions from "../constans/filterOptions";
+
 
 interface PROPS {
   quizID: string;
