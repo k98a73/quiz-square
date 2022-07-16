@@ -21,7 +21,7 @@ import {
   useDisclosure,
   VStack,
 } from "@chakra-ui/react";
-import { useRecoilValue } from "recoil";
+import { useRecoilState } from "recoil";
 import { useForm } from "react-hook-form";
 import useWindowSize from "react-use/lib/useWindowSize";
 import Confetti from "react-confetti";
@@ -34,7 +34,7 @@ import { useRouter } from "next/router";
 import { modalTheme } from "../../constans/modalTheme";
 
 export default function QuizIndex() {
-  const quizItem = useRecoilValue(quizItemState);
+  const [quizItem, setQuizItem] = useRecoilState(quizItemState);
   const { register, getValues } = useForm();
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [isClient, setIsClient] = useState(false);
@@ -46,12 +46,26 @@ export default function QuizIndex() {
     e.preventDefault();
     const result = window.confirm("クイズを本当に削除しても良いですか？");
     if (result) {
+      setQuizItem({
+        id: "",
+        uid: "",
+        userName: "",
+        genre: "",
+        content: "",
+        optionA: "",
+        optionB: "",
+        optionC: "",
+        optionD: "",
+        answer: "",
+        description: "",
+      });
       db.collection("quizzes").doc(quizItem.id).delete();
       router.push("/");
     }
   };
 
   useEffect(() => {
+    if (!quizItem.id) router.push("/");
     const unSubWindow = () => {
       //  window オブジェクトが存在する場合に、isClientをtrueにする
       if (typeof window !== "undefined") setIsClient(true);
@@ -60,6 +74,7 @@ export default function QuizIndex() {
       setUser(user);
     });
     return unSubWindow(), unSubAuth();
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (
