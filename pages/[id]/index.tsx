@@ -74,7 +74,7 @@ export default function QuizIndex() {
       setUser(user);
     });
     return unSubWindow(), unSubAuth();
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (
@@ -171,7 +171,7 @@ export default function QuizIndex() {
                   </Modal>
                 </Center>
               </RadioGroup>
-              {user && (
+              {user?.uid === quizItem.uid && (
                 <>
                   <HStack>
                     <Tooltip

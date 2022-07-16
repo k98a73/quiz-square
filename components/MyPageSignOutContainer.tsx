@@ -1,11 +1,5 @@
 import React, { useState } from "react";
-import {
-  Avatar,
-  Center,
-  IconButton,
-  Spinner,
-  Tooltip,
-} from "@chakra-ui/react";
+import { Avatar, Center, IconButton, Spinner, Tooltip } from "@chakra-ui/react";
 import { FaSignOutAlt } from "react-icons/fa";
 
 import useSignOut from "../hooks/useSignOut";

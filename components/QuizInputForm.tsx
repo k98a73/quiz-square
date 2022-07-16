@@ -31,7 +31,6 @@ import useIsMounted from "../hooks/useIsMounted";
 import filterOptions from "../constans/filterOptions";
 import { quizItemState } from "../constans/atom";
 
-
 interface PROPS {
   quizID: string;
   genreDefaultValue: string;
@@ -91,7 +90,7 @@ const QuizInputForm: React.FC<PROPS> = ({
       optionD,
       answer,
       description,
-    })
+    });
     db.collection("quizzes").doc(quizID).set({
       id: quizID,
       uid: user?.uid,
