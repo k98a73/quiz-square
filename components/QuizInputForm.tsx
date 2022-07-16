@@ -22,12 +22,14 @@ import {
   Spinner,
 } from "@chakra-ui/react";
 import { useForm } from "react-hook-form";
+import { useRecoilState } from "recoil";
 
 import Header from "./Header";
 import { auth, date, db } from "../lib/firebase";
 import { inputTheme } from "../constans/inputTheme";
 import useIsMounted from "../hooks/useIsMounted";
 import filterOptions from "../constans/filterOptions";
+import { quizItemState } from "../constans/atom";
 
 
 interface PROPS {
@@ -60,6 +62,7 @@ const QuizInputForm: React.FC<PROPS> = ({
   const [userName, setUserName] = useState<string>("");
   // マウントを監視するカスタムフック
   const isMountedRef = useIsMounted();
+  const [quizItem, setQuizItem] = useRecoilState(quizItemState);
   const {
     handleSubmit,
     register,
@@ -76,6 +79,19 @@ const QuizInputForm: React.FC<PROPS> = ({
     answer,
     description,
   }: any) => {
+    setQuizItem({
+      id: quizID,
+      uid: user?.uid,
+      userName,
+      genre,
+      content,
+      optionA,
+      optionB,
+      optionC,
+      optionD,
+      answer,
+      description,
+    })
     db.collection("quizzes").doc(quizID).set({
       id: quizID,
       uid: user?.uid,
