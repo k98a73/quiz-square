@@ -131,91 +131,102 @@ const Home: NextPage = () => {
         <title>Quiz Square</title>
       </Head>
       <Header />
-      <Container py="3" maxW="800px">
-        <VStack>
-          <Flex mt="5" w="85%" alignItems="center">
-            <HStack>
-              <Text w="120px" fontSize="lg" color="gray.600">
-                ジャンル:
-              </Text>
-              <Select
-                size="md"
-                color="gray.500"
-                mb="2"
-                fontWeight="bold"
-                textAlign="center"
-                variant="filled"
-                value={genreFilter}
-                onChange={(e) => setGenreFilter(e.target.value)}
-              >
-                <option value="全て">全て</option>
-                <option value="国語">国語</option>
-                <option value="算数">算数</option>
-                <option value="理科">理科</option>
-                <option value="社会">社会</option>
-                <option value="英語">英語</option>
-                <option value="その他">その他</option>
-              </Select>
-            </HStack>
-            <Spacer />
-            <NextLink href="/create" passHref>
-              <IconButton
-                aria-label="add"
-                shadow="lg"
-                bg="white"
-                color="gray.400"
-                rounded="full"
-                icon={<AddIcon />}
-                as="a"
-              />
-            </NextLink>
-          </Flex>
-          <Wrap align="center" justify="center">
-            {filteredQuizzes.map((quiz) => {
-              return (
-                <WrapItem key={quiz.id}>
-                  <Box
-                    m="2"
-                    p="2"
-                    w="xs"
-                    borderWidth="1px"
-                    borderRadius="lg"
-                    boxShadow="md"
-                    _hover={{ cursor: "pointer", opacity: 0.8 }}
-                    onClick={() =>
-                      handleSelectQuiz(
-                        quiz.id,
-                        quiz.uid,
-                        quiz.userName,
-                        quiz.genre,
-                        quiz.content,
-                        quiz.optionA,
-                        quiz.optionB,
-                        quiz.optionC,
-                        quiz.optionD,
-                        quiz.answer,
-                        quiz.description
-                      )
-                    }
-                  >
-                    <HStack>
+      <div
+        style={{
+          height: "calc(100vh - 70px)",
+          backgroundImage: `url("https://cdn.pixabay.com/photo/2017/03/25/20/51/quiz-2174368_960_720.png")`,
+          backgroundRepeat: "repeat-y",
+          backgroundSize: "contain",
+          backgroundPosition: " 50% 0%",
+        }}
+      >
+        <Container py="3" maxW="800px">
+          <VStack>
+            <Flex mt="5" w="85%" alignItems="center">
+              <HStack>
+                <Text w="120px" fontSize="lg" color="gray.600">
+                  ジャンル:
+                </Text>
+                <Select
+                  size="md"
+                  color="gray.500"
+                  mb="2"
+                  fontWeight="bold"
+                  textAlign="center"
+                  variant="filled"
+                  value={genreFilter}
+                  onChange={(e) => setGenreFilter(e.target.value)}
+                >
+                  <option value="全て">全て</option>
+                  <option value="国語">国語</option>
+                  <option value="算数">算数</option>
+                  <option value="理科">理科</option>
+                  <option value="社会">社会</option>
+                  <option value="英語">英語</option>
+                  <option value="その他">その他</option>
+                </Select>
+              </HStack>
+              <Spacer />
+              <NextLink href="/create" passHref>
+                <IconButton
+                  aria-label="add"
+                  shadow="lg"
+                  bg="white"
+                  color="gray.400"
+                  rounded="full"
+                  icon={<AddIcon />}
+                  as="a"
+                />
+              </NextLink>
+            </Flex>
+            <Wrap align="center" justify="center">
+              {filteredQuizzes.map((quiz) => {
+                return (
+                  <WrapItem key={quiz.id}>
+                    <Box
+                      m="2"
+                      p="2"
+                      w="xs"
+                      bg="white"
+                      borderWidth="1px"
+                      borderRadius="lg"
+                      boxShadow="md"
+                      _hover={{ cursor: "pointer", opacity: 0.8 }}
+                      onClick={() =>
+                        handleSelectQuiz(
+                          quiz.id,
+                          quiz.uid,
+                          quiz.userName,
+                          quiz.genre,
+                          quiz.content,
+                          quiz.optionA,
+                          quiz.optionB,
+                          quiz.optionC,
+                          quiz.optionD,
+                          quiz.answer,
+                          quiz.description
+                        )
+                      }
+                    >
+                      <HStack>
+                        <Text fontSize="lg" color="gray.800" py="1">
+                          {`作成者：${quiz.userName}`}
+                        </Text>
+                      </HStack>
                       <Text fontSize="lg" color="gray.800" py="1">
-                        {`作成者：${quiz.userName}`}
+                        {`ジャンル：${quiz.genre}`}
                       </Text>
-                    </HStack>
-                    <Text fontSize="lg" color="gray.800" py="1">
-                      {`ジャンル：${quiz.genre}`}
-                    </Text>
-                    <Text fontSize="lg" color="gray.800" py="1">
-                      {`問題文：${quiz.content}`}
-                    </Text>
-                  </Box>
-                </WrapItem>
-              );
-            })}
-          </Wrap>
-        </VStack>
-      </Container>
+                      <Text fontSize="lg" color="gray.800" py="1">
+                        {`問題文：${quiz.content}`}
+                      </Text>
+                    </Box>
+                  </WrapItem>
+                );
+              })}
+            </Wrap>
+          </VStack>
+        </Container>
+      </div>
     </>
   );
 };
