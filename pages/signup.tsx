@@ -17,6 +17,7 @@ import {
   Input,
   InputGroup,
   InputRightElement,
+  Spinner,
   VStack,
 } from "@chakra-ui/react";
 
@@ -30,6 +31,7 @@ export default function SignUp() {
   const router = useRouter();
   const [show, setShow] = useState(false);
   const [selectedImage, setSelectedImage] = useState("");
+  const [isLoading, setIsLoading] = useState<boolean>(false);
 
   const handleClick = () => setShow(!show);
 
@@ -49,6 +51,7 @@ export default function SignUp() {
   } = useForm();
 
   const onSubmit = async ({ email, password, userName, image }: any) => {
+    setIsLoading(true);
     try {
       await auth
         .createUserWithEmailAndPassword(email, password)
@@ -61,6 +64,7 @@ export default function SignUp() {
             userName,
             imageUrl,
           });
+          setIsLoading(false);
           router.push("/quizzesIndex");
         });
     } catch (error: any) {
@@ -92,147 +96,159 @@ export default function SignUp() {
       <Head>
         <title>Quiz Square</title>
       </Head>
-      <Header />
-      <Container py="3" maxW="800px">
-        <VStack mt="2">
-          <form style={{ width: "95%" }} onSubmit={handleSubmit(onSubmit)}>
-            <FormControl
-              variant="floating"
-              id="userName"
-              isInvalid={errors.userName ? true : false}
-            >
-              <Input
-                id="userName"
-                placeholder=" "
-                {...register("userName", {
-                  required: "文字を入力してください",
-                  maxLength: {
-                    value: 10,
-                    message: "10文字以内で入力してください",
-                  },
-                })}
-              />
-              <FormLabel>
-                ユーザーネーム
-                <span style={{ color: "red", paddingLeft: "2px" }}>*</span>
-              </FormLabel>
-              <FormErrorMessage>
-                {errors.userName && errors.userName.message}
-              </FormErrorMessage>
-            </FormControl>
+      {!isLoading ? (
+        <>
+          <Header />
+          <Container py="3" maxW="800px">
+            <VStack mt="2">
+              <form style={{ width: "95%" }} onSubmit={handleSubmit(onSubmit)}>
+                <FormControl
+                  variant="floating"
+                  id="userName"
+                  isInvalid={errors.userName ? true : false}
+                >
+                  <Input
+                    id="userName"
+                    placeholder=" "
+                    {...register("userName", {
+                      required: "文字を入力してください",
+                      maxLength: {
+                        value: 10,
+                        message: "10文字以内で入力してください",
+                      },
+                    })}
+                  />
+                  <FormLabel>
+                    ユーザーネーム
+                    <span style={{ color: "red", paddingLeft: "2px" }}>*</span>
+                  </FormLabel>
+                  <FormErrorMessage>
+                    {errors.userName && errors.userName.message}
+                  </FormErrorMessage>
+                </FormControl>
 
-            <FormControl
-              id="image"
-              mt="5"
-              isInvalid={errors.image ? true : false}
-            >
-              <FormLabel>
-                画像を選択
-                <span style={{ color: "red", paddingLeft: "2px" }}>*</span>
-              </FormLabel>
-              <Box>
-                <input
+                <FormControl
                   id="image"
-                  type="file"
-                  accept="image/*"
-                  style={{
-                    margin: "9px 0",
-                    padding: "0px",
-                    color: "white",
-                    width: "128px",
-                  }}
-                  {...register("image", {
-                    required: "画像を選択してください",
-                  })}
-                  onChange={handleChange}
-                />
-                <Avatar ml="3" size="md" src={selectedImage} />
-              </Box>
-              <FormErrorMessage>
-                {errors.image && errors.image.message}
-              </FormErrorMessage>
-            </FormControl>
+                  mt="5"
+                  isInvalid={errors.image ? true : false}
+                >
+                  <FormLabel>
+                    画像を選択
+                    <span style={{ color: "red", paddingLeft: "2px" }}>*</span>
+                  </FormLabel>
+                  <Box>
+                    <input
+                      id="image"
+                      type="file"
+                      accept="image/*"
+                      style={{
+                        margin: "9px 0",
+                        padding: "0px",
+                        color: "white",
+                        width: "128px",
+                      }}
+                      {...register("image", {
+                        required: "画像を選択してください",
+                      })}
+                      onChange={handleChange}
+                    />
+                    <Avatar ml="3" size="md" src={selectedImage} />
+                  </Box>
+                  <FormErrorMessage>
+                    {errors.image && errors.image.message}
+                  </FormErrorMessage>
+                </FormControl>
 
-            <FormControl
-              mt="5"
-              variant="floating"
-              id="email"
-              isInvalid={errors.email ? true : false}
-            >
-              <Input
-                id="email"
-                placeholder=" "
-                {...register("email", {
-                  required: "文字を入力してください",
-                  pattern: {
-                    value: /^[\w\-._]+@[\w\-._]+\.[A-Za-z]+/,
-                    message: "入力形式がメールアドレスではありません。",
-                  },
-                })}
-              />
-              <FormLabel>
-                メール
-                <span style={{ color: "red", paddingLeft: "2px" }}>*</span>
-              </FormLabel>
-              <FormErrorMessage>
-                {errors.email && errors.email.message}
-              </FormErrorMessage>
-            </FormControl>
+                <FormControl
+                  mt="5"
+                  variant="floating"
+                  id="email"
+                  isInvalid={errors.email ? true : false}
+                >
+                  <Input
+                    id="email"
+                    placeholder=" "
+                    {...register("email", {
+                      required: "文字を入力してください",
+                      pattern: {
+                        value: /^[\w\-._]+@[\w\-._]+\.[A-Za-z]+/,
+                        message: "入力形式がメールアドレスではありません。",
+                      },
+                    })}
+                  />
+                  <FormLabel>
+                    メール
+                    <span style={{ color: "red", paddingLeft: "2px" }}>*</span>
+                  </FormLabel>
+                  <FormErrorMessage>
+                    {errors.email && errors.email.message}
+                  </FormErrorMessage>
+                </FormControl>
 
-            <FormControl
-              id="password"
-              mt="5"
-              isInvalid={errors.password ? true : false}
-            >
-              <FormLabel>
-                パスワード
-                <span style={{ color: "red", paddingLeft: "2px" }}>*</span>
-              </FormLabel>
-              <InputGroup size="md">
-                <Input
-                  pr="4.5rem"
-                  placeholder=" "
-                  type={show ? "text" : "password"}
+                <FormControl
                   id="password"
-                  {...register("password", {
-                    required: "文字を入力してください",
-                    pattern: {
-                      value: /^[a-zA-Z0-9]+$/,
-                      message: "半角英数字で入力してください。",
-                    },
-                    minLength: {
-                      value: 8,
-                      message: "8文字以上で入力してください",
-                    },
-                  })}
-                />
-                <InputRightElement width="4.5rem">
-                  <IconButton
-                    h="1.75rem"
-                    size="lg"
-                    onClick={handleClick}
-                    aria-label="passwordView"
-                    _focus={{ boxShadow: "none" }}
-                    icon={show ? <ViewOffIcon /> : <ViewIcon />}
-                  ></IconButton>
-                </InputRightElement>
-              </InputGroup>
-              <FormHelperText>
-                {!errors.password && "半角英数8文字以上"}
-              </FormHelperText>
-              <FormErrorMessage>
-                {errors.password && errors.password.message}
-              </FormErrorMessage>
-            </FormControl>
+                  mt="5"
+                  isInvalid={errors.password ? true : false}
+                >
+                  <FormLabel>
+                    パスワード
+                    <span style={{ color: "red", paddingLeft: "2px" }}>*</span>
+                  </FormLabel>
+                  <InputGroup size="md">
+                    <Input
+                      pr="4.5rem"
+                      placeholder=" "
+                      type={show ? "text" : "password"}
+                      id="password"
+                      {...register("password", {
+                        required: "文字を入力してください",
+                        pattern: {
+                          value: /^[a-zA-Z0-9]+$/,
+                          message: "半角英数字で入力してください。",
+                        },
+                        minLength: {
+                          value: 8,
+                          message: "8文字以上で入力してください",
+                        },
+                      })}
+                    />
+                    <InputRightElement width="4.5rem">
+                      <IconButton
+                        h="1.75rem"
+                        size="lg"
+                        onClick={handleClick}
+                        aria-label="passwordView"
+                        _focus={{ boxShadow: "none" }}
+                        icon={show ? <ViewOffIcon /> : <ViewIcon />}
+                      ></IconButton>
+                    </InputRightElement>
+                  </InputGroup>
+                  <FormHelperText>
+                    {!errors.password && "半角英数8文字以上"}
+                  </FormHelperText>
+                  <FormErrorMessage>
+                    {errors.password && errors.password.message}
+                  </FormErrorMessage>
+                </FormControl>
 
-            <Center>
-              <Button type="submit" colorScheme="blackAlpha" variant="solid">
-                ユーザー登録
-              </Button>
-            </Center>
-          </form>
-        </VStack>
-      </Container>
+                <Center>
+                  <Button
+                    type="submit"
+                    colorScheme="blackAlpha"
+                    variant="solid"
+                  >
+                    ユーザー登録
+                  </Button>
+                </Center>
+              </form>
+            </VStack>
+          </Container>
+        </>
+      ) : (
+        <Center mt="30%">
+          <Spinner size="xl" />
+        </Center>
+      )}
     </ChakraProvider>
   );
 }
