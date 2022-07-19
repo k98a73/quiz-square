@@ -157,7 +157,7 @@ export default function QuizIndex() {
                             <Confetti
                               width={width}
                               height={height}
-                              recycle={true}
+                              recycle={false}
                             />
                           </>
                         )}
