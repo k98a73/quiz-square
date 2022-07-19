@@ -60,12 +60,12 @@ export default function QuizIndex() {
         description: "",
       });
       db.collection("quizzes").doc(quizItem.id).delete();
-      router.push("/");
+      router.push("/quizzesIndex");
     }
   };
 
   useEffect(() => {
-    if (!quizItem.id) router.push("/");
+    if (!quizItem.id) router.push("/quizzesIndex");
     const unSubWindow = () => {
       //  window オブジェクトが存在する場合に、isClientをtrueにする
       if (typeof window !== "undefined") setIsClient(true);

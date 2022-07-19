@@ -38,7 +38,7 @@ export default function SignIn() {
   const onSubmit = async ({ email, password }: any) => {
     try {
       await auth.signInWithEmailAndPassword(email, password);
-      router.push("/");
+      router.push("/quizzesIndex");
     } catch (error: any) {
       alert(error.message);
     }

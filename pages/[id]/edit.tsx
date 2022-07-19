@@ -17,7 +17,7 @@ export default function QuizEdit() {
 
   auth.onAuthStateChanged((user) => {
     if (isMountedRef && user?.uid !== quizItem.uid) {
-      router.push("/");
+      router.push("/quizzesIndex");
     } else {
       setLoading(false);
     }

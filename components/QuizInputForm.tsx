@@ -105,7 +105,7 @@ const QuizInputForm: React.FC<PROPS> = ({
       description,
       createdAt: date.FieldValue.serverTimestamp(),
     });
-    router.push("/");
+    router.push("/quizzesIndex");
   };
 
   useEffect(() => {

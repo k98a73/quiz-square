@@ -81,7 +81,7 @@ export default function MyPageEdit() {
       { merge: true }
     );
     setIsLoading(false);
-    router.push("/");
+    router.push("/quizzesIndex");
   };
 
   async function uploadTaskPromise(image: any, imageName: any, uid: any) {
@@ -162,11 +162,7 @@ export default function MyPageEdit() {
                     })}
                     onChange={handleChange}
                   />
-                  <Avatar
-                    ml="3"
-                    size="md"
-                    src={selectedImage}
-                  />
+                  <Avatar ml="3" size="md" src={selectedImage} />
                 </Box>
                 <FormErrorMessage>
                   {errors.image && errors.image.message}

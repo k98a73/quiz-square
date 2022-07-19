@@ -61,7 +61,7 @@ export default function SignUp() {
             userName,
             imageUrl,
           });
-          router.push("/");
+          router.push("/quizzesIndex");
         });
     } catch (error: any) {
       alert(error.message);
