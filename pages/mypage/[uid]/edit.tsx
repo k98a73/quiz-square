@@ -155,7 +155,6 @@ export default function MyPageEdit() {
                     style={{
                       margin: "9px 0",
                       padding: "0px",
-                      color: "white",
                       width: "128px",
                     }}
                     {...register("image", {

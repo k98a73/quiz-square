@@ -89,6 +89,9 @@ export default function QuizIndex() {
           <Container py="3" maxW="800px">
             <VStack>
               <Text fontSize="lg" lineHeight="2" color="gray.600">
+                {`作成者：${quizItem.userName}`}
+              </Text>
+              <Text fontSize="lg" lineHeight="2" color="gray.600">
                 {`ジャンル：${quizItem.genre}`}
               </Text>
               <Text fontSize="lg" lineHeight="2" color="gray.600">
