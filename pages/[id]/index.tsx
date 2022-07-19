@@ -138,7 +138,7 @@ export default function QuizIndex() {
                     colorScheme="blackAlpha"
                     variant="solid"
                   >
-                    回答
+                    解答
                   </Button>
                   <Modal isOpen={isOpen} onClose={onClose}>
                     <ModalOverlay />
