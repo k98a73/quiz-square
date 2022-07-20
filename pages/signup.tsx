@@ -63,6 +63,7 @@ export default function SignUp() {
             uid,
             userName,
             imageUrl,
+            imageName,
           });
           setIsLoading(false);
           router.push("/quizzesIndex");
