@@ -179,13 +179,13 @@ const QuizInputForm: React.FC<PROPS> = ({
                     {...register("content", {
                       required: "文字を入力してください",
                       maxLength: {
-                        value: 40,
-                        message: "40文字以内で入力してください",
+                        value: 100,
+                        message: "100文字以内で入力してください",
                       },
                     })}
                   />
                   <FormHelperText>
-                    {!errors.content && "40文字以内"}
+                    {!errors.content && "100文字以内"}
                   </FormHelperText>
                   <FormErrorMessage>
                     {errors.content && errors.content.message}
@@ -385,13 +385,13 @@ const QuizInputForm: React.FC<PROPS> = ({
                     {...register("description", {
                       required: "文字を入力してください",
                       maxLength: {
-                        value: 40,
-                        message: "40文字以内で入力してください",
+                        value: 100,
+                        message: "100文字以内で入力してください",
                       },
                     })}
                   />
                   <FormHelperText>
-                    {!errors.description && "40文字以内"}
+                    {!errors.description && "100文字以内"}
                   </FormHelperText>
                   <FormErrorMessage>
                     {errors.description && errors.description.message}
