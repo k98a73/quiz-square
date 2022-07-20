@@ -94,7 +94,13 @@ export default function QuizIndex() {
               <Text fontSize="lg" lineHeight="2" color="gray.600">
                 {`ジャンル：${quizItem.genre}`}
               </Text>
-              <Text w="100%" fontSize="lg" lineHeight="2" color="gray.600" overflowWrap="break-word">
+              <Text
+                w="100%"
+                fontSize="lg"
+                lineHeight="2"
+                color="gray.600"
+                overflowWrap="break-word"
+              >
                 {`問題文：${quizItem.content}`}
               </Text>
               <RadioGroup defaultValue="1">
@@ -155,7 +161,11 @@ export default function QuizIndex() {
                         {getValues("answer") === quizItem.answer && (
                           <>
                             <Center>
-                              <Text color="blue.400">{`解説：${quizItem.description}`}</Text>
+                              <Text
+                                w="100%"
+                                color="blue.400"
+                                overflowWrap="break-word"
+                              >{`解説：${quizItem.description}`}</Text>
                             </Center>
                             <Confetti
                               width={width}
