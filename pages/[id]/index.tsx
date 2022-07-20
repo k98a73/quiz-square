@@ -94,7 +94,7 @@ export default function QuizIndex() {
               <Text fontSize="lg" lineHeight="2" color="gray.600">
                 {`ジャンル：${quizItem.genre}`}
               </Text>
-              <Text fontSize="lg" lineHeight="2" color="gray.600">
+              <Text w="100%" fontSize="lg" lineHeight="2" color="gray.600" overflowWrap="break-word">
                 {`問題文：${quizItem.content}`}
               </Text>
               <RadioGroup defaultValue="1">
