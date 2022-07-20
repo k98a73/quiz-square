@@ -19,7 +19,7 @@ const MyPageSignOutContainer = ({ uid, router }: any) => {
         // マウント時のみアバター画像を更新
         if (isMountedRef.current) setAvatarUrl(doc.data()?.imageUrl);
       } else {
-        uid && alert("No such document!");
+        if (isMountedRef.current) alert("No such document!");
       }
     })
     .catch((error) => {
