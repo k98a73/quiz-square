@@ -18,13 +18,17 @@ import { useForm } from "react-hook-form";
 
 import Header from "../../../components/Header";
 import { inputTheme } from "../../../constans/inputTheme";
+import useIsMounted from "../../../hooks/useIsMounted";
 import firebase, { auth, db, storage } from "../../../lib/firebase";
 
 export default function MyPageEdit() {
   const [user, setUser] = useState<any>("");
   const [userName, setUserName] = useState<any>("");
+  const [oldImageName, setOldImageName] = useState<any>("");
   const [selectedImage, setSelectedImage] = useState("");
   const [isLoading, setIsLoading] = useState<boolean>(false);
+  // マウントを監視するカスタムフック
+  const isMountedRef = useIsMounted();
   const router = useRouter();
   const {
     handleSubmit,
@@ -49,6 +53,7 @@ export default function MyPageEdit() {
       .then((doc) => {
         if (doc.exists) {
           setUserName(doc.data()?.userName);
+          setOldImageName(doc.data()?.imageName);
           setValue("userName", userName);
         } else {
           alert("No such document!");
@@ -77,10 +82,12 @@ export default function MyPageEdit() {
       {
         userName,
         imageUrl,
+        imageName,
       },
       { merge: true }
     );
-    setIsLoading(false);
+    await storage.ref(`/images/${uid}/${oldImageName}`).delete();
+    if(isMountedRef) setIsLoading(false);
     router.push("/quizzesIndex");
   };
 
@@ -105,11 +112,11 @@ export default function MyPageEdit() {
 
   return (
     <ChakraProvider theme={inputTheme}>
+      <Head>
+        <title>Quiz Square</title>
+      </Head>
       {user && !isLoading ? (
         <>
-          <Head>
-            <title>Quiz Square</title>
-          </Head>
           <Header />
           <Container mt="3" py="3" maxW="800px">
             <form style={{ width: "95%" }} onSubmit={handleSubmit(onSubmit)}>
