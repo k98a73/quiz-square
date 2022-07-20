@@ -132,14 +132,13 @@ const QuizzesIndex = () => {
       <Header />
       <div
         style={{
-          height: "calc(100vh - 70px)",
           backgroundImage: `url("https://cdn.pixabay.com/photo/2017/03/25/20/51/quiz-2174368_960_720.png")`,
           backgroundRepeat: "repeat-y",
           backgroundSize: "contain",
           backgroundPosition: " 50% 0%",
         }}
       >
-        <Container py="3" maxW="800px">
+        <Container minH="calc(100vh - 70px)" py="3" maxW="800px">
           <VStack>
             <Flex mt="5" w="85%" alignItems="center">
               <HStack>
