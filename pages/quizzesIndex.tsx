@@ -189,7 +189,11 @@ const QuizzesIndex = () => {
                       borderWidth="1px"
                       borderRadius="lg"
                       boxShadow="md"
-                      _hover={{ cursor: "pointer", opacity: 0.8 }}
+                      _hover={{
+                        cursor: "pointer",
+                        opacity: 0.8,
+                        bgColor: "gray.100",
+                      }}
                       onClick={() =>
                         handleSelectQuiz(
                           quiz.id,
@@ -214,7 +218,7 @@ const QuizzesIndex = () => {
                       <Text fontSize="lg" color="gray.800" py="1">
                         {`ジャンル：${quiz.genre}`}
                       </Text>
-                      <Text fontSize="lg" color="gray.800" py="1">
+                      <Text fontSize="lg" color="gray.800" py="1" noOfLines={3}>
                         {`問題文：${quiz.content}`}
                       </Text>
                     </Box>
