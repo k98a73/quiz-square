@@ -27,6 +27,7 @@ export default function MyPageEdit() {
   const [oldImageName, setOldImageName] = useState<any>("");
   const [selectedImage, setSelectedImage] = useState("");
   const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [isDefaultUserName, setIsDefaultUserName] = useState<boolean>(false);
   // マウントを監視するカスタムフック
   const isMountedRef = useIsMounted();
   const router = useRouter();
@@ -54,7 +55,8 @@ export default function MyPageEdit() {
         if (doc.exists) {
           setUserName(doc.data()?.userName);
           setOldImageName(doc.data()?.imageName);
-          setValue("userName", userName);
+          if (!isDefaultUserName) setValue("userName", userName);
+          setIsDefaultUserName(true);
         } else {
           alert("No such document!");
         }
@@ -87,7 +89,7 @@ export default function MyPageEdit() {
       { merge: true }
     );
     await storage.ref(`/images/${uid}/${oldImageName}`).delete();
-    if(isMountedRef) setIsLoading(false);
+    if (isMountedRef.current) setIsLoading(false);
     router.push("/quizzesIndex");
   };
 
