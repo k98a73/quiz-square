@@ -98,10 +98,11 @@ export default function QuizIndex() {
                 w="100%"
                 fontSize="lg"
                 lineHeight="2"
+                align="center"
                 color="gray.600"
                 overflowWrap="break-word"
               >
-                {`問題文：${quizItem.content}`}
+                {`問題：${quizItem.content}`}
               </Text>
               <RadioGroup defaultValue="1">
                 <VStack mb="4" spacing={5}>

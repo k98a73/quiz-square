@@ -138,7 +138,11 @@ const QuizzesIndex = () => {
           backgroundPosition: " 50% 0%",
         }}
       >
-        <Container minH="calc(100vh - 70px)" py="3" maxW="800px">
+        <Container
+          minH="calc(100vh - 70px)"
+          py="3"
+          maxW={{ base: "800px", xl: "1100px" }}
+        >
           <VStack>
             <Flex mt="5" w="85%" alignItems="center">
               <HStack>
@@ -219,7 +223,7 @@ const QuizzesIndex = () => {
                         {`ジャンル：${quiz.genre}`}
                       </Text>
                       <Text fontSize="lg" color="gray.800" py="1" noOfLines={3}>
-                        {`問題文：${quiz.content}`}
+                        {`問題：${quiz.content}`}
                       </Text>
                     </Box>
                   </WrapItem>
