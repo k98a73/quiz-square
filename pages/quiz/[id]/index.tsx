@@ -26,12 +26,12 @@ import { useForm } from "react-hook-form";
 import useWindowSize from "react-use/lib/useWindowSize";
 import Confetti from "react-confetti";
 
-import Header from "../../components/Header";
-import { quizItemState } from "../../constans/atom";
-import { auth, db } from "../../lib/firebase";
+import Header from "../../../components/Header";
+import { quizItemState } from "../../../constans/atom";
+import { auth, db } from "../../../lib/firebase";
 import { DeleteIcon, EditIcon } from "@chakra-ui/icons";
 import { useRouter } from "next/router";
-import { modalTheme } from "../../constans/modalTheme";
+import { modalTheme } from "../../../constans/modalTheme";
 
 export default function QuizIndex() {
   const [quizItem, setQuizItem] = useRecoilState(quizItemState);
@@ -203,7 +203,7 @@ export default function QuizIndex() {
                         color="gray.400"
                         rounded="full"
                         icon={<EditIcon />}
-                        onClick={() => router.push(`/${quizItem.id}/edit`)}
+                        onClick={() => router.push(`/quiz/${quizItem.id}/edit`)}
                       ></IconButton>
                     </Tooltip>
                     <Tooltip

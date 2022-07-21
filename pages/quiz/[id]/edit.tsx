@@ -3,10 +3,10 @@ import { useRouter } from "next/router";
 import React, { useState } from "react";
 import { useRecoilValue } from "recoil";
 
-import QuizInputForm from "../../components/QuizInputForm";
-import { quizItemState } from "../../constans/atom";
-import useIsMounted from "../../hooks/useIsMounted";
-import { auth } from "../../lib/firebase";
+import QuizInputForm from "../../../components/QuizInputForm";
+import { quizItemState } from "../../../constans/atom";
+import useIsMounted from "../../../hooks/useIsMounted";
+import { auth } from "../../../lib/firebase";
 
 export default function QuizEdit() {
   const quizItem = useRecoilValue(quizItemState);

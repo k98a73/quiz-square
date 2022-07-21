@@ -69,7 +69,7 @@ const QuizzesIndex = () => {
       answer,
       description,
     });
-    router.push(`/${quizItem.id}`);
+    router.push(`/quiz/${quizItem.id}`);
   };
 
   useEffect(() => {
