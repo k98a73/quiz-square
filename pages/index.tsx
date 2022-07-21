@@ -1,10 +1,8 @@
 import { ChevronRightIcon } from "@chakra-ui/icons";
 import {
   Box,
-  Code,
   Container,
   Divider,
-  HStack,
   Image,
   Kbd,
   Link,
