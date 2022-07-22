@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
 import Head from "next/head";
-import NextLink from "next/link";
 import { useRouter } from "next/router";
 import {
   Box,
@@ -11,6 +10,7 @@ import {
   Select,
   Spacer,
   Text,
+  Tooltip,
   VStack,
   Wrap,
   WrapItem,
@@ -169,7 +169,14 @@ const QuizzesIndex = () => {
                 </Select>
               </HStack>
               <Spacer />
-              <NextLink href="/create" passHref>
+              <Tooltip
+                label="問題作成"
+                fontSize="md"
+                bg="gray.500"
+                color="white"
+                placement="right"
+                hasArrow
+              >
                 <IconButton
                   aria-label="add"
                   shadow="lg"
@@ -177,9 +184,9 @@ const QuizzesIndex = () => {
                   color="gray.400"
                   rounded="full"
                   icon={<AddIcon />}
-                  as="a"
+                  onClick={() => router.push("/create")}
                 />
-              </NextLink>
+              </Tooltip>
             </Flex>
             <Wrap align="center" justify="center">
               {filteredQuizzes.map((quiz) => {
