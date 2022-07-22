@@ -15,11 +15,22 @@ import {
 } from "@chakra-ui/react";
 import type { NextPage } from "next";
 import Head from "next/head";
+import { useState } from "react";
 import { MdCheckCircle } from "react-icons/md";
 
 import Header from "../components/Header";
+import useIsMounted from "../hooks/useIsMounted";
+import { auth } from "../lib/firebase";
 
 const Home: NextPage = () => {
+  const [user, setUser] = useState<any>("");
+  // マウントを監視するカスタムフック
+  const isMountedRef = useIsMounted();
+
+  auth.onAuthStateChanged((user) => {
+    if (isMountedRef.current) setUser(user);
+  });
+
   return (
     <>
       <Head>
@@ -75,7 +86,7 @@ const Home: NextPage = () => {
               </List>
             </Box>
             <Image
-              src="https://i.gyazo.com/e26f3e111bed286191532c2524dcba8b.gif"
+              src="/signup.gif"
               alt="gif"
               w={{ base: "80%", md: "60%" }}
               h="auto"
@@ -124,7 +135,7 @@ const Home: NextPage = () => {
               </List>
             </Box>
             <Image
-              src="https://i.gyazo.com/e26f3e111bed286191532c2524dcba8b.gif"
+              src="/signup.gif"
               alt="gif"
               w={{ base: "80%", md: "60%" }}
               h="auto"
@@ -161,7 +172,7 @@ const Home: NextPage = () => {
               </List>
             </Box>
             <Image
-              src="https://i.gyazo.com/e26f3e111bed286191532c2524dcba8b.gif"
+              src="/signup.gif"
               alt="gif"
               w={{ base: "80%", md: "60%" }}
               h="auto"
@@ -180,30 +191,45 @@ const Home: NextPage = () => {
               color="gray.600"
             >
               <ChevronRightIcon />
-              <Link color="blue.400" href="/signup">
-                ユーザー登録
-              </Link>
-            </Text>
-            <Text
-              fontSize={{ base: "xl", md: "2xl" }}
-              fontWeight="bold"
-              color="gray.600"
-            >
-              <ChevronRightIcon />
-              <Link color="blue.400" href="/signin">
-                ログイン
-              </Link>
-            </Text>
-            <Text
-              fontSize={{ base: "xl", md: "2xl" }}
-              fontWeight="bold"
-              color="gray.600"
-            >
-              <ChevronRightIcon />
               <Link color="blue.400" href="/quizzesIndex">
                 問題一覧
               </Link>
             </Text>
+            {user ? (
+              <Text
+                fontSize={{ base: "xl", md: "2xl" }}
+                fontWeight="bold"
+                color="gray.600"
+              >
+                <ChevronRightIcon />
+                <Link color="blue.400" href="/create">
+                  問題作成
+                </Link>
+              </Text>
+            ) : (
+              <>
+                <Text
+                  fontSize={{ base: "xl", md: "2xl" }}
+                  fontWeight="bold"
+                  color="gray.600"
+                >
+                  <ChevronRightIcon />
+                  <Link color="blue.400" href="/signup">
+                    ユーザー登録
+                  </Link>
+                </Text>
+                <Text
+                  fontSize={{ base: "xl", md: "2xl" }}
+                  fontWeight="bold"
+                  color="gray.600"
+                >
+                  <ChevronRightIcon />
+                  <Link color="blue.400" href="/signin">
+                    ログイン
+                  </Link>
+                </Text>
+              </>
+            )}
           </Stack>
         </VStack>
       </Container>
