@@ -43,7 +43,7 @@ export default function QuizIndex() {
   const { width, height } = useWindowSize();
   const [user, setUser] = useState<any>("");
   const router = useRouter();
-  const iconButtonSize = useBreakpointValue({ base: "xs", md: "xl" });
+  const modalSize = useBreakpointValue({ base: "xs", md: "xl" });
 
   const deleteQuiz = (e: any) => {
     e.preventDefault();
@@ -149,11 +149,7 @@ export default function QuizIndex() {
                   >
                     解答
                   </Button>
-                  <Modal
-                    isOpen={isOpen}
-                    onClose={onClose}
-                    size={iconButtonSize}
-                  >
+                  <Modal isOpen={isOpen} onClose={onClose} size={modalSize}>
                     <ModalOverlay />
                     <ModalContent>
                       <ModalHeader textAlign="center">

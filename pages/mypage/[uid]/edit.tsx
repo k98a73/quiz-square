@@ -177,7 +177,7 @@ export default function MyPageEdit() {
                   {errors.image && errors.image.message}
                 </FormErrorMessage>
               </FormControl>
-              <Center>
+              <Center mt="3">
                 <Button type="submit" colorScheme="blackAlpha" variant="solid">
                   ユーザー情報更新
                 </Button>
