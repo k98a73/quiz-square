@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import Head from "next/head";
 import {
+  Box,
   Button,
   Center,
   ChakraProvider,
@@ -18,6 +19,7 @@ import {
   RadioGroup,
   Text,
   Tooltip,
+  useBreakpointValue,
   useDisclosure,
   VStack,
 } from "@chakra-ui/react";
@@ -41,6 +43,7 @@ export default function QuizIndex() {
   const { width, height } = useWindowSize();
   const [user, setUser] = useState<any>("");
   const router = useRouter();
+  const iconButtonSize = useBreakpointValue({ base: "xs", md: "xl" });
 
   const deleteQuiz = (e: any) => {
     e.preventDefault();
@@ -95,10 +98,9 @@ export default function QuizIndex() {
                 {`ジャンル：${quizItem.genre}`}
               </Text>
               <Text
-                w="100%"
+                px={{ base: "5%", md: "20%" }}
                 fontSize="lg"
                 lineHeight="2"
-                align="center"
                 color="gray.600"
                 overflowWrap="break-word"
               >
@@ -147,7 +149,11 @@ export default function QuizIndex() {
                   >
                     解答
                   </Button>
-                  <Modal isOpen={isOpen} onClose={onClose}>
+                  <Modal
+                    isOpen={isOpen}
+                    onClose={onClose}
+                    size={iconButtonSize}
+                  >
                     <ModalOverlay />
                     <ModalContent>
                       <ModalHeader textAlign="center">
@@ -163,7 +169,7 @@ export default function QuizIndex() {
                           <>
                             <Center>
                               <Text
-                                w="100%"
+                                px={{ base: "5%", md: "20%" }}
                                 color="blue.400"
                                 overflowWrap="break-word"
                               >{`解説：${quizItem.description}`}</Text>

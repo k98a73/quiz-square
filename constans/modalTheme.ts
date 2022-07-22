@@ -5,8 +5,8 @@ export const modalTheme = extendTheme({
     Modal: {
       baseStyle: () => ({
         dialog: {
-          maxWidth: "100%",
-          minWidth: "95%",
+          maxWidth: "90%",
+          minWidth: "90%",
         },
       }),
     },
