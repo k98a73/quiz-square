@@ -6,6 +6,7 @@ import {
   IconButton,
   Spacer,
   Tooltip,
+  useBreakpointValue,
 } from "@chakra-ui/react";
 import { FaSignInAlt } from "react-icons/fa";
 import { HiOutlineUserAdd } from "react-icons/hi";
@@ -17,6 +18,8 @@ import MyPageSignOutContainer from "./MyPageSignOutContainer";
 const Header = () => {
   const [user, setUser] = useState<any>("");
   const router = useRouter();
+  const iconButtonSize = useBreakpointValue({ base: "md", md: "lg" });
+  const iconSize = useBreakpointValue({ base: 18, md: 23 });
 
   useEffect(() => {
     const unSub = auth.onAuthStateChanged((user) => {
@@ -28,24 +31,29 @@ const Header = () => {
   return (
     <>
       <Flex
-        h="70px"
+        h={{ base: "60px", md: "70px" }}
         alignItems="center"
         minWidth="max-content"
         bgColor="cyan.600"
         color="gray.50"
       >
         <Heading
-          ml="2"
-          p="2"
+          ml={{ base: "5px", md: "10px" }}
+          p={{ base: "5px", md: "10px" }}
           _hover={{ cursor: "pointer", border: "2px solid white" }}
           onClick={() => router.push("/quizzesIndex")}
         >
           Quiz Square
         </Heading>
         <Spacer />
-        <ButtonGroup mr="5" gap="2">
+        <ButtonGroup mr={{ base: "5px", md: "10px" }} alignItems="center">
           {user ? (
-            <MyPageSignOutContainer uid={user?.uid} router={router} />
+            <MyPageSignOutContainer
+              uid={user?.uid}
+              router={router}
+              iconButtonSize={iconButtonSize}
+              iconSize={iconSize}
+            />
           ) : (
             <>
               <Tooltip
@@ -61,13 +69,13 @@ const Header = () => {
                   bg="cyan.600"
                   color="gray.50"
                   rounded="full"
-                  size="lg"
+                  size={iconButtonSize}
                   _hover={{
                     cursor: "pointer",
                     backgroundColor: "#f4f4f4",
                     color: "#c0ccce",
                   }}
-                  icon={<HiOutlineUserAdd />}
+                  icon={<HiOutlineUserAdd size={iconSize} />}
                   onClick={() => router.push("/signup")}
                 />
               </Tooltip>
@@ -84,13 +92,13 @@ const Header = () => {
                   bg="cyan.600"
                   color="gray.50"
                   rounded="full"
-                  size="lg"
+                  size={iconButtonSize}
                   _hover={{
                     cursor: "pointer",
                     backgroundColor: "#f4f4f4",
                     color: "#c0ccce",
                   }}
-                  icon={<FaSignInAlt />}
+                  icon={<FaSignInAlt size={iconSize} />}
                   onClick={() => router.push("/signin")}
                 />
               </Tooltip>

@@ -1,15 +1,28 @@
 import React, { useState } from "react";
-import { Avatar, Center, IconButton, Spinner, Tooltip } from "@chakra-ui/react";
+import {
+  Avatar,
+  Center,
+  IconButton,
+  Spinner,
+  Tooltip,
+  useBreakpointValue,
+} from "@chakra-ui/react";
 import { FaSignOutAlt } from "react-icons/fa";
 
 import useSignOut from "../hooks/useSignOut";
 import { db } from "../lib/firebase";
 import useIsMounted from "../hooks/useIsMounted";
 
-const MyPageSignOutContainer = ({ uid, router }: any) => {
+const MyPageSignOutContainer = ({
+  uid,
+  router,
+  iconButtonSize,
+  iconSize,
+}: any) => {
   const [avatarUrl, setAvatarUrl] = useState<any>("");
   // マウントを監視するカスタムフック
   const isMountedRef = useIsMounted();
+  const avatarSize = useBreakpointValue({ base: "sm", md: "md" });
 
   const docRef = db.collection("users").doc(uid);
   docRef
@@ -38,8 +51,7 @@ const MyPageSignOutContainer = ({ uid, router }: any) => {
           hasArrow
         >
           <Avatar
-            ml="3"
-            size="md"
+            size={avatarSize}
             src={avatarUrl}
             _hover={{
               cursor: "pointer",
@@ -67,13 +79,13 @@ const MyPageSignOutContainer = ({ uid, router }: any) => {
           bg="cyan.600"
           color="gray.50"
           rounded="full"
-          size="lg"
+          size={iconButtonSize}
           _hover={{
             cursor: "pointer",
             backgroundColor: "#f4f4f4",
             color: "#c0ccce",
           }}
-          icon={<FaSignOutAlt />}
+          icon={<FaSignOutAlt size={iconSize} />}
           onClick={useSignOut()}
         />
       </Tooltip>
