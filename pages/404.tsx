@@ -18,7 +18,7 @@ export default function Custom404() {
           color="gray.600"
           fontSize={{ base: "3xl", sm: "4xl", md: "5xl" }}
         >
-          ページは存在しません
+          ページは存在しません。
         </Text>
         <Text
           fontSize={{ base: "xl", md: "2xl" }}
