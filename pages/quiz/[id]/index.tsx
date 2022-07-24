@@ -31,7 +31,7 @@ import Confetti from "react-confetti";
 import Header from "../../../components/Header";
 import { quizItemState } from "../../../constans/atom";
 import { auth, db } from "../../../lib/firebase";
-import { DeleteIcon, EditIcon } from "@chakra-ui/icons";
+import { ArrowBackIcon, DeleteIcon, EditIcon } from "@chakra-ui/icons";
 import { useRouter } from "next/router";
 import { modalTheme } from "../../../constans/modalTheme";
 
@@ -187,9 +187,9 @@ export default function QuizIndex() {
                   </Modal>
                 </Center>
               </RadioGroup>
-              {user?.uid === quizItem.uid && (
-                <>
-                  <HStack>
+              <HStack>
+                {user?.uid === quizItem.uid && (
+                  <>
                     <Tooltip
                       label="編集"
                       fontSize="md"
@@ -214,7 +214,7 @@ export default function QuizIndex() {
                       fontSize="md"
                       bg="gray.500"
                       color="white"
-                      placement="bottom-start"
+                      placement="bottom"
                       hasArrow
                     >
                       <IconButton
@@ -228,9 +228,28 @@ export default function QuizIndex() {
                         onClick={deleteQuiz}
                       />
                     </Tooltip>
-                  </HStack>
-                </>
-              )}
+                  </>
+                )}
+                <Tooltip
+                  label="戻る"
+                  fontSize="md"
+                  bg="gray.500"
+                  color="white"
+                  placement="bottom-start"
+                  hasArrow
+                >
+                  <IconButton
+                    as="a"
+                    aria-label="back"
+                    shadow="lg"
+                    bg="white"
+                    color="gray.400"
+                    rounded="full"
+                    icon={<ArrowBackIcon />}
+                    onClick={() => router.push("/quizzesIndex")}
+                  ></IconButton>
+                </Tooltip>
+              </HStack>
             </VStack>
           </Container>
         </>
