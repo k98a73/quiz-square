@@ -20,6 +20,7 @@ import {
   Box,
   Button,
   Spinner,
+  HStack,
 } from "@chakra-ui/react";
 import { useForm } from "react-hook-form";
 import { useRecoilState } from "recoil";
@@ -405,6 +406,15 @@ const QuizInputForm: React.FC<PROPS> = ({
                     variant="solid"
                   >
                     {buttonSentence}
+                  </Button>
+                  <Button
+                    ml="3"
+                    type="submit"
+                    colorScheme="blackAlpha"
+                    variant="solid"
+                    onClick={() => router.push("/quizzesIndex")}
+                  >
+                    キャンセル
                   </Button>
                 </Center>
               </form>
