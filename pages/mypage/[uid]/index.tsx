@@ -15,7 +15,7 @@ import {
 
 import Header from "../../../components/Header";
 import { auth, db } from "../../../lib/firebase";
-import { EditIcon } from "@chakra-ui/icons";
+import { ArrowBackIcon, EditIcon } from "@chakra-ui/icons";
 
 export default function MyPage() {
   const [user, setUser] = useState<any>("");
@@ -73,25 +73,46 @@ export default function MyPage() {
                 </Text>
                 <Avatar ml="3" size="md" src={avatarUrl} />
               </HStack>
-              <Tooltip
-                label="編集"
-                fontSize="md"
-                bg="gray.500"
-                color="white"
-                placement="bottom-end"
-                hasArrow
-              >
-                <IconButton
-                  as="a"
-                  aria-label="edit"
-                  shadow="lg"
-                  bg="white"
-                  color="gray.400"
-                  rounded="full"
-                  icon={<EditIcon />}
-                  onClick={() => router.push(`/mypage/${user?.uid}/edit`)}
-                ></IconButton>
-              </Tooltip>
+              <HStack>
+                <Tooltip
+                  label="編集"
+                  fontSize="md"
+                  bg="gray.500"
+                  color="white"
+                  placement="bottom-end"
+                  hasArrow
+                >
+                  <IconButton
+                    as="a"
+                    aria-label="edit"
+                    shadow="lg"
+                    bg="white"
+                    color="gray.400"
+                    rounded="full"
+                    icon={<EditIcon />}
+                    onClick={() => router.push(`/mypage/${user?.uid}/edit`)}
+                  ></IconButton>
+                </Tooltip>
+                <Tooltip
+                  label="戻る"
+                  fontSize="md"
+                  bg="gray.500"
+                  color="white"
+                  placement="bottom-start"
+                  hasArrow
+                >
+                  <IconButton
+                    as="a"
+                    aria-label="back"
+                    shadow="lg"
+                    bg="white"
+                    color="gray.400"
+                    rounded="full"
+                    icon={<ArrowBackIcon />}
+                    onClick={() => router.push("/quizzesIndex")}
+                  ></IconButton>
+                </Tooltip>
+              </HStack>
             </VStack>
           </Container>
         </>
