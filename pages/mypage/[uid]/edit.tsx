@@ -181,6 +181,15 @@ export default function MyPageEdit() {
                 <Button type="submit" colorScheme="blackAlpha" variant="solid">
                   ユーザー情報更新
                 </Button>
+                <Button
+                  ml="3"
+                  type="submit"
+                  colorScheme="blackAlpha"
+                  variant="solid"
+                  onClick={() => router.push("/quizzesIndex")}
+                >
+                  キャンセル
+                </Button>
               </Center>
             </form>
           </Container>
