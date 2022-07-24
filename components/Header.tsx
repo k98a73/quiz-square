@@ -40,7 +40,7 @@ const Header = () => {
         <Heading
           ml={{ base: "5px", md: "10px" }}
           p={{ base: "5px", md: "10px" }}
-          _hover={{ cursor: "pointer", border: "2px solid white" }}
+          _hover={{ cursor: "pointer" }}
           onClick={() => router.push("/quizzesIndex")}
         >
           Quiz Square
