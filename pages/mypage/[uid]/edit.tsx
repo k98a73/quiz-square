@@ -21,6 +21,11 @@ import { inputTheme } from "../../../constants/inputTheme";
 import useIsMounted from "../../../hooks/useIsMounted";
 import firebase, { auth, db, storage } from "../../../lib/firebase";
 
+interface QuizItem {
+  id: string;
+  uid: string;
+}
+
 export default function MyPageEdit() {
   const [user, setUser] = useState<any>("");
   // const [userName, setUserName] = useState<any>("");
@@ -29,6 +34,7 @@ export default function MyPageEdit() {
   const [selectedImage, setSelectedImage] = useState("");
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [isDefaultUserName, setIsDefaultUserName] = useState<boolean>(false);
+  const [quizzes, setQuizzes] = useState<QuizItem[]>([]);
   // マウントを監視するカスタムフック
   const isMountedRef = useIsMounted();
   const router = useRouter();
@@ -46,6 +52,19 @@ export default function MyPageEdit() {
     });
     return () => unSub();
     // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  useEffect(() => {
+    const unSub = db.collection("quizzes").onSnapshot((snapshot) => {
+      if (isMountedRef.current) setQuizzes(
+        snapshot.docs.map((doc) => ({
+          id: doc.data().id,
+          uid: doc.data().uid,
+        }))
+      );
+    });
+    return () => unSub();
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const docRef = db.collection("users").doc(user?.uid);
@@ -81,6 +100,7 @@ export default function MyPageEdit() {
   const onSubmit = async ({ userName, image }: any) => {
     setIsLoading(true);
     const uid = user?.uid;
+    userNameChange(uid, userName);
     const imageName = new Date().toISOString() + image[0].name;
     const imageUrl = await uploadTaskPromise(image[0], imageName, uid);
     db.collection("users").doc(uid).set(
@@ -114,6 +134,19 @@ export default function MyPageEdit() {
       );
     });
   }
+
+  const userNameChange = (uid: string, userName: string) => {
+    quizzes.map((quiz) => {
+      console.log("uid", uid);
+      console.log("quiz.uid", quiz.uid);
+      if (quiz.uid === uid) {
+        const userRef = db.collection("quizzes").doc(quiz.id);
+        userRef.update({
+          userName,
+        });
+      }
+    });
+  };
 
   return (
     <ChakraProvider theme={inputTheme}>
