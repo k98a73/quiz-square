@@ -137,8 +137,6 @@ export default function MyPageEdit() {
 
   const userNameChange = (uid: string, userName: string) => {
     quizzes.map((quiz) => {
-      console.log("uid", uid);
-      console.log("quiz.uid", quiz.uid);
       if (quiz.uid === uid) {
         const userRef = db.collection("quizzes").doc(quiz.id);
         userRef.update({
