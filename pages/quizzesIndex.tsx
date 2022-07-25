@@ -221,11 +221,9 @@ const QuizzesIndex = () => {
                         )
                       }
                     >
-                      <HStack>
-                        <Text fontSize="lg" color="gray.800" py="1">
-                          {`作成者：${quiz.userName}`}
-                        </Text>
-                      </HStack>
+                      <Text fontSize="lg" color="gray.800" py="1">
+                        {`作成者：${quiz.userName}`}
+                      </Text>
                       <Text fontSize="lg" color="gray.800" py="1">
                         {`ジャンル：${quiz.genre}`}
                       </Text>
