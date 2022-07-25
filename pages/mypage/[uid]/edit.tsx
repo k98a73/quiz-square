@@ -23,8 +23,9 @@ import firebase, { auth, db, storage } from "../../../lib/firebase";
 
 export default function MyPageEdit() {
   const [user, setUser] = useState<any>("");
-  const [userName, setUserName] = useState<any>("");
+  // const [userName, setUserName] = useState<any>("");
   const [oldImageName, setOldImageName] = useState<any>("");
+  const [oldUserName, setOldUserName] = useState<any>("");
   const [selectedImage, setSelectedImage] = useState("");
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [isDefaultUserName, setIsDefaultUserName] = useState<boolean>(false);
@@ -53,10 +54,12 @@ export default function MyPageEdit() {
       .get()
       .then((doc) => {
         if (doc.exists) {
-          setUserName(doc.data()?.userName);
-          setOldImageName(doc.data()?.imageName);
-          if (!isDefaultUserName) setValue("userName", userName);
-          setIsDefaultUserName(true);
+          if (isMountedRef.current) {
+            setOldUserName(doc.data()?.userName);
+            setOldImageName(doc.data()?.imageName);
+            if (!isDefaultUserName) setValue("userName", oldUserName);
+            setIsDefaultUserName(true);
+          }
         } else {
           alert("No such document!");
         }
