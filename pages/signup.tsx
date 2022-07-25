@@ -25,7 +25,7 @@ import Header from "../components/Header";
 import { db, auth } from "../lib/firebase";
 import firebase, { storage } from "../lib/firebase";
 import { ViewIcon, ViewOffIcon } from "@chakra-ui/icons";
-import { inputTheme } from "../constans/inputTheme";
+import { inputTheme } from "../constants/inputTheme";
 
 export default function SignUp() {
   const router = useRouter();

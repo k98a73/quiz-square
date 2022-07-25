@@ -29,11 +29,11 @@ import useWindowSize from "react-use/lib/useWindowSize";
 import Confetti from "react-confetti";
 
 import Header from "../../../components/Header";
-import { quizItemState } from "../../../constans/atom";
+import { quizItemState } from "../../../constants/atom";
 import { auth, db } from "../../../lib/firebase";
 import { ArrowBackIcon, DeleteIcon, EditIcon } from "@chakra-ui/icons";
 import { useRouter } from "next/router";
-import { modalTheme } from "../../../constans/modalTheme";
+import { modalTheme } from "../../../constants/modalTheme";
 
 export default function QuizIndex() {
   const [quizItem, setQuizItem] = useRecoilState(quizItemState);

@@ -17,7 +17,7 @@ import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 
 import Header from "../../../components/Header";
-import { inputTheme } from "../../../constans/inputTheme";
+import { inputTheme } from "../../../constants/inputTheme";
 import useIsMounted from "../../../hooks/useIsMounted";
 import firebase, { auth, db, storage } from "../../../lib/firebase";
 

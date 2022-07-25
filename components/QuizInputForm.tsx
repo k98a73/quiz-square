@@ -27,10 +27,10 @@ import { useRecoilState } from "recoil";
 
 import Header from "./Header";
 import { auth, date, db } from "../lib/firebase";
-import { inputTheme } from "../constans/inputTheme";
+import { inputTheme } from "../constants/inputTheme";
 import useIsMounted from "../hooks/useIsMounted";
-import filterOptions from "../constans/filterOptions";
-import { quizItemState } from "../constans/atom";
+import filterOptions from "../constants/filterOptions";
+import { quizItemState } from "../constants/atom";
 
 interface PROPS {
   quizID: string;

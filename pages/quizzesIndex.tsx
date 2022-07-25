@@ -20,7 +20,7 @@ import { useRecoilState } from "recoil";
 
 import Header from "../components/Header";
 import { db } from "../lib/firebase";
-import { quizItemState } from "../constans/atom";
+import { quizItemState } from "../constants/atom";
 
 interface QuizItem {
   id: string;

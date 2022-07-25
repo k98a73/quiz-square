@@ -21,7 +21,7 @@ import { useForm } from "react-hook-form";
 import Header from "../components/Header";
 import { auth } from "../lib/firebase";
 import { ViewIcon, ViewOffIcon } from "@chakra-ui/icons";
-import { inputTheme } from "../constans/inputTheme";
+import { inputTheme } from "../constants/inputTheme";
 
 export default function SignIn() {
   const router = useRouter();

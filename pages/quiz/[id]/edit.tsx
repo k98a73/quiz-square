@@ -4,7 +4,7 @@ import React, { useState } from "react";
 import { useRecoilValue } from "recoil";
 
 import QuizInputForm from "../../../components/QuizInputForm";
-import { quizItemState } from "../../../constans/atom";
+import { quizItemState } from "../../../constants/atom";
 import useIsMounted from "../../../hooks/useIsMounted";
 import { auth } from "../../../lib/firebase";
 
