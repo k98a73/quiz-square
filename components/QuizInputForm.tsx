@@ -200,7 +200,7 @@ const QuizInputForm: React.FC<PROPS> = ({
                     isInvalid={errors.optionA ? true : false}
                   >
                     <Input
-                      id="optinA"
+                      id="optionA"
                       placeholder=" "
                       defaultValue={optionADefaultValue}
                       {...register("optionA", {
