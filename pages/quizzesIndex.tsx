@@ -196,14 +196,16 @@ const QuizzesIndex = () => {
                       m="2"
                       p="2"
                       w="xs"
-                      bg="white"
                       borderWidth="1px"
                       borderRadius="lg"
                       boxShadow="md"
+                      color="white"
+                      fontWeight='bold'
+                      bgGradient='linear(to-r, cyan.500, blue.500)'
                       _hover={{
                         cursor: "pointer",
                         opacity: 0.8,
-                        bgColor: "gray.100",
+                        bgGradient: 'linear(to-r, red.500, yellow.500)'
                       }}
                       onClick={() =>
                         handleSelectQuiz(
@@ -221,13 +223,13 @@ const QuizzesIndex = () => {
                         )
                       }
                     >
-                      <Text fontSize="lg" color="gray.800" py="1">
+                      <Text fontSize="lg" py="1">
                         {`作成者：${quiz.userName}`}
                       </Text>
-                      <Text fontSize="lg" color="gray.800" py="1">
+                      <Text fontSize="lg" py="1">
                         {`ジャンル：${quiz.genre}`}
                       </Text>
-                      <Text fontSize="lg" color="gray.800" py="1" noOfLines={3}>
+                      <Text fontSize="lg" py="1" noOfLines={3}>
                         {`問題：${quiz.content}`}
                       </Text>
                     </Box>
