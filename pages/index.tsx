@@ -41,9 +41,10 @@ const Home: NextPage = () => {
         <VStack spacing="10">
           <Text
             fontSize={{ base: "2xl", sm: "4xl", md: "5xl" }}
-            fontWeight="bold"
+            fontWeight="extrabold"
             fontFamily="游ゴシック体"
-            color="cyan.600"
+            bgGradient="linear(to-l, #7928CA, #FF0080)"
+            bgClip="text"
           >
             ようこそ Quiz Square へ
           </Text>
