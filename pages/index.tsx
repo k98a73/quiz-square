@@ -1,5 +1,6 @@
 import { ChevronRightIcon } from "@chakra-ui/icons";
 import {
+  AspectRatio,
   Box,
   Container,
   Divider,
@@ -37,8 +38,8 @@ const Home: NextPage = () => {
         <title>Quiz Square</title>
       </Head>
       <Header />
-      <Container py="3" maxW={{ base: "800px", xl: "1100px" }}>
-        <VStack spacing="10">
+      <Container py="3" maxW="1000px">
+        <VStack spacing={{ base: "15px", md: "25px" }}>
           <Text
             fontSize={{ base: "2xl", sm: "4xl", md: "5xl" }}
             fontWeight="extrabold"
@@ -48,13 +49,15 @@ const Home: NextPage = () => {
           >
             ようこそ Quiz Square へ
           </Text>
+
           <Stack
+            w="100%"
             direction={{ base: "column", md: "row" }}
-            spacing="3"
+            spacing={{ base: "5px", md: "10px" }}
             align="center"
             justify="center"
           >
-            <Box mr="2">
+            <Box w={{ base: "235px", md: "260px" }}>
               <Text
                 fontSize={{ base: "xl", md: "2xl" }}
                 fontWeight="bold"
@@ -64,7 +67,7 @@ const Home: NextPage = () => {
               </Text>
               <List
                 mt="2"
-                spacing={3}
+                spacing={{ base: "5px", md: "10px" }}
                 fontSize={{ base: "lg", md: "xl" }}
                 color="gray.600"
               >
@@ -86,20 +89,32 @@ const Home: NextPage = () => {
                 </ListItem>
               </List>
             </Box>
-            <Image
-              src="/signup.gif"
-              alt="gif"
-              w={{ base: "80%", md: "60%" }}
-              h="auto"
-            />
+            <AspectRatio
+              w={{ base: "95%", sm: "80%", md: "calc(100% - 260px)" }}
+              ratio={16 / 9}
+            >
+              <iframe
+                src="https://www.loom.com/embed/efa1b03e5bce4569ba97285638bfc4af"
+                frameBorder="0"
+                webkitallowfullscreen="true"
+                mozallowfullscreen="true"
+                allowFullScreen
+                style={{
+                  width: "100%",
+                  height: "100%",
+                }}
+              />
+            </AspectRatio>
           </Stack>
+
           <Stack
+            w="100%"
             direction={{ base: "column", md: "row-reverse" }}
-            spacing="3"
+            spacing={{ base: "5px", md: "10px" }}
             align="center"
             justify="center"
           >
-            <Box mr="2">
+            <Box w={{ base: "235px", md: "260px" }}>
               <Text
                 fontSize={{ base: "xl", md: "2xl" }}
                 fontWeight="bold"
@@ -135,20 +150,32 @@ const Home: NextPage = () => {
                 </ListItem>
               </List>
             </Box>
-            <Image
-              src="/signup.gif"
-              alt="gif"
-              w={{ base: "80%", md: "60%" }}
-              h="auto"
-            />
+            <AspectRatio
+              w={{ base: "95%", sm: "80%", md: "calc(100% - 260px)" }}
+              ratio={16 / 9}
+            >
+              <iframe
+                src="https://www.loom.com/embed/03dbab9e7ed9417094358a471ec6c573"
+                frameBorder="0"
+                webkitallowfullscreen="true"
+                mozallowfullscreen="true"
+                allowFullScreen
+                style={{
+                  width: "100%",
+                  height: "100%",
+                }}
+              />
+            </AspectRatio>
           </Stack>
+
           <Stack
+            w="100%"
             direction={{ base: "column", md: "row" }}
-            spacing="3"
+            spacing={{ base: "5px", md: "10px" }}
             align="center"
             justify="center"
           >
-            <Box mr="2">
+            <Box w={{ base: "245px", md: "275px" }}>
               <Text
                 fontSize={{ base: "xl", md: "2xl" }}
                 fontWeight="bold"
@@ -172,12 +199,22 @@ const Home: NextPage = () => {
                 </ListItem>
               </List>
             </Box>
-            <Image
-              src="/signup.gif"
-              alt="gif"
-              w={{ base: "80%", md: "60%" }}
-              h="auto"
-            />
+            <AspectRatio
+              w={{ base: "95%", sm: "80%", md: "calc(100% - 275px)" }}
+              ratio={16 / 9}
+            >
+              <iframe
+                src="https://www.loom.com/embed/197e3103a50c493f8f591df39bb2f048"
+                frameBorder="0"
+                webkitallowfullscreen="true"
+                mozallowfullscreen="true"
+                allowFullScreen
+                style={{
+                  width: "100%",
+                  height: "100%",
+                }}
+              />
+            </AspectRatio>
           </Stack>
           <Divider />
           <Stack
