@@ -200,12 +200,12 @@ const QuizzesIndex = () => {
                       borderRadius="lg"
                       boxShadow="md"
                       color="white"
-                      fontWeight='bold'
-                      bgGradient='linear(to-r, cyan.500, blue.500)'
+                      fontWeight="bold"
+                      bgGradient="linear(to-r, cyan.500, blue.500)"
                       _hover={{
                         cursor: "pointer",
                         opacity: 0.8,
-                        bgGradient: 'linear(to-r, red.500, yellow.500)'
+                        bgGradient: "linear(to-r, red.500, yellow.500)",
                       }}
                       onClick={() =>
                         handleSelectQuiz(

@@ -56,15 +56,16 @@ export default function MyPageEdit() {
 
   useEffect(() => {
     const unSub = db.collection("quizzes").onSnapshot((snapshot) => {
-      if (isMountedRef.current) setQuizzes(
-        snapshot.docs.map((doc) => ({
-          id: doc.data().id,
-          uid: doc.data().uid,
-        }))
-      );
+      if (isMountedRef.current)
+        setQuizzes(
+          snapshot.docs.map((doc) => ({
+            id: doc.data().id,
+            uid: doc.data().uid,
+          }))
+        );
     });
     return () => unSub();
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const docRef = db.collection("users").doc(user?.uid);

@@ -25,7 +25,7 @@ export default function Custom404() {
           fontWeight="bold"
           color="gray.600"
         >
-          <Link color="blue.400" href="/quizzesIndex"  >
+          <Link color="blue.400" href="/quizzesIndex">
             問題一覧に戻る
           </Link>
         </Text>

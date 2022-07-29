@@ -4,7 +4,6 @@ import {
   Box,
   Container,
   Divider,
-  Image,
   Kbd,
   Link,
   List,
@@ -96,8 +95,6 @@ const Home: NextPage = () => {
               <iframe
                 src="https://www.loom.com/embed/efa1b03e5bce4569ba97285638bfc4af"
                 frameBorder="0"
-                webkitallowfullscreen="true"
-                mozallowfullscreen="true"
                 allowFullScreen
                 style={{
                   width: "100%",
@@ -157,8 +154,6 @@ const Home: NextPage = () => {
               <iframe
                 src="https://www.loom.com/embed/03dbab9e7ed9417094358a471ec6c573"
                 frameBorder="0"
-                webkitallowfullscreen="true"
-                mozallowfullscreen="true"
                 allowFullScreen
                 style={{
                   width: "100%",
@@ -206,8 +201,6 @@ const Home: NextPage = () => {
               <iframe
                 src="https://www.loom.com/embed/197e3103a50c493f8f591df39bb2f048"
                 frameBorder="0"
-                webkitallowfullscreen="true"
-                mozallowfullscreen="true"
                 allowFullScreen
                 style={{
                   width: "100%",
