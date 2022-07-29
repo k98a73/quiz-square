@@ -29,6 +29,7 @@ https://quiz-square.vercel.app/
 <img width="400px" alt="問題作成" src="https://cdn.loom.com/sessions/thumbnails/03dbab9e7ed9417094358a471ec6c573-with-play.gif">
 
 1. トップページのヘッダーにある「新規登録」ボタンをクリックし、ユーザー登録を行う
+
    <img width="400px" alt="ユーザー登録" src="https://cdn.loom.com/sessions/thumbnails/efa1b03e5bce4569ba97285638bfc4af-with-play.gif">
 
 2. 問題一覧ページの「＋」ボタンを押す
