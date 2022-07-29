@@ -1,34 +1,36 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# アプリケーション名
 
-## Getting Started
+Quiz Square
 
-First, run the development server:
+# アプリケーション概要
 
-```bash
-npm run dev
-# or
-yarn dev
-```
+クイズを作成したり、解答したりできる
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+# URL
 
-You can start editing the page by modifying `pages/index.tsx`. The page auto-updates as you edit the file.
+https://quiz-square.vercel.app/
 
-[API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.ts`.
+# テスト用アカウント
 
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
+問題作成用
 
-## Learn More
+- メール：test1@test1.com
+- パスワード：test1test1
 
-To learn more about Next.js, take a look at the following resources:
+問題解答用
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+- メール：test2@test2.com
+- パスワード：test2test2
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+# 利用方法
 
-## Deploy on Vercel
+## 問題作成
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+1. トップページの下部にある「ユーザー登録」をクリックし、ユーザー登録を行う
+2. 問題一覧ページの「＋」ボタンを押す
+3. 問題の内容（ジャンル、問題文、選択肢 A〜D、正解、解説）を入力し、「問題の作成」を押す
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+## 問題解答
+
+1. 問題一覧ページに解答したい問題をクリック
+2.
