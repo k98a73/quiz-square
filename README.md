@@ -33,6 +33,7 @@ https://quiz-square.vercel.app/
 1. トップページのヘッダーにある「新規登録」ボタンをクリックし、ユーザー登録を行う
 
 [ユーザー登録](https://www.loom.com/share/efa1b03e5bce4569ba97285638bfc4af)
+
    <img width="400px" alt="ユーザー登録" src="https://cdn.loom.com/sessions/thumbnails/efa1b03e5bce4569ba97285638bfc4af-with-play.gif">
 1. 問題一覧ページの「＋」ボタンを押す
 2. 問題の内容（ジャンル、問題文、選択肢 A〜D、正解、解説）を入力し、「問題の作成」を押す
