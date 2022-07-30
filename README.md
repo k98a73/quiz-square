@@ -25,17 +25,20 @@ https://quiz-square.vercel.app/
 # 利用方法
 
 ## 問題作成
+[問題作成](https://www.loom.com/share/03dbab9e7ed9417094358a471ec6c573)
 
 <a href="https://www.loom.com/share/03dbab9e7ed9417094358a471ec6c573">
 <img width="400px" alt="問題作成" src="https://cdn.loom.com/sessions/thumbnails/03dbab9e7ed9417094358a471ec6c573-with-play.gif"></a>
 
-1. トップページのヘッダーにある「新規登録」ボタンをクリックし、ユーザー登録を行う  
-   <a href="https://www.loom.com/share/efa1b03e5bce4569ba97285638bfc4af"><img width="400px" alt="ユーザー登録" src="https://cdn.loom.com/sessions/thumbnails/efa1b03e5bce4569ba97285638bfc4af-with-play.gif"></a>
+1. トップページのヘッダーにある「新規登録」ボタンをクリックし、ユーザー登録を行う
 
-2. 問題一覧ページの「＋」ボタンを押す
-3. 問題の内容（ジャンル、問題文、選択肢 A〜D、正解、解説）を入力し、「問題の作成」を押す
+[ユーザー登録](https://www.loom.com/share/efa1b03e5bce4569ba97285638bfc4af)
+   <img width="400px" alt="ユーザー登録" src="https://cdn.loom.com/sessions/thumbnails/efa1b03e5bce4569ba97285638bfc4af-with-play.gif">
+1. 問題一覧ページの「＋」ボタンを押す
+2. 問題の内容（ジャンル、問題文、選択肢 A〜D、正解、解説）を入力し、「問題の作成」を押す
 
 ## 問題解答
+[問題解答](https://www.loom.com/share/197e3103a50c493f8f591df39bb2f048)
 
 <a href="https://www.loom.com/share/197e3103a50c493f8f591df39bb2f048"><img width="400px" alt="問題解答" src="https://cdn.loom.com/sessions/thumbnails/197e3103a50c493f8f591df39bb2f048-with-play.gif"></a>
 
