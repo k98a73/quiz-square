@@ -188,7 +188,7 @@ const QuizzesIndex = () => {
                 />
               </Tooltip>
             </Flex>
-            <Wrap align="center" justify="center">
+            <Wrap align="start" justify="center">
               {filteredQuizzes.map((quiz) => {
                 return (
                   <WrapItem key={quiz.id}>
