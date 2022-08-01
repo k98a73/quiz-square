@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import Head from "next/head";
 import { useRouter } from "next/router";
 import {
   Button,
@@ -46,9 +45,6 @@ export default function SignIn() {
 
   return (
     <ChakraProvider theme={inputTheme}>
-      <Head>
-        <title>Quiz Square</title>
-      </Head>
       <Header />
       <Container py="3" maxW="800px">
         <VStack>

@@ -1,7 +1,5 @@
 import React, { useEffect, useState } from "react";
-import Head from "next/head";
 import {
-  Box,
   Button,
   Center,
   ChakraProvider,
@@ -85,9 +83,6 @@ export default function QuizIndex() {
       {/* window オブジェクトが存在する場合にのみ以下を表示することにより、サーバーでの表示と不一致防止 */}
       {isClient && (
         <>
-          <Head>
-            <title>Quiz Square</title>
-          </Head>
           <Header />
           <Container py="3" maxW="800px">
             <VStack>

@@ -11,6 +11,7 @@ import {
 import { FaSignInAlt } from "react-icons/fa";
 import { HiOutlineUserAdd } from "react-icons/hi";
 import { useRouter } from "next/router";
+import Head from "next/head";
 
 import { auth } from "../lib/firebase";
 import MyPageSignOutContainer from "./MyPageSignOutContainer";
@@ -30,6 +31,9 @@ const Header = () => {
 
   return (
     <>
+      <Head>
+        <title>Quiz Square</title>
+      </Head>
       <Flex
         h={{ base: "60px", md: "70px" }}
         alignItems="center"

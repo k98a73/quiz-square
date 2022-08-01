@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import Head from "next/head";
 import { useRouter } from "next/router";
 import {
   Avatar,
@@ -53,9 +52,6 @@ export default function MyPage() {
     <>
       {user ? (
         <>
-          <Head>
-            <title>Quiz Square</title>
-          </Head>
           <Header />
           <Container py="3" maxW="800px">
             <VStack>

@@ -1,5 +1,4 @@
 import React from "react";
-import Head from "next/head";
 
 import Header from "../components/Header";
 import { Link, Text, VStack } from "@chakra-ui/react";
@@ -7,9 +6,6 @@ import { Link, Text, VStack } from "@chakra-ui/react";
 export default function Custom404() {
   return (
     <>
-      <Head>
-        <title>Quiz Square</title>
-      </Head>
       <Header />
       <VStack mt="5">
         <Text

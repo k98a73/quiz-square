@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import Head from "next/head";
 import { useRouter } from "next/router";
 import {
   Container,
@@ -20,7 +19,6 @@ import {
   Box,
   Button,
   Spinner,
-  HStack,
 } from "@chakra-ui/react";
 import { useForm } from "react-hook-form";
 import { useRecoilState } from "recoil";
@@ -139,9 +137,6 @@ const QuizInputForm: React.FC<PROPS> = ({
     <>
       {user ? (
         <ChakraProvider theme={inputTheme}>
-          <Head>
-            <title>Quiz Square</title>
-          </Head>
           <Header />
           <Container py="3" maxW="800px">
             <VStack>

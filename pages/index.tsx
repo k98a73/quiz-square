@@ -14,7 +14,6 @@ import {
   VStack,
 } from "@chakra-ui/react";
 import type { NextPage } from "next";
-import Head from "next/head";
 import { useState } from "react";
 import { MdCheckCircle } from "react-icons/md";
 
@@ -33,9 +32,6 @@ const Home: NextPage = () => {
 
   return (
     <>
-      <Head>
-        <title>Quiz Square</title>
-      </Head>
       <Header />
       <Container py="3" maxW="1000px">
         <VStack spacing={{ base: "15px", md: "25px" }}>

@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import Head from "next/head";
 import { useRouter } from "next/router";
 import { useForm } from "react-hook-form";
 import {
@@ -94,9 +93,6 @@ export default function SignUp() {
 
   return (
     <ChakraProvider theme={inputTheme}>
-      <Head>
-        <title>Quiz Square</title>
-      </Head>
       {!isLoading ? (
         <>
           <Header />
