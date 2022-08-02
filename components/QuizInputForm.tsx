@@ -144,7 +144,7 @@ const QuizInputForm: React.FC<PROPS> = ({
                 <Stack direction="row" align="center">
                   <Text fontSize="lg" color="gray.600">
                     ジャンル
-                    <span style={{ color: "red", padding: "0 3px" }}>*</span>:
+                    <Text as="span" color="red" p="0 3px">*</Text>:
                   </Text>
                   <Select
                     size="md"
@@ -167,7 +167,7 @@ const QuizInputForm: React.FC<PROPS> = ({
                 <FormControl mt="2" isInvalid={errors.content ? true : false}>
                   <FormLabel fontSize="lg" color="gray.600" htmlFor="content">
                     問題文
-                    <span style={{ color: "red", paddingLeft: "2px" }}>*</span>
+                    <Text as="span" color="red" pl="2px">*</Text>
                   </FormLabel>
                   <Textarea
                     id="content"
@@ -208,9 +208,7 @@ const QuizInputForm: React.FC<PROPS> = ({
                     />
                     <FormLabel>
                       選択肢Ａ
-                      <span style={{ color: "red", paddingLeft: "2px" }}>
-                        *
-                      </span>
+                      <Text as="span" color="red" pl="2px">*</Text>
                     </FormLabel>
                     <FormHelperText>
                       {!errors.optionA && "10文字以内"}
@@ -241,9 +239,7 @@ const QuizInputForm: React.FC<PROPS> = ({
                     />
                     <FormLabel>
                       選択肢Ｂ
-                      <span style={{ color: "red", paddingLeft: "2px" }}>
-                        *
-                      </span>
+                      <Text as="span" color="red" pl="2px">*</Text>
                     </FormLabel>
                     <FormHelperText>
                       {!errors.optionB && "10文字以内"}
@@ -274,9 +270,7 @@ const QuizInputForm: React.FC<PROPS> = ({
                     />
                     <FormLabel>
                       選択肢Ｃ
-                      <span style={{ color: "red", paddingLeft: "2px" }}>
-                        *
-                      </span>
+                      <Text as="span" color="red" pl="2px">*</Text>
                     </FormLabel>
                     <FormHelperText>
                       {!errors.optionC && "10文字以内"}
@@ -307,9 +301,7 @@ const QuizInputForm: React.FC<PROPS> = ({
                     />
                     <FormLabel>
                       選択肢Ｄ
-                      <span style={{ color: "red", paddingLeft: "2px" }}>
-                        *
-                      </span>
+                      <Text as="span" color="red" pl="2px">*</Text>
                     </FormLabel>
                     <FormHelperText>
                       {!errors.optionD && "10文字以内"}
@@ -323,7 +315,7 @@ const QuizInputForm: React.FC<PROPS> = ({
                 <Box mt="3">
                   <Text fontSize="lg" color="gray.600">
                     正解
-                    <span style={{ color: "red", paddingLeft: "2px" }}>*</span>
+                    <Text as="span" color="red" pl="2px">*</Text>
                   </Text>
                   <RadioGroup defaultValue={answerDefaultValue}>
                     <Stack spacing={5} direction="row">
@@ -373,7 +365,7 @@ const QuizInputForm: React.FC<PROPS> = ({
                     htmlFor="description"
                   >
                     解説
-                    <span style={{ color: "red", paddingLeft: "2px" }}>*</span>
+                    <Text as="span" color="red" pl="2px">*</Text>
                   </FormLabel>
                   <Textarea
                     id="description"
