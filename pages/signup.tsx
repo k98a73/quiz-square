@@ -17,6 +17,7 @@ import {
   InputGroup,
   InputRightElement,
   Spinner,
+  Text,
   VStack,
 } from "@chakra-ui/react";
 
@@ -117,7 +118,9 @@ export default function SignUp() {
                   />
                   <FormLabel>
                     ユーザーネーム
-                    <span style={{ color: "red", paddingLeft: "2px" }}>*</span>
+                    <Text as="span" color="red" pl="2px">
+                      *
+                    </Text>
                   </FormLabel>
                   <FormErrorMessage>
                     {errors.userName && errors.userName.message}
@@ -131,7 +134,9 @@ export default function SignUp() {
                 >
                   <FormLabel>
                     画像を選択
-                    <span style={{ color: "red", paddingLeft: "2px" }}>*</span>
+                    <Text as="span" color="red" pl="2px">
+                      *
+                    </Text>
                   </FormLabel>
                   <Box>
                     <input
@@ -175,7 +180,9 @@ export default function SignUp() {
                   />
                   <FormLabel>
                     メール
-                    <span style={{ color: "red", paddingLeft: "2px" }}>*</span>
+                    <Text as="span" color="red" pl="2px">
+                      *
+                    </Text>
                   </FormLabel>
                   <FormErrorMessage>
                     {errors.email && errors.email.message}
@@ -189,7 +196,9 @@ export default function SignUp() {
                 >
                   <FormLabel>
                     パスワード
-                    <span style={{ color: "red", paddingLeft: "2px" }}>*</span>
+                    <Text as="span" color="red" pl="2px">
+                      *
+                    </Text>
                   </FormLabel>
                   <InputGroup size="md">
                     <Input

@@ -13,6 +13,7 @@ import {
   Input,
   InputGroup,
   InputRightElement,
+  Text,
   VStack,
 } from "@chakra-ui/react";
 import { useForm } from "react-hook-form";
@@ -68,7 +69,9 @@ export default function SignIn() {
               />
               <FormLabel>
                 メール
-                <span style={{ color: "red", paddingLeft: "2px" }}>*</span>
+                <Text as="span" color="red" pl="2px">
+                  *
+                </Text>
               </FormLabel>
               <FormErrorMessage>
                 {errors.email && errors.email.message}
@@ -82,7 +85,9 @@ export default function SignIn() {
             >
               <FormLabel>
                 パスワード
-                <span style={{ color: "red", paddingLeft: "2px" }}>*</span>
+                <Text as="span" color="red" pl="2px">
+                  *
+                </Text>
               </FormLabel>
               <InputGroup size="md">
                 <Input

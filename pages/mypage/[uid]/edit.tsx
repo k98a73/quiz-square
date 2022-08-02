@@ -10,6 +10,7 @@ import {
   FormLabel,
   Input,
   Spinner,
+  Text,
 } from "@chakra-ui/react";
 import { useRouter } from "next/router";
 import React, { useEffect, useState } from "react";
@@ -171,7 +172,9 @@ export default function MyPageEdit() {
                 />
                 <FormLabel>
                   ユーザーネーム
-                  <span style={{ color: "red", paddingLeft: "2px" }}>*</span>
+                  <Text as="span" color="red" pl="2px">
+                    *
+                  </Text>
                 </FormLabel>
                 <FormErrorMessage>
                   {errors.userName && errors.userName.message}
@@ -185,7 +188,9 @@ export default function MyPageEdit() {
               >
                 <FormLabel>
                   画像を選択
-                  <span style={{ color: "red", paddingLeft: "2px" }}>*</span>
+                  <Text as="span" color="red" pl="2px">
+                    *
+                  </Text>
                 </FormLabel>
                 <Box>
                   <input
