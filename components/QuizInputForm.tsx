@@ -20,7 +20,7 @@ import {
   Button,
   Spinner,
 } from "@chakra-ui/react";
-import { useForm } from "react-hook-form";
+import { SubmitHandler, useForm } from "react-hook-form";
 import { useRecoilState } from "recoil";
 
 import Header from "./Header";
@@ -42,6 +42,18 @@ interface PROPS {
   descriptionDefaultValue: string;
   buttonSentence: string;
 }
+
+// registerに登録するname属性の型を定義
+type Inputs = {
+  genre: string;
+  content: string;
+  optionA: string;
+  optionB: string;
+  optionC: string;
+  optionD: string;
+  answer: string;
+  description: string;
+};
 
 const QuizInputForm: React.FC<PROPS> = ({
   quizID,
@@ -65,9 +77,9 @@ const QuizInputForm: React.FC<PROPS> = ({
     handleSubmit,
     register,
     formState: { errors },
-  } = useForm();
+  } = useForm<Inputs>();
 
-  const onSubmit = ({
+  const onSubmit: SubmitHandler<Inputs> = ({
     genre,
     content,
     optionA,
@@ -76,7 +88,7 @@ const QuizInputForm: React.FC<PROPS> = ({
     optionD,
     answer,
     description,
-  }: any) => {
+  }) => {
     setQuizItem({
       id: quizID,
       uid: user?.uid,
@@ -178,7 +190,7 @@ const QuizInputForm: React.FC<PROPS> = ({
                     id="content"
                     defaultValue={contentDefaultValue}
                     {...register("content", {
-                      required: "文字を入力してください",
+                      required: "問題文は入力必須です",
                       maxLength: {
                         value: 100,
                         message: "100文字以内で入力してください",
@@ -204,7 +216,7 @@ const QuizInputForm: React.FC<PROPS> = ({
                       placeholder=" "
                       defaultValue={optionADefaultValue}
                       {...register("optionA", {
-                        required: "文字を入力してください",
+                        required: "選択肢Ａは入力必須です",
                         maxLength: {
                           value: 10,
                           message: "10文字以内で入力してください",
@@ -237,7 +249,7 @@ const QuizInputForm: React.FC<PROPS> = ({
                       placeholder=" "
                       defaultValue={optionBDefaultValue}
                       {...register("optionB", {
-                        required: "文字を入力してください",
+                        required: "選択肢Ｂは入力必須です",
                         maxLength: {
                           value: 10,
                           message: "10文字以内で入力してください",
@@ -270,7 +282,7 @@ const QuizInputForm: React.FC<PROPS> = ({
                       placeholder=" "
                       defaultValue={optionCDefaultValue}
                       {...register("optionC", {
-                        required: "文字を入力してください",
+                        required: "選択肢Ｃは入力必須です",
                         maxLength: {
                           value: 10,
                           message: "10文字以内で入力してください",
@@ -303,7 +315,7 @@ const QuizInputForm: React.FC<PROPS> = ({
                       placeholder=" "
                       defaultValue={optionDDefaultValue}
                       {...register("optionD", {
-                        required: "文字を入力してください",
+                        required: "選択肢Ｄは入力必須です",
                         maxLength: {
                           value: 10,
                           message: "10文字以内で入力してください",
@@ -388,7 +400,7 @@ const QuizInputForm: React.FC<PROPS> = ({
                     id="description"
                     defaultValue={descriptionDefaultValue}
                     {...register("description", {
-                      required: "文字を入力してください",
+                      required: "解説は入力必須です",
                       maxLength: {
                         value: 100,
                         message: "100文字以内で入力してください",
