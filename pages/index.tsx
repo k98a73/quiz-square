@@ -117,7 +117,7 @@ const Home: NextPage = () => {
               </Text>
               <List
                 mt="2"
-                spacing={3}
+                spacing={{ base: "5px", md: "10px" }}
                 fontSize={{ base: "lg", md: "xl" }}
                 color="gray.600"
               >
@@ -176,7 +176,7 @@ const Home: NextPage = () => {
               </Text>
               <List
                 mt="2"
-                spacing={3}
+                spacing={{ base: "5px", md: "10px" }}
                 fontSize={{ base: "lg", md: "xl" }}
                 color="gray.600"
               >
