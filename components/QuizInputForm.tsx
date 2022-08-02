@@ -193,7 +193,7 @@ const QuizInputForm: React.FC<PROPS> = ({
                   </FormErrorMessage>
                 </FormControl>
 
-                <Box mt="2" p={2}>
+                <Box mt="2" p="2">
                   <FormControl
                     variant="floating"
                     id="optionA"
@@ -226,7 +226,7 @@ const QuizInputForm: React.FC<PROPS> = ({
                   </FormControl>
                 </Box>
 
-                <Box mt="2" p={2}>
+                <Box mt="2" p="2">
                   <FormControl
                     variant="floating"
                     id="optionB"
@@ -259,7 +259,7 @@ const QuizInputForm: React.FC<PROPS> = ({
                   </FormControl>
                 </Box>
 
-                <Box mt="2" p={2}>
+                <Box mt="2" p="2">
                   <FormControl
                     variant="floating"
                     id="optionC"
@@ -292,7 +292,7 @@ const QuizInputForm: React.FC<PROPS> = ({
                   </FormControl>
                 </Box>
 
-                <Box mt="2" p={2}>
+                <Box mt="2" p="2">
                   <FormControl
                     variant="floating"
                     id="optionD"
@@ -333,7 +333,7 @@ const QuizInputForm: React.FC<PROPS> = ({
                     </Text>
                   </Text>
                   <RadioGroup defaultValue={answerDefaultValue}>
-                    <Stack spacing={5} direction="row">
+                    <Stack spacing="5" direction="row">
                       <Radio
                         size="lg"
                         colorScheme="red"
