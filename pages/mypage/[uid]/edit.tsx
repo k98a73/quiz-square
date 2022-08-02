@@ -14,7 +14,7 @@ import {
 } from "@chakra-ui/react";
 import { useRouter } from "next/router";
 import React, { useEffect, useState } from "react";
-import { useForm } from "react-hook-form";
+import { SubmitHandler, useForm } from "react-hook-form";
 
 import Header from "../../../components/Header";
 import { inputTheme } from "../../../constants/inputTheme";
@@ -26,9 +26,14 @@ interface QuizItem {
   uid: string;
 }
 
+// registerに登録するname属性の型を定義
+type Inputs = {
+  userName: string;
+  image: any;
+};
+
 export default function MyPageEdit() {
   const [user, setUser] = useState<any>("");
-  // const [userName, setUserName] = useState<any>("");
   const [oldImageName, setOldImageName] = useState<any>("");
   const [oldUserName, setOldUserName] = useState<any>("");
   const [selectedImage, setSelectedImage] = useState("");
@@ -43,7 +48,7 @@ export default function MyPageEdit() {
     register,
     setValue,
     formState: { errors },
-  } = useForm({});
+  } = useForm<Inputs>({});
 
   useEffect(() => {
     const unSub = auth.onAuthStateChanged((user) => {
@@ -98,21 +103,25 @@ export default function MyPageEdit() {
     }
   };
 
-  const onSubmit = async ({ userName, image }: any) => {
+  const onSubmit: SubmitHandler<Inputs> = async ({ userName, image }) => {
     setIsLoading(true);
     const uid = user?.uid;
     userNameChange(uid, userName);
-    const imageName = new Date().toISOString() + image[0].name;
-    const imageUrl = await uploadTaskPromise(image[0], imageName, uid);
-    db.collection("users").doc(uid).set(
-      {
-        userName,
-        imageUrl,
-        imageName,
-      },
-      { merge: true }
-    );
-    await storage.ref(`/images/${uid}/${oldImageName}`).delete();
+    if (image[0]) {
+      const imageName = new Date().toISOString() + image[0].name;
+      const imageUrl = await uploadTaskPromise(image[0], imageName, uid);
+      db.collection("users").doc(uid).set(
+        {
+          userName,
+          imageUrl,
+          imageName,
+        },
+        { merge: true }
+      );
+      await storage.ref(`/images/${uid}/${oldImageName}`).delete();
+    } else {
+      db.collection("users").doc(uid).set({ userName }, { merge: true });
+    }
     if (isMountedRef.current) setIsLoading(false);
     router.push("/quizzesIndex");
   };
@@ -186,12 +195,7 @@ export default function MyPageEdit() {
                 mt="5"
                 isInvalid={errors.image ? true : false}
               >
-                <FormLabel>
-                  画像を選択
-                  <Text as="span" color="red" pl="2px">
-                    *
-                  </Text>
-                </FormLabel>
+                <FormLabel>画像を選択</FormLabel>
                 <Box>
                   <input
                     id="image"
@@ -202,9 +206,7 @@ export default function MyPageEdit() {
                       padding: "0px",
                       width: "128px",
                     }}
-                    {...register("image", {
-                      required: "画像を選択してください",
-                    })}
+                    {...register("image")}
                     onChange={handleChange}
                   />
                   <Avatar ml="3" size="md" src={selectedImage} />
