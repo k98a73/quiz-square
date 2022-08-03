@@ -16,12 +16,18 @@ import {
   Text,
   VStack,
 } from "@chakra-ui/react";
-import { useForm } from "react-hook-form";
+import { SubmitHandler, useForm } from "react-hook-form";
 
 import Header from "../components/Header";
 import { auth } from "../lib/firebase";
 import { ViewIcon, ViewOffIcon } from "@chakra-ui/icons";
 import { inputTheme } from "../constants/inputTheme";
+
+/* registerに登録するname属性の型を定義*/
+type Inputs = {
+  email: string;
+  password: string;
+};
 
 export default function SignIn() {
   const router = useRouter();
@@ -31,11 +37,11 @@ export default function SignIn() {
     handleSubmit,
     register,
     formState: { errors },
-  } = useForm();
+  } = useForm<Inputs>();
 
   const handleClick = () => setShow(!show);
 
-  const onSubmit = async ({ email, password }: any) => {
+  const onSubmit: SubmitHandler<Inputs> = async ({ email, password }) => {
     try {
       await auth.signInWithEmailAndPassword(email, password);
       router.push("/quizzesIndex");
@@ -60,10 +66,10 @@ export default function SignIn() {
                 id="email"
                 placeholder=" "
                 {...register("email", {
-                  required: "文字を入力してください",
+                  required: "メールアドレスは必須です",
                   pattern: {
                     value: /^[\w\-._]+@[\w\-._]+\.[A-Za-z]+/,
-                    message: "入力形式がメールアドレスではありません。",
+                    message: "メールアドレスの形式が正しくありません",
                   },
                 })}
               />
@@ -96,10 +102,10 @@ export default function SignIn() {
                   type={show ? "text" : "password"}
                   id="password"
                   {...register("password", {
-                    required: "文字を入力してください",
+                    required: "パスワードは必須です",
                     pattern: {
                       value: /^[a-zA-Z0-9]+$/,
-                      message: "半角英数字で入力してください。",
+                      message: "半角英数字で入力してください",
                     },
                     minLength: {
                       value: 8,
