@@ -1,6 +1,6 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useRouter } from "next/router";
-import { useForm } from "react-hook-form";
+import { SubmitHandler, useForm } from "react-hook-form";
 import {
   Avatar,
   Box,
@@ -27,30 +27,45 @@ import firebase, { storage } from "../lib/firebase";
 import { ViewIcon, ViewOffIcon } from "@chakra-ui/icons";
 import { inputTheme } from "../constants/inputTheme";
 
+// registerに登録するname属性の型を定義
+type Inputs = {
+  email: string;
+  password: string;
+  userName: string;
+  image: any;
+};
+
 export default function SignUp() {
   const router = useRouter();
   const [show, setShow] = useState(false);
   const [selectedImage, setSelectedImage] = useState("");
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
+  const {
+    handleSubmit,
+    register,
+    watch,
+    formState: { errors },
+  } = useForm<Inputs>();
+
   const handleClick = () => setShow(!show);
 
-  const handleChange = (event: any) => {
-    if (event.target.files[0]) {
-      const blobUrl = window.URL.createObjectURL(event.target.files[0]);
+  const avatarImage = watch("image");
+  useEffect(() => {
+    if (avatarImage && avatarImage[0]) {
+      const blobUrl = window.URL.createObjectURL(avatarImage[0]);
       setSelectedImage(blobUrl);
     } else {
       setSelectedImage("");
     }
-  };
+  }, [avatarImage]);
 
-  const {
-    handleSubmit,
-    register,
-    formState: { errors },
-  } = useForm();
-
-  const onSubmit = async ({ email, password, userName, image }: any) => {
+  const onSubmit: SubmitHandler<Inputs> = async ({
+    email,
+    password,
+    userName,
+    image,
+  }) => {
     setIsLoading(true);
     try {
       await auth
@@ -73,7 +88,11 @@ export default function SignUp() {
     }
   };
 
-  async function uploadTaskPromise(image: any, imageName: any, uid: any) {
+  async function uploadTaskPromise(
+    image: any,
+    imageName: string,
+    uid: string | undefined
+  ) {
     return new Promise(function (resolve, reject) {
       const uploadTask = storage.ref(`/images/${uid}/${imageName}`).put(image);
       uploadTask.on(
@@ -109,7 +128,7 @@ export default function SignUp() {
                     id="userName"
                     placeholder=" "
                     {...register("userName", {
-                      required: "文字を入力してください",
+                      required: "ユーザーネームは必須です",
                       maxLength: {
                         value: 10,
                         message: "10文字以内で入力してください",
@@ -152,7 +171,6 @@ export default function SignUp() {
                       {...register("image", {
                         required: "画像を選択してください",
                       })}
-                      onChange={handleChange}
                     />
                     <Avatar ml="3" size="md" src={selectedImage} />
                   </Box>
@@ -171,10 +189,10 @@ export default function SignUp() {
                     id="email"
                     placeholder=" "
                     {...register("email", {
-                      required: "文字を入力してください",
+                      required: "メールアドレスは必須です",
                       pattern: {
                         value: /^[\w\-._]+@[\w\-._]+\.[A-Za-z]+/,
-                        message: "入力形式がメールアドレスではありません。",
+                        message: "メールアドレスの形式が正しくありません",
                       },
                     })}
                   />
@@ -207,10 +225,10 @@ export default function SignUp() {
                       type={show ? "text" : "password"}
                       id="password"
                       {...register("password", {
-                        required: "文字を入力してください",
+                        required: "パスワードは必須です",
                         pattern: {
                           value: /^[a-zA-Z0-9]+$/,
-                          message: "半角英数字で入力してください。",
+                          message: "半角英数字で入力してください",
                         },
                         minLength: {
                           value: 8,

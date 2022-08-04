@@ -23,7 +23,7 @@ import { auth } from "../lib/firebase";
 import { ViewIcon, ViewOffIcon } from "@chakra-ui/icons";
 import { inputTheme } from "../constants/inputTheme";
 
-/* registerに登録するname属性の型を定義*/
+// registerに登録するname属性の型を定義
 type Inputs = {
   email: string;
   password: string;
