@@ -26,6 +26,7 @@ import { db, auth } from "../lib/firebase";
 import firebase, { storage } from "../lib/firebase";
 import { ViewIcon, ViewOffIcon } from "@chakra-ui/icons";
 import { inputTheme } from "../constants/inputTheme";
+import useSignInUserRedirect from "../hooks/useSignInUserRedirect";
 
 // registerに登録するname属性の型を定義
 type Inputs = {
@@ -47,6 +48,8 @@ export default function SignUp() {
     watch,
     formState: { errors },
   } = useForm<Inputs>();
+
+  const user = useSignInUserRedirect();
 
   const handleClick = () => setShow(!show);
 
@@ -113,7 +116,7 @@ export default function SignUp() {
 
   return (
     <ChakraProvider theme={inputTheme}>
-      {!isLoading ? (
+      {!isLoading && !user ? (
         <>
           <Header />
           <Container py="3" maxW="800px">
