@@ -19,7 +19,8 @@ import { SubmitHandler, useForm } from "react-hook-form";
 import Header from "../../../components/Header";
 import { inputTheme } from "../../../constants/inputTheme";
 import useIsMounted from "../../../hooks/useIsMounted";
-import firebase, { auth, db, storage } from "../../../lib/firebase";
+import useSignOutUserRedirect from "../../../hooks/useSignOutUserRedirect";
+import firebase, { db, storage } from "../../../lib/firebase";
 
 interface QuizItem {
   id: string;
@@ -33,7 +34,6 @@ type Inputs = {
 };
 
 export default function MyPageEdit() {
-  const [user, setUser] = useState<any>("");
   const [oldImageName, setOldImageName] = useState<any>("");
   const [oldUserName, setOldUserName] = useState<any>("");
   const [selectedImage, setSelectedImage] = useState("");
@@ -43,21 +43,13 @@ export default function MyPageEdit() {
   // マウントを監視するカスタムフック
   const isMountedRef = useIsMounted();
   const router = useRouter();
+  const user = useSignOutUserRedirect();
   const {
     handleSubmit,
     register,
     setValue,
     formState: { errors },
   } = useForm<Inputs>({});
-
-  useEffect(() => {
-    const unSub = auth.onAuthStateChanged((user) => {
-      setUser(user);
-      !user && router.push("/signin");
-    });
-    return () => unSub();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
 
   useEffect(() => {
     const unSub = db.collection("quizzes").onSnapshot((snapshot) => {

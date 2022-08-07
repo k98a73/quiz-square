@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { useRouter } from "next/router";
 import {
   Container,
@@ -24,11 +24,12 @@ import { SubmitHandler, useForm } from "react-hook-form";
 import { useRecoilState } from "recoil";
 
 import Header from "./Header";
-import { auth, date, db } from "../lib/firebase";
+import { date, db } from "../lib/firebase";
 import { inputTheme } from "../constants/inputTheme";
 import useIsMounted from "../hooks/useIsMounted";
 import filterOptions from "../constants/filterOptions";
 import { quizItemState } from "../constants/atom";
+import useSignOutUserRedirect from "../hooks/useSignOutUserRedirect";
 
 interface PROPS {
   quizID: string;
@@ -68,11 +69,11 @@ const QuizInputForm: React.FC<PROPS> = ({
   buttonSentence,
 }) => {
   const router = useRouter();
-  const [user, setUser] = useState<any>("");
   const [userName, setUserName] = useState<string>("");
   // マウントを監視するカスタムフック
   const isMountedRef = useIsMounted();
   const [quizItem, setQuizItem] = useRecoilState(quizItemState);
+  const user = useSignOutUserRedirect();
   const {
     handleSubmit,
     register,
@@ -118,15 +119,6 @@ const QuizInputForm: React.FC<PROPS> = ({
     });
     router.push("/quizzesIndex");
   };
-
-  useEffect(() => {
-    const unSub = auth.onAuthStateChanged((user) => {
-      setUser(user);
-      !user && router.push("/signin");
-    });
-    return () => unSub();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
 
   const docRef = db.collection("users").doc(user?.uid);
   if (user) {
