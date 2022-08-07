@@ -9,9 +9,9 @@ import {
 } from "@chakra-ui/react";
 import { FaSignOutAlt } from "react-icons/fa";
 
-import useSignOut from "../hooks/useSignOut";
 import { db } from "../lib/firebase";
 import useIsMounted from "../hooks/useIsMounted";
+import SignOut from "../util/signOut";
 
 const MyPageSignOutContainer = ({
   uid,
@@ -86,7 +86,7 @@ const MyPageSignOutContainer = ({
             color: "#c0ccce",
           }}
           icon={<FaSignOutAlt size={iconSize} />}
-          onClick={useSignOut()}
+          onClick={SignOut()}
         />
       </Tooltip>
     </>

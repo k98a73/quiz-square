@@ -2,7 +2,7 @@ import { useRouter } from "next/router";
 
 import { auth } from "../lib/firebase";
 
-const useSignOut = () => {
+const SignOut = () => {
   const router = useRouter();
   return async () => {
     try {
@@ -14,4 +14,4 @@ const useSignOut = () => {
   };
 };
 
-export default useSignOut;
+export default SignOut;
