@@ -16,6 +16,7 @@ import {
 } from "@chakra-ui/react";
 import { AddIcon } from "@chakra-ui/icons";
 import { useRecoilState } from "recoil";
+import { AiFillStar } from "react-icons/ai";
 
 import Header from "../components/Header";
 import { db } from "../lib/firebase";
@@ -40,6 +41,7 @@ const QuizzesIndex = () => {
   const [filteredQuizzes, setFilteredQuizzes] = useState<QuizItem[]>([]);
   const [genreFilter, setGenreFilter] = useState("全て");
   const [quizItem, setQuizItem] = useRecoilState(quizItemState);
+  const [favoriteColor, setFavoriteColor] = useState<boolean>(true);
   const router = useRouter();
 
   const handleSelectQuiz = (
@@ -186,10 +188,9 @@ const QuizzesIndex = () => {
               {filteredQuizzes.map((quiz) => {
                 return (
                   <WrapItem key={quiz.id}>
-                    <Box
-                      m="2"
-                      p="2"
-                      w="xs"
+                    <VStack
+                      pb="4px"
+                      spacing="4px"
                       borderWidth="1px"
                       borderRadius="lg"
                       boxShadow="md"
@@ -197,36 +198,70 @@ const QuizzesIndex = () => {
                       fontWeight="bold"
                       bgGradient="linear(to-r, cyan.500, blue.500)"
                       _hover={{
-                        cursor: "pointer",
                         opacity: 0.8,
                         bgGradient: "linear(to-r, red.500, yellow.500)",
                       }}
-                      onClick={() =>
-                        handleSelectQuiz(
-                          quiz.id,
-                          quiz.uid,
-                          quiz.userName,
-                          quiz.genre,
-                          quiz.content,
-                          quiz.optionA,
-                          quiz.optionB,
-                          quiz.optionC,
-                          quiz.optionD,
-                          quiz.answer,
-                          quiz.description
-                        )
-                      }
                     >
-                      <Text fontSize="lg" py="1">
-                        {`作成者：${quiz.userName}`}
-                      </Text>
-                      <Text fontSize="lg" py="1">
-                        {`ジャンル：${quiz.genre}`}
-                      </Text>
-                      <Text fontSize="lg" py="1" noOfLines={3}>
-                        {`問題：${quiz.content}`}
-                      </Text>
-                    </Box>
+                      <Box
+                        m="2px 8px 0 8px"
+                        w="xs"
+                        _hover={{
+                          cursor: "pointer",
+                        }}
+                        onClick={() =>
+                          handleSelectQuiz(
+                            quiz.id,
+                            quiz.uid,
+                            quiz.userName,
+                            quiz.genre,
+                            quiz.content,
+                            quiz.optionA,
+                            quiz.optionB,
+                            quiz.optionC,
+                            quiz.optionD,
+                            quiz.answer,
+                            quiz.description
+                          )
+                        }
+                      >
+                        <Text fontSize="lg" py="1">
+                          {`作成者：${quiz.userName}`}
+                        </Text>
+                        <Text fontSize="lg" py="1">
+                          {`ジャンル：${quiz.genre}`}
+                        </Text>
+                        <Text fontSize="lg" py="1" noOfLines={3}>
+                          {`問題：${quiz.content}`}
+                        </Text>
+                      </Box>
+                      <Tooltip
+                        label="お気に入り"
+                        fontSize="md"
+                        bg="gray.500"
+                        color="white"
+                        placement="bottom"
+                        hasArrow
+                      >
+                        <IconButton
+                          aria-label="favorite"
+                          bg="rgba(0,0,0,0)"
+                          rounded="full"
+                          size="sm"
+                          _hover={{
+                            cursor: "pointer",
+                            backgroundColor: "#f4f4f4",
+                            color: "#c0ccce",
+                          }}
+                          icon={
+                            <AiFillStar
+                              color={favoriteColor ? "white" : "yellow"}
+                              size="23"
+                            />
+                          }
+                          onClick={() => setFavoriteColor(!favoriteColor)}
+                        />
+                      </Tooltip>
+                    </VStack>
                   </WrapItem>
                 );
               })}
