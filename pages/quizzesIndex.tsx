@@ -19,7 +19,7 @@ import { useRecoilState } from "recoil";
 import { AiFillStar } from "react-icons/ai";
 
 import Header from "../components/Header";
-import { db } from "../lib/firebase";
+import { auth, db } from "../lib/firebase";
 import { quizItemState } from "../constants/atom";
 
 interface QuizItem {
@@ -34,6 +34,7 @@ interface QuizItem {
   optionD: string;
   answer: string;
   description: string;
+  favorite: string[];
 }
 
 const QuizzesIndex = () => {
@@ -42,6 +43,7 @@ const QuizzesIndex = () => {
   const [genreFilter, setGenreFilter] = useState("全て");
   const [quizItem, setQuizItem] = useRecoilState(quizItemState);
   const [favoriteColor, setFavoriteColor] = useState<boolean>(true);
+  const [user, setUser] = useState<any>(false);
   const router = useRouter();
 
   const handleSelectQuiz = (
@@ -91,6 +93,7 @@ const QuizzesIndex = () => {
             optionD: doc.data().optionD,
             answer: doc.data().answer,
             description: doc.data().description,
+            favorite: doc.data().favorite,
           }))
         );
       });
@@ -124,6 +127,34 @@ const QuizzesIndex = () => {
     };
     return filteringQuizzesGenre();
   }, [genreFilter, quizzes]);
+
+  useEffect(() => {
+    const unSub = auth.onAuthStateChanged((user) => {
+      setUser(user);
+    });
+    return () => unSub();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  const addFavorite = (id: string, favorite: string[]) => {
+    const uid = user?.uid;
+    if (favorite.length === 0) {
+      db.collection("quizzes").doc(id).set(
+        {
+          favorite: [],
+        },
+        { merge: true }
+      );
+    } else {
+      db.collection("quizzes").doc(id).set(
+        {
+          favorite: [],
+        },
+        { merge: true }
+      );
+    }
+    // setFavoriteColor(!favoriteColor);
+  };
 
   return (
     <>
@@ -234,33 +265,35 @@ const QuizzesIndex = () => {
                           {`問題：${quiz.content}`}
                         </Text>
                       </Box>
-                      <Tooltip
-                        label="お気に入り"
-                        fontSize="md"
-                        bg="gray.500"
-                        color="white"
-                        placement="bottom"
-                        hasArrow
-                      >
-                        <IconButton
-                          aria-label="favorite"
-                          bg="rgba(0,0,0,0)"
-                          rounded="full"
-                          size="sm"
-                          _hover={{
-                            cursor: "pointer",
-                            backgroundColor: "#f4f4f4",
-                            color: "#c0ccce",
-                          }}
-                          icon={
-                            <AiFillStar
-                              color={favoriteColor ? "white" : "yellow"}
-                              size="23"
-                            />
-                          }
-                          onClick={() => setFavoriteColor(!favoriteColor)}
-                        />
-                      </Tooltip>
+                      {user && (
+                        <Tooltip
+                          label="お気に入り"
+                          fontSize="md"
+                          bg="gray.500"
+                          color="white"
+                          placement="bottom"
+                          hasArrow
+                        >
+                          <IconButton
+                            aria-label="favorite"
+                            bg="rgba(0,0,0,0)"
+                            rounded="full"
+                            size="sm"
+                            _hover={{
+                              cursor: "pointer",
+                              backgroundColor: "#f4f4f4",
+                              color: "#c0ccce",
+                            }}
+                            icon={
+                              <AiFillStar
+                                color={favoriteColor ? "white" : "yellow"}
+                                size="23"
+                              />
+                            }
+                            onClick={() => addFavorite(quiz.id, quiz.favorite)}
+                          />
+                        </Tooltip>
+                      )}
                     </VStack>
                   </WrapItem>
                 );
