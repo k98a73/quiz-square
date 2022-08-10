@@ -116,7 +116,7 @@ const QuizInputForm: React.FC<PROPS> = ({
         optionD,
         answer,
         description,
-        favorite: [],
+        favorites: [],
         createdAt: date.FieldValue.serverTimestamp(),
       });
     } else {

@@ -34,7 +34,7 @@ interface QuizItem {
   optionD: string;
   answer: string;
   description: string;
-  favorite: string[];
+  favorites: string[];
 }
 
 const QuizzesIndex = () => {
@@ -42,7 +42,8 @@ const QuizzesIndex = () => {
   const [filteredQuizzes, setFilteredQuizzes] = useState<QuizItem[]>([]);
   const [genreFilter, setGenreFilter] = useState("全て");
   const [quizItem, setQuizItem] = useRecoilState(quizItemState);
-  const [favoriteColor, setFavoriteColor] = useState<boolean>(true);
+  const [favoritesColor, setFavoritesColor] = useState<boolean>(false);
+  const [favoriteExistence, setFavoriteExistence] = useState<boolean>(false);
   const [user, setUser] = useState<any>(false);
   const router = useRouter();
 
@@ -93,7 +94,7 @@ const QuizzesIndex = () => {
             optionD: doc.data().optionD,
             answer: doc.data().answer,
             description: doc.data().description,
-            favorite: doc.data().favorite,
+            favorites: doc.data().favorites,
           }))
         );
       });
@@ -136,24 +137,24 @@ const QuizzesIndex = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  const addFavorite = (id: string, favorite: string[]) => {
+  const addFavorites = (id: string, favorites: string[]) => {
     const uid = user?.uid;
-    if (favorite.length === 0) {
+    if (favorites.length === 0) {
+      favorites.push(uid);
       db.collection("quizzes").doc(id).set(
         {
-          favorite: [],
+          favorites,
         },
         { merge: true }
       );
     } else {
-      db.collection("quizzes").doc(id).set(
-        {
-          favorite: [],
-        },
-        { merge: true }
-      );
+      favorites.forEach((favorite, index) => {
+        if (favorite === uid) {
+          setFavoriteExistence(true);
+          favorites.splice(index, 1);
+        }
+      })
     }
-    // setFavoriteColor(!favoriteColor);
   };
 
   return (
@@ -275,7 +276,7 @@ const QuizzesIndex = () => {
                           hasArrow
                         >
                           <IconButton
-                            aria-label="favorite"
+                            aria-label="favorites"
                             bg="rgba(0,0,0,0)"
                             rounded="full"
                             size="sm"
@@ -286,11 +287,11 @@ const QuizzesIndex = () => {
                             }}
                             icon={
                               <AiFillStar
-                                color={favoriteColor ? "white" : "yellow"}
+                                color={favoritesColor ? "yellow" : "white"}
                                 size="23"
                               />
                             }
-                            onClick={() => addFavorite(quiz.id, quiz.favorite)}
+                            onClick={() => addFavorites(quiz.id, quiz.favorites)}
                           />
                         </Tooltip>
                       )}
