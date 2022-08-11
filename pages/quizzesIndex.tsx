@@ -43,7 +43,6 @@ const QuizzesIndex = () => {
   const [genreFilter, setGenreFilter] = useState("全て");
   const [quizItem, setQuizItem] = useRecoilState(quizItemState);
   const [favoritesColor, setFavoritesColor] = useState<boolean>(false);
-  const [favoriteExistence, setFavoriteExistence] = useState<boolean>(false);
   const [user, setUser] = useState<any>(false);
   const router = useRouter();
 
@@ -148,12 +147,25 @@ const QuizzesIndex = () => {
         { merge: true }
       );
     } else {
+      let favoriteExistence = false;
+      let favoritesIndex = 0;
       favorites.forEach((favorite, index) => {
         if (favorite === uid) {
-          setFavoriteExistence(true);
-          favorites.splice(index, 1);
+          favoriteExistence = true;
+          favoritesIndex =index;
         }
-      })
+      });
+      if (favoriteExistence) {
+        favorites.splice(favoritesIndex, 1);
+      } else {
+        favorites.push(uid);
+      }
+      db.collection("quizzes").doc(id).set(
+        {
+          favorites,
+        },
+        { merge: true }
+      );
     }
   };
 
@@ -291,7 +303,9 @@ const QuizzesIndex = () => {
                                 size="23"
                               />
                             }
-                            onClick={() => addFavorites(quiz.id, quiz.favorites)}
+                            onClick={() =>
+                              addFavorites(quiz.id, quiz.favorites)
+                            }
                           />
                         </Tooltip>
                       )}
