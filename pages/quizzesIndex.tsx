@@ -42,7 +42,7 @@ const QuizzesIndex = () => {
   const [filteredQuizzes, setFilteredQuizzes] = useState<QuizItem[]>([]);
   const [genreFilter, setGenreFilter] = useState("全て");
   const [quizItem, setQuizItem] = useRecoilState(quizItemState);
-  const [favoritesColor, setFavoritesColor] = useState<boolean>(false);
+  // const [favoritesColor, setFavoritesColor] = useState<boolean>(false);
   const [user, setUser] = useState<any>(false);
   const router = useRouter();
 
@@ -136,8 +136,9 @@ const QuizzesIndex = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
+  const uid = user?.uid;
+
   const addFavorites = (id: string, favorites: string[]) => {
-    const uid = user?.uid;
     if (favorites.length === 0) {
       favorites.push(uid);
       db.collection("quizzes").doc(id).set(
@@ -152,7 +153,7 @@ const QuizzesIndex = () => {
       favorites.forEach((favorite, index) => {
         if (favorite === uid) {
           favoriteExistence = true;
-          favoritesIndex =index;
+          favoritesIndex = index;
         }
       });
       if (favoriteExistence) {
@@ -167,6 +168,16 @@ const QuizzesIndex = () => {
         { merge: true }
       );
     }
+  };
+
+  const favoritesColor = (favorites: string[]) => {
+    let favoriteExistence = false;
+    favorites.forEach((favorite) => {
+      if (favorite === uid) {
+        favoriteExistence = true;
+      }
+    });
+    return favoriteExistence;
   };
 
   return (
@@ -299,7 +310,11 @@ const QuizzesIndex = () => {
                             }}
                             icon={
                               <AiFillStar
-                                color={favoritesColor ? "yellow" : "white"}
+                                color={
+                                  favoritesColor(quiz.favorites)
+                                    ? "yellow"
+                                    : "white"
+                                }
                                 size="23"
                               />
                             }
