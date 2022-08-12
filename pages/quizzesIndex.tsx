@@ -11,16 +11,12 @@ import {
   Text,
   Tooltip,
   VStack,
-  Wrap,
-  WrapItem,
 } from "@chakra-ui/react";
 import { AddIcon } from "@chakra-ui/icons";
-import { useRecoilState } from "recoil";
 
 import Header from "../components/Header";
-import { db } from "../lib/firebase";
-import { quizItemState } from "../constants/atom";
-
+import { auth, db } from "../lib/firebase";
+import WrapQuizzes from "../components/WrapQuizzes";
 interface QuizItem {
   id: string;
   uid: string;
@@ -33,43 +29,16 @@ interface QuizItem {
   optionD: string;
   answer: string;
   description: string;
+  favorites: string[];
 }
 
 const QuizzesIndex = () => {
   const [quizzes, setQuizzes] = useState<QuizItem[]>([]);
   const [filteredQuizzes, setFilteredQuizzes] = useState<QuizItem[]>([]);
   const [genreFilter, setGenreFilter] = useState("全て");
-  const [quizItem, setQuizItem] = useRecoilState(quizItemState);
+  // const [favoritesColor, setFavoritesColor] = useState<boolean>(false);
+  const [user, setUser] = useState<any>(false);
   const router = useRouter();
-
-  const handleSelectQuiz = (
-    id: string,
-    uid: string,
-    userName: string,
-    genre: string,
-    content: string,
-    optionA: string,
-    optionB: string,
-    optionC: string,
-    optionD: string,
-    answer: string,
-    description: string
-  ) => {
-    setQuizItem({
-      id,
-      uid,
-      userName,
-      genre,
-      content,
-      optionA,
-      optionB,
-      optionC,
-      optionD,
-      answer,
-      description,
-    });
-    router.push(`/quiz/${quizItem.id}`);
-  };
 
   useEffect(() => {
     const unSub = db
@@ -89,6 +58,7 @@ const QuizzesIndex = () => {
             optionD: doc.data().optionD,
             answer: doc.data().answer,
             description: doc.data().description,
+            favorites: doc.data().favorites,
           }))
         );
       });
@@ -123,6 +93,26 @@ const QuizzesIndex = () => {
     return filteringQuizzesGenre();
   }, [genreFilter, quizzes]);
 
+  useEffect(() => {
+    const unSub = auth.onAuthStateChanged((user) => {
+      setUser(user);
+    });
+    return () => unSub();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  const uid = user?.uid;
+
+  const favoritesQuizzes = quizzes.filter((quiz) => {
+    let favoriteExistence = false;
+    quiz.favorites.forEach((favorite) => {
+      if (favorite === uid) {
+        favoriteExistence = true;
+      }
+    });
+    if (favoriteExistence) return quiz;
+  });
+
   return (
     <>
       <Header />
@@ -138,11 +128,28 @@ const QuizzesIndex = () => {
           maxW={{ base: "800px", xl: "1100px" }}
         >
           <VStack>
+            {user && (
+              <VStack w="100%">
+                <Box bg="white">
+                  <Text
+                    fontSize={{ base: "2xl", md: "4xl" }}
+                    fontWeight="extrabold"
+                    bgGradient="linear(to-r, cyan.500, blue.500)"
+                    bgClip="text"
+                  >
+                    お気に入り一覧
+                  </Text>
+                </Box>
+                <WrapQuizzes quizzes={favoritesQuizzes} />
+              </VStack>
+            )}
             <Flex mt="5" w="85%" alignItems="center">
               <HStack>
-                <Text w="120px" fontSize="lg" color="gray.600">
-                  ジャンル:
-                </Text>
+                <Box bg="white">
+                  <Text w="90px" fontSize="xl" fontWeight="bold" color="gray.600">
+                    ジャンル:
+                  </Text>
+                </Box>
                 <Select
                   size="md"
                   color="gray.500"
@@ -182,55 +189,7 @@ const QuizzesIndex = () => {
                 />
               </Tooltip>
             </Flex>
-            <Wrap align="start" justify="center">
-              {filteredQuizzes.map((quiz) => {
-                return (
-                  <WrapItem key={quiz.id}>
-                    <Box
-                      m="2"
-                      p="2"
-                      w="xs"
-                      borderWidth="1px"
-                      borderRadius="lg"
-                      boxShadow="md"
-                      color="white"
-                      fontWeight="bold"
-                      bgGradient="linear(to-r, cyan.500, blue.500)"
-                      _hover={{
-                        cursor: "pointer",
-                        opacity: 0.8,
-                        bgGradient: "linear(to-r, red.500, yellow.500)",
-                      }}
-                      onClick={() =>
-                        handleSelectQuiz(
-                          quiz.id,
-                          quiz.uid,
-                          quiz.userName,
-                          quiz.genre,
-                          quiz.content,
-                          quiz.optionA,
-                          quiz.optionB,
-                          quiz.optionC,
-                          quiz.optionD,
-                          quiz.answer,
-                          quiz.description
-                        )
-                      }
-                    >
-                      <Text fontSize="lg" py="1">
-                        {`作成者：${quiz.userName}`}
-                      </Text>
-                      <Text fontSize="lg" py="1">
-                        {`ジャンル：${quiz.genre}`}
-                      </Text>
-                      <Text fontSize="lg" py="1" noOfLines={3}>
-                        {`問題：${quiz.content}`}
-                      </Text>
-                    </Box>
-                  </WrapItem>
-                );
-              })}
-            </Wrap>
+            <WrapQuizzes quizzes={filteredQuizzes} />
           </VStack>
         </Container>
       </Box>

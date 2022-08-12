@@ -103,20 +103,41 @@ const QuizInputForm: React.FC<PROPS> = ({
       answer,
       description,
     });
-    db.collection("quizzes").doc(quizID).set({
-      id: quizID,
-      uid: user?.uid,
-      userName,
-      genre,
-      content,
-      optionA,
-      optionB,
-      optionC,
-      optionD,
-      answer,
-      description,
-      createdAt: date.FieldValue.serverTimestamp(),
-    });
+    if (contentDefaultValue === "") {
+      db.collection("quizzes").doc(quizID).set({
+        id: quizID,
+        uid: user?.uid,
+        userName,
+        genre,
+        content,
+        optionA,
+        optionB,
+        optionC,
+        optionD,
+        answer,
+        description,
+        favorites: [],
+        createdAt: date.FieldValue.serverTimestamp(),
+      });
+    } else {
+      db.collection("quizzes").doc(quizID).set(
+        {
+          id: quizID,
+          uid: user?.uid,
+          userName,
+          genre,
+          content,
+          optionA,
+          optionB,
+          optionC,
+          optionD,
+          answer,
+          description,
+          createdAt: date.FieldValue.serverTimestamp(),
+        },
+        { merge: true }
+      );
+    }
     router.push("/quizzesIndex");
   };
 

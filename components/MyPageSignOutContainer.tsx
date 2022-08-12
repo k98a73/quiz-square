@@ -13,7 +13,6 @@ import { db } from "../lib/firebase";
 import useIsMounted from "../hooks/useIsMounted";
 import SignOut from "../util/SignOut";
 
-
 const MyPageSignOutContainer = ({
   uid,
   router,
