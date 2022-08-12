@@ -11,7 +11,7 @@ import { FaSignOutAlt } from "react-icons/fa";
 
 import { db } from "../lib/firebase";
 import useIsMounted from "../hooks/useIsMounted";
-import SignOut from "../util/signOut";
+import SignOut from "../util/SignOut";
 
 const MyPageSignOutContainer = ({
   uid,
