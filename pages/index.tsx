@@ -33,9 +33,10 @@ const Home: NextPage = () => {
   return (
     <>
       <Header />
-      <Container py="3" maxW="1000px">
-        <VStack spacing={{ base: "15px", md: "25px" }}>
+      <Container mt={{ base: "40px", md: "80px" }} pb="3" maxW="1000px">
+        <VStack spacing={{ base: "32px", md: "64px" }}>
           <Text
+            mb={{ base: "8px", md: "16px" }}
             fontSize={{ base: "2xl", sm: "4xl", md: "5xl" }}
             fontWeight="extrabold"
             fontFamily="游ゴシック体"
@@ -205,60 +206,61 @@ const Home: NextPage = () => {
               />
             </AspectRatio>
           </Stack>
-          <Divider />
-          <Stack
-            direction={{ base: "column", md: "row" }}
-            spacing="3"
-            align="center"
-            justify="center"
+        </VStack>
+        <Divider mt={{ base: "30px", md: "60px" }} />
+        <Stack
+          mt={{ base: "10px", md: "20px" }}
+          direction={{ base: "column", md: "row" }}
+          spacing="3"
+          align="center"
+          justify="center"
+        >
+          <Text
+            fontSize={{ base: "xl", md: "2xl" }}
+            fontWeight="bold"
+            color="gray.600"
           >
+            <ChevronRightIcon />
+            <Link color="blue.400" href="/quizzesIndex">
+              問題一覧
+            </Link>
+          </Text>
+          {user ? (
             <Text
               fontSize={{ base: "xl", md: "2xl" }}
               fontWeight="bold"
               color="gray.600"
             >
               <ChevronRightIcon />
-              <Link color="blue.400" href="/quizzesIndex">
-                問題一覧
+              <Link color="blue.400" href="/create">
+                問題作成
               </Link>
             </Text>
-            {user ? (
+          ) : (
+            <>
               <Text
                 fontSize={{ base: "xl", md: "2xl" }}
                 fontWeight="bold"
                 color="gray.600"
               >
                 <ChevronRightIcon />
-                <Link color="blue.400" href="/create">
-                  問題作成
+                <Link color="blue.400" href="/signup">
+                  ユーザー登録
                 </Link>
               </Text>
-            ) : (
-              <>
-                <Text
-                  fontSize={{ base: "xl", md: "2xl" }}
-                  fontWeight="bold"
-                  color="gray.600"
-                >
-                  <ChevronRightIcon />
-                  <Link color="blue.400" href="/signup">
-                    ユーザー登録
-                  </Link>
-                </Text>
-                <Text
-                  fontSize={{ base: "xl", md: "2xl" }}
-                  fontWeight="bold"
-                  color="gray.600"
-                >
-                  <ChevronRightIcon />
-                  <Link color="blue.400" href="/signin">
-                    ログイン
-                  </Link>
-                </Text>
-              </>
-            )}
-          </Stack>
-        </VStack>
+              <Text
+                fontSize={{ base: "xl", md: "2xl" }}
+                fontWeight="bold"
+                color="gray.600"
+              >
+                <ChevronRightIcon />
+                <Link color="blue.400" href="/signin">
+                  ログイン
+                </Link>
+              </Text>
+            </>
+          )}
+        </Stack>
       </Container>
     </>
   );
