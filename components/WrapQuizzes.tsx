@@ -10,24 +10,11 @@ import {
 } from "@chakra-ui/react";
 import { AiFillStar } from "react-icons/ai";
 import { useRecoilState } from "recoil";
-import { quizItemState } from "../constants/atom";
 import { useRouter } from "next/router";
-import { auth, db } from "../lib/firebase";
 
-interface QuizItem {
-  id: string;
-  uid: string;
-  userName: string;
-  genre: string;
-  content: string;
-  optionA: string;
-  optionB: string;
-  optionC: string;
-  optionD: string;
-  answer: string;
-  description: string;
-  favorites: string[];
-}
+import { quizItemState } from "../constants/atom";
+import { auth, db } from "../lib/firebase";
+import { QuizItem } from "../types/QuizItem";
 
 const WrapQuizzes: React.FC<{quizzes: QuizItem[]}> = ({quizzes}) => {
   const [quizItem, setQuizItem] = useRecoilState(quizItemState);

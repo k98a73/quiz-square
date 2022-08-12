@@ -17,20 +17,7 @@ import { AddIcon } from "@chakra-ui/icons";
 import Header from "../components/Header";
 import { auth, db } from "../lib/firebase";
 import WrapQuizzes from "../components/WrapQuizzes";
-interface QuizItem {
-  id: string;
-  uid: string;
-  userName: string;
-  genre: string;
-  content: string;
-  optionA: string;
-  optionB: string;
-  optionC: string;
-  optionD: string;
-  answer: string;
-  description: string;
-  favorites: string[];
-}
+import { QuizItem } from "../types/QuizItem";
 
 const QuizzesIndex = () => {
   const [quizzes, setQuizzes] = useState<QuizItem[]>([]);
