@@ -18,6 +18,7 @@ import {
   VStack,
 } from "@chakra-ui/react";
 import { SubmitHandler, useForm } from "react-hook-form";
+import { signInWithEmailAndPassword } from "firebase/auth";
 
 import Header from "../components/Header";
 import { auth } from "../lib/firebase";
@@ -45,13 +46,12 @@ export default function SignIn() {
 
   const handleClick = () => setShow(!show);
 
-  const onSubmit: SubmitHandler<Inputs> = async ({ email, password }) => {
-    try {
-      await auth.signInWithEmailAndPassword(email, password);
-      router.push("/quizzesIndex");
-    } catch (error: any) {
-      alert(error.message);
-    }
+  const onSubmit: SubmitHandler<Inputs> = ({ email, password }) => {
+    signInWithEmailAndPassword(auth, email, password)
+      .then(() => router.push("/quizzesIndex"))
+      .catch((error) => {
+        alert(error.message);
+      });
   };
 
   return (
