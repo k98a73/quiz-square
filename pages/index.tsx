@@ -13,6 +13,7 @@ import {
   Text,
   VStack,
 } from "@chakra-ui/react";
+import { onAuthStateChanged } from "firebase/auth";
 import type { NextPage } from "next";
 import { useState } from "react";
 import { MdCheckCircle } from "react-icons/md";
@@ -26,7 +27,7 @@ const Home: NextPage = () => {
   // マウントを監視するカスタムフック
   const isMountedRef = useIsMounted();
 
-  auth.onAuthStateChanged((user) => {
+  onAuthStateChanged(auth, (user) => {
     if (isMountedRef.current) setUser(user);
   });
 

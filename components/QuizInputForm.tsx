@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import {
   Container,
@@ -22,9 +22,15 @@ import {
 } from "@chakra-ui/react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { useRecoilState } from "recoil";
+import {
+  getDoc,
+  serverTimestamp,
+  doc,
+  setDoc,
+} from "firebase/firestore";
 
 import Header from "./Header";
-import { date, db } from "../lib/firebase";
+import { db } from "../lib/firebase";
 import { inputTheme } from "../constants/inputTheme";
 import useIsMounted from "../hooks/useIsMounted";
 import filterOptions from "../constants/filterOptions";
@@ -104,7 +110,7 @@ const QuizInputForm: React.FC<PROPS> = ({
       description,
     });
     if (contentDefaultValue === "") {
-      db.collection("quizzes").doc(quizID).set({
+      setDoc(doc(db, "quizzes", quizID), {
         id: quizID,
         uid: user?.uid,
         userName,
@@ -117,10 +123,11 @@ const QuizInputForm: React.FC<PROPS> = ({
         answer,
         description,
         favorites: [],
-        createdAt: date.FieldValue.serverTimestamp(),
+        createdAt: serverTimestamp(),
       });
     } else {
-      db.collection("quizzes").doc(quizID).set(
+      setDoc(
+        doc(db, "quizzes", quizID),
         {
           id: quizID,
           uid: user?.uid,
@@ -133,7 +140,7 @@ const QuizInputForm: React.FC<PROPS> = ({
           optionD,
           answer,
           description,
-          createdAt: date.FieldValue.serverTimestamp(),
+          createdAt: serverTimestamp(),
         },
         { merge: true }
       );
@@ -141,14 +148,14 @@ const QuizInputForm: React.FC<PROPS> = ({
     router.push("/quizzesIndex");
   };
 
-  const docRef = db.collection("users").doc(user?.uid);
-  if (user) {
-    docRef
-      .get()
-      .then((doc) => {
-        if (doc.exists) {
+  useEffect(() => {
+    const docRef = doc(db, "quizzes", user?.uid);
+    getDoc(docRef)
+      .then((documentSnapshot) => {
+        if (documentSnapshot.exists()) {
           // マウント時のみユーザーネームを更新
-          if (isMountedRef.current) setUserName(doc.data()?.userName);
+          if (isMountedRef.current)
+            setUserName(documentSnapshot.data()?.userName);
         } else {
           alert("No such document!");
         }
@@ -156,7 +163,8 @@ const QuizInputForm: React.FC<PROPS> = ({
       .catch((error) => {
         alert(error);
       });
-  }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   return (
     <>

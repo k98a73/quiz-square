@@ -12,6 +12,7 @@ import { FaSignOutAlt } from "react-icons/fa";
 import { db } from "../lib/firebase";
 import useIsMounted from "../hooks/useIsMounted";
 import SignOut from "../util/SignOut";
+import { doc, getDoc } from "firebase/firestore";
 
 const MyPageSignOutContainer = ({
   uid,
@@ -24,13 +25,13 @@ const MyPageSignOutContainer = ({
   const isMountedRef = useIsMounted();
   const avatarSize = useBreakpointValue({ base: "sm", md: "md" });
 
-  const docRef = db.collection("users").doc(uid);
-  docRef
-    .get()
-    .then((doc) => {
-      if (doc.exists) {
+  const docRef = doc(db, "users", uid);
+  getDoc(docRef)
+    .then((documentSnapshot) => {
+      if (documentSnapshot.exists()) {
         // マウント時のみアバター画像を更新
-        if (isMountedRef.current) setAvatarUrl(doc.data()?.imageUrl);
+        if (isMountedRef.current)
+          setAvatarUrl(documentSnapshot.data()?.imageUrl);
       } else {
         if (isMountedRef.current) alert("No such document!");
       }
