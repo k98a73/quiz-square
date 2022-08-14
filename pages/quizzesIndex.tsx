@@ -18,6 +18,8 @@ import Header from "../components/Header";
 import { auth, db } from "../lib/firebase";
 import WrapQuizzes from "../components/WrapQuizzes";
 import { QuizItem } from "../types/QuizItem";
+import { collection, onSnapshot, orderBy, query } from "firebase/firestore";
+import { onAuthStateChanged } from "firebase/auth";
 
 const QuizzesIndex = () => {
   const [quizzes, setQuizzes] = useState<QuizItem[]>([]);
@@ -28,27 +30,26 @@ const QuizzesIndex = () => {
   const router = useRouter();
 
   useEffect(() => {
-    const unSub = db
-      .collection("quizzes")
-      .orderBy("createdAt", "desc")
-      .onSnapshot((snapshot) => {
-        setQuizzes(
-          snapshot.docs.map((doc) => ({
-            id: doc.data().id,
-            uid: doc.data().uid,
-            userName: doc.data().userName,
-            genre: doc.data().genre,
-            content: doc.data().content,
-            optionA: doc.data().optionA,
-            optionB: doc.data().optionB,
-            optionC: doc.data().optionC,
-            optionD: doc.data().optionD,
-            answer: doc.data().answer,
-            description: doc.data().description,
-            favorites: doc.data().favorites,
-          }))
-        );
-      });
+    const quizzesCollectionRef = collection(db, "quizzes");
+    const q = query(quizzesCollectionRef, orderBy("createdAt", "desc"));
+    const unSub = onSnapshot(q, (querySnapshot) => {
+      setQuizzes(
+        querySnapshot.docs.map((doc) => ({
+          id: doc.data().id,
+          uid: doc.data().uid,
+          userName: doc.data().userName,
+          genre: doc.data().genre,
+          content: doc.data().content,
+          optionA: doc.data().optionA,
+          optionB: doc.data().optionB,
+          optionC: doc.data().optionC,
+          optionD: doc.data().optionD,
+          answer: doc.data().answer,
+          description: doc.data().description,
+          favorites: doc.data().favorites,
+        }))
+      );
+    });
     return () => unSub();
   }, []);
 
@@ -81,7 +82,7 @@ const QuizzesIndex = () => {
   }, [genreFilter, quizzes]);
 
   useEffect(() => {
-    const unSub = auth.onAuthStateChanged((user) => {
+    const unSub = onAuthStateChanged(auth, (user) => {
       setUser(user);
     });
     return () => unSub();
@@ -133,7 +134,12 @@ const QuizzesIndex = () => {
             <Flex mt="5" w="85%" alignItems="center">
               <HStack>
                 <Box bg="white">
-                  <Text w="90px" fontSize="xl" fontWeight="bold" color="gray.600">
+                  <Text
+                    w="90px"
+                    fontSize="xl"
+                    fontWeight="bold"
+                    color="gray.600"
+                  >
                     ジャンル:
                   </Text>
                 </Box>
