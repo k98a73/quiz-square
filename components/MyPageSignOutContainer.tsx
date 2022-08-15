@@ -8,11 +8,11 @@ import {
   useBreakpointValue,
 } from "@chakra-ui/react";
 import { FaSignOutAlt } from "react-icons/fa";
+import { doc, getDoc } from "firebase/firestore";
 
 import { db } from "../lib/firebase";
 import useIsMounted from "../hooks/useIsMounted";
 import SignOut from "../util/SignOut";
-import { doc, getDoc } from "firebase/firestore";
 
 const MyPageSignOutContainer = ({
   uid,
