@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import {
   Box,
   IconButton,
@@ -11,25 +11,18 @@ import {
 import { AiFillStar } from "react-icons/ai";
 import { useRecoilState } from "recoil";
 import { useRouter } from "next/router";
+import { doc, setDoc } from "firebase/firestore";
 
 import { quizItemState } from "../constants/atom";
-import { auth, db } from "../lib/firebase";
+import { db } from "../lib/firebase";
 import { QuizItem } from "../types/QuizItem";
+import useUserGet from "../hooks/useUserGet";
 
-const WrapQuizzes: React.FC<{quizzes: QuizItem[]}> = ({quizzes}) => {
+const WrapQuizzes: React.FC<{ quizzes: QuizItem[] }> = ({ quizzes }) => {
   const [quizItem, setQuizItem] = useRecoilState(quizItemState);
-  const [user, setUser] = useState<any>(false);
-  const router = useRouter();
-
-  useEffect(() => {
-    const unSub = auth.onAuthStateChanged((user) => {
-      setUser(user);
-    });
-    return () => unSub();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
-
+  const user = useUserGet();
   const uid = user?.uid;
+  const router = useRouter();
 
   const favoritesColor = (favorites: string[]) => {
     let favoriteExistence = false;
@@ -73,7 +66,8 @@ const WrapQuizzes: React.FC<{quizzes: QuizItem[]}> = ({quizzes}) => {
   const addFavorites = (id: string, favorites: string[]) => {
     if (favorites.length === 0) {
       favorites.push(uid);
-      db.collection("quizzes").doc(id).set(
+      setDoc(
+        doc(db, "quizzes", id),
         {
           favorites,
         },
@@ -93,7 +87,8 @@ const WrapQuizzes: React.FC<{quizzes: QuizItem[]}> = ({quizzes}) => {
       } else {
         favorites.push(uid);
       }
-      db.collection("quizzes").doc(id).set(
+      setDoc(
+        doc(db, "quizzes", id),
         {
           favorites,
         },
