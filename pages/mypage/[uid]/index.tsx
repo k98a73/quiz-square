@@ -16,6 +16,7 @@ import Header from "../../../components/Header";
 import { db } from "../../../lib/firebase";
 import { ArrowBackIcon, EditIcon } from "@chakra-ui/icons";
 import useSignOutUserRedirect from "../../../hooks/useSignOutUserRedirect";
+import { doc, getDoc } from "firebase/firestore";
 
 export default function MyPage() {
   const router = useRouter();
@@ -23,14 +24,13 @@ export default function MyPage() {
   const [userName, setUserName] = useState<any>("");
   const user = useSignOutUserRedirect();
 
-  const docRef = db.collection("users").doc(user?.uid);
+  const docRef = doc(db, "users", user?.uid);
   if (user) {
-    docRef
-      .get()
-      .then((doc) => {
-        if (doc.exists) {
-          setAvatarUrl(doc.data()?.imageUrl);
-          setUserName(doc.data()?.userName);
+    getDoc(docRef)
+      .then((documentSnapshot) => {
+        if (documentSnapshot.exists()) {
+          setAvatarUrl(documentSnapshot.data()?.imageUrl);
+          setUserName(documentSnapshot.data()?.userName);
         } else {
           alert("No such document!");
         }
