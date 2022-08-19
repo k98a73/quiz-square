@@ -32,6 +32,7 @@ import { auth, db } from "../../../lib/firebase";
 import { ArrowBackIcon, DeleteIcon, EditIcon } from "@chakra-ui/icons";
 import { useRouter } from "next/router";
 import { modalTheme } from "../../../constants/modalTheme";
+import { deleteDoc, doc } from "firebase/firestore";
 
 export default function QuizIndex() {
   const [quizItem, setQuizItem] = useRecoilState(quizItemState);
@@ -60,7 +61,7 @@ export default function QuizIndex() {
         answer: "",
         description: "",
       });
-      db.collection("quizzes").doc(quizItem.id).delete();
+      deleteDoc(doc(db, "quizzes", quizItem.id));
       router.push("/quizzesIndex");
     }
   };
