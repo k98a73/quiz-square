@@ -1,3 +1,4 @@
+import { collection, doc } from "firebase/firestore";
 import React from "react";
 
 import QuizInputForm from "../components/QuizInputForm";
@@ -5,7 +6,7 @@ import { db } from "../lib/firebase";
 
 export default function Create() {
   // 自動採番のドキュメントIDを事前に取得
-  const quizID = db.collection("quizzes").doc().id;
+  const quizID = doc(collection(db, "quizzes")).id;
   return (
     <QuizInputForm
       quizID={quizID}
