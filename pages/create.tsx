@@ -1,5 +1,5 @@
-import { collection, doc } from "firebase/firestore";
 import React from "react";
+import { collection, doc } from "firebase/firestore";
 
 import QuizInputForm from "../components/QuizInputForm";
 import { db } from "../lib/firebase";

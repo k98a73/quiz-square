@@ -13,13 +13,13 @@ import {
   VStack,
 } from "@chakra-ui/react";
 import { AddIcon } from "@chakra-ui/icons";
+import { collection, onSnapshot, orderBy, query } from "firebase/firestore";
+import { onAuthStateChanged } from "firebase/auth";
 
 import Header from "../components/Header";
 import { auth, db } from "../lib/firebase";
 import WrapQuizzes from "../components/WrapQuizzes";
 import { QuizItem } from "../types/QuizItem";
-import { collection, onSnapshot, orderBy, query } from "firebase/firestore";
-import { onAuthStateChanged } from "firebase/auth";
 
 const QuizzesIndex = () => {
   const [quizzes, setQuizzes] = useState<QuizItem[]>([]);

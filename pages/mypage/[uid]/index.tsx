@@ -11,12 +11,12 @@ import {
   Tooltip,
   VStack,
 } from "@chakra-ui/react";
+import { ArrowBackIcon, EditIcon } from "@chakra-ui/icons";
+import { doc, getDoc } from "firebase/firestore";
 
 import Header from "../../../components/Header";
 import { db } from "../../../lib/firebase";
-import { ArrowBackIcon, EditIcon } from "@chakra-ui/icons";
 import useSignOutUserRedirect from "../../../hooks/useSignOutUserRedirect";
-import { doc, getDoc } from "firebase/firestore";
 
 export default function MyPage() {
   const router = useRouter();
