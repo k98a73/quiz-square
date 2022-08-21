@@ -22,12 +22,7 @@ import {
 } from "@chakra-ui/react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { useRecoilState } from "recoil";
-import {
-  getDoc,
-  serverTimestamp,
-  doc,
-  setDoc,
-} from "firebase/firestore";
+import { getDoc, serverTimestamp, doc, setDoc } from "firebase/firestore";
 
 import Header from "./Header";
 import { db } from "../lib/firebase";
@@ -148,8 +143,8 @@ const QuizInputForm: React.FC<PROPS> = ({
     router.push("/quizzesIndex");
   };
 
-  useEffect(() => {
-    const docRef = doc(db, "quizzes", user?.uid);
+  if (user) {
+    const docRef = doc(db, "users", user.uid);
     getDoc(docRef)
       .then((documentSnapshot) => {
         if (documentSnapshot.exists()) {
@@ -163,8 +158,7 @@ const QuizInputForm: React.FC<PROPS> = ({
       .catch((error) => {
         alert(error);
       });
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }
 
   return (
     <>
