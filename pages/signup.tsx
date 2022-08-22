@@ -89,7 +89,7 @@ export default function SignUp() {
         router.push("/quizzesIndex");
       })
       .catch((error: any) => {
-        alert(error.message);
+        alert(error);
       });
   };
 
@@ -103,6 +103,7 @@ export default function SignUp() {
       const uploadTask = uploadBytesResumable(imageRef, image);
       uploadTask.on(
         "state_changed",
+        null,
         (error) => {
           alert(error);
           reject();
