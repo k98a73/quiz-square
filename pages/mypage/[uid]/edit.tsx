@@ -66,6 +66,8 @@ export default function MyPageEdit() {
     formState: { errors },
   } = useForm<Inputs>({});
 
+  const uid = user.uid;
+
   useEffect(() => {
     const quizzesCollectionRef = collection(db, "quizzes");
     const q = query(quizzesCollectionRef);
@@ -82,8 +84,8 @@ export default function MyPageEdit() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  const docRef = doc(db, "users", user?.uid);
   if (user) {
+    const docRef = doc(db, "users", uid);
     getDoc(docRef)
       .then((documentSnapshot) => {
         if (documentSnapshot.exists()) {
@@ -113,7 +115,6 @@ export default function MyPageEdit() {
 
   const onSubmit: SubmitHandler<Inputs> = async ({ userName, image }) => {
     setIsLoading(true);
-    const uid = user?.uid;
     userNameChange(uid, userName);
     if (image[0]) {
       const imageName = new Date().toISOString() + image[0].name;
@@ -132,7 +133,6 @@ export default function MyPageEdit() {
     } else {
       setDoc(doc(db, "users", uid), { userName }, { merge: true });
     }
-    if (isMountedRef.current) setIsLoading(false);
     router.push("/quizzesIndex");
   };
 
@@ -142,6 +142,7 @@ export default function MyPageEdit() {
       const uploadTask = uploadBytesResumable(imageRef, image);
       uploadTask.on(
         "state_changed",
+        null,
         (error) => {
           alert(error);
           reject();

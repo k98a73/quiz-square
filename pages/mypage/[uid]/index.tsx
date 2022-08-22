@@ -24,8 +24,8 @@ export default function MyPage() {
   const [userName, setUserName] = useState<any>("");
   const user = useSignOutUserRedirect();
 
-  const docRef = doc(db, "users", user?.uid);
   if (user) {
+    const docRef = doc(db, "users", user.uid);
     getDoc(docRef)
       .then((documentSnapshot) => {
         if (documentSnapshot.exists()) {
