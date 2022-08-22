@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import {
   ButtonGroup,
   Flex,
@@ -13,21 +13,14 @@ import { HiOutlineUserAdd } from "react-icons/hi";
 import { useRouter } from "next/router";
 import Head from "next/head";
 
-import { auth } from "../lib/firebase";
 import MyPageSignOutContainer from "./MyPageSignOutContainer";
+import useGetUser from "../hooks/useGetUser";
 
 const Header = () => {
-  const [user, setUser] = useState<any>("");
+  const user = useGetUser();
   const router = useRouter();
   const iconButtonSize = useBreakpointValue({ base: "md", md: "lg" });
   const iconSize = useBreakpointValue({ base: 18, md: 23 });
-
-  useEffect(() => {
-    const unSub = auth.onAuthStateChanged((user) => {
-      setUser(user);
-    });
-    return () => unSub();
-  }, []);
 
   return (
     <>
@@ -53,7 +46,7 @@ const Header = () => {
         <ButtonGroup mr={{ base: "5px", md: "10px" }} alignItems="center">
           {user ? (
             <MyPageSignOutContainer
-              uid={user?.uid}
+              user={user}
               router={router}
               iconButtonSize={iconButtonSize}
               iconSize={iconSize}

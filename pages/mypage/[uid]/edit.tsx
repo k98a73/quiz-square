@@ -12,6 +12,21 @@ import {
   Spinner,
   Text,
 } from "@chakra-ui/react";
+import {
+  collection,
+  doc,
+  getDoc,
+  onSnapshot,
+  query,
+  setDoc,
+  updateDoc,
+} from "firebase/firestore";
+import {
+  deleteObject,
+  getDownloadURL,
+  ref,
+  uploadBytesResumable,
+} from "firebase/storage";
 import { useRouter } from "next/router";
 import React, { useEffect, useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
@@ -20,7 +35,7 @@ import Header from "../../../components/Header";
 import { inputTheme } from "../../../constants/inputTheme";
 import useIsMounted from "../../../hooks/useIsMounted";
 import useSignOutUserRedirect from "../../../hooks/useSignOutUserRedirect";
-import firebase, { db, storage } from "../../../lib/firebase";
+import { db, storage } from "../../../lib/firebase";
 
 interface QuizItem {
   id: string;
@@ -51,11 +66,15 @@ export default function MyPageEdit() {
     formState: { errors },
   } = useForm<Inputs>({});
 
+  const uid = user.uid;
+
   useEffect(() => {
-    const unSub = db.collection("quizzes").onSnapshot((snapshot) => {
+    const quizzesCollectionRef = collection(db, "quizzes");
+    const q = query(quizzesCollectionRef);
+    const unSub = onSnapshot(q, (querySnapshot) => {
       if (isMountedRef.current)
         setQuizzes(
-          snapshot.docs.map((doc) => ({
+          querySnapshot.docs.map((doc) => ({
             id: doc.data().id,
             uid: doc.data().uid,
           }))
@@ -65,15 +84,14 @@ export default function MyPageEdit() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  const docRef = db.collection("users").doc(user?.uid);
   if (user) {
-    docRef
-      .get()
-      .then((doc) => {
-        if (doc.exists) {
+    const docRef = doc(db, "users", uid);
+    getDoc(docRef)
+      .then((documentSnapshot) => {
+        if (documentSnapshot.exists()) {
           if (isMountedRef.current) {
-            setOldUserName(doc.data()?.userName);
-            setOldImageName(doc.data()?.imageName);
+            setOldUserName(documentSnapshot.data()?.userName);
+            setOldImageName(documentSnapshot.data()?.imageName);
             if (!isDefaultUserName) setValue("userName", oldUserName);
             setIsDefaultUserName(true);
           }
@@ -97,12 +115,12 @@ export default function MyPageEdit() {
 
   const onSubmit: SubmitHandler<Inputs> = async ({ userName, image }) => {
     setIsLoading(true);
-    const uid = user?.uid;
     userNameChange(uid, userName);
     if (image[0]) {
       const imageName = new Date().toISOString() + image[0].name;
       const imageUrl = await uploadTaskPromise(image[0], imageName, uid);
-      db.collection("users").doc(uid).set(
+      setDoc(
+        doc(db, "users", uid),
         {
           userName,
           imageUrl,
@@ -110,26 +128,27 @@ export default function MyPageEdit() {
         },
         { merge: true }
       );
-      await storage.ref(`/images/${uid}/${oldImageName}`).delete();
+      const oldImageNameRef = ref(storage, `/images/${uid}/${oldImageName}`);
+      await deleteObject(oldImageNameRef);
     } else {
-      db.collection("users").doc(uid).set({ userName }, { merge: true });
+      await setDoc(doc(db, "users", uid), { userName }, { merge: true });
     }
-    if (isMountedRef.current) setIsLoading(false);
     router.push("/quizzesIndex");
   };
 
   async function uploadTaskPromise(image: any, imageName: any, uid: any) {
     return new Promise(function (resolve, reject) {
-      const uploadTask = storage.ref(`/images/${uid}/${imageName}`).put(image);
+      const imageRef = ref(storage, `/images/${uid}/${imageName}`);
+      const uploadTask = uploadBytesResumable(imageRef, image);
       uploadTask.on(
-        firebase.storage.TaskEvent.STATE_CHANGED,
+        "state_changed",
         null,
         (error) => {
-          alert(error.message);
+          alert(error);
           reject();
         },
         () => {
-          uploadTask.snapshot.ref.getDownloadURL().then((fireBaseUrl) => {
+          getDownloadURL(uploadTask.snapshot.ref).then((fireBaseUrl) => {
             resolve(fireBaseUrl);
           });
         }
@@ -140,8 +159,8 @@ export default function MyPageEdit() {
   const userNameChange = (uid: string, userName: string) => {
     quizzes.map((quiz) => {
       if (quiz.uid === uid) {
-        const userRef = db.collection("quizzes").doc(quiz.id);
-        userRef.update({
+        const userRef = doc(db, "quizzes", quiz.id);
+        updateDoc(userRef, {
           userName,
         });
       }

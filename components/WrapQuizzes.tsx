@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import {
   Box,
   IconButton,
@@ -11,33 +11,28 @@ import {
 import { AiFillStar } from "react-icons/ai";
 import { useRecoilState } from "recoil";
 import { useRouter } from "next/router";
+import { doc, setDoc } from "firebase/firestore";
 
 import { quizItemState } from "../constants/atom";
-import { auth, db } from "../lib/firebase";
+import { db } from "../lib/firebase";
 import { QuizItem } from "../types/QuizItem";
+import useGetUser from "../hooks/useGetUser";
 
-const WrapQuizzes: React.FC<{quizzes: QuizItem[]}> = ({quizzes}) => {
+const WrapQuizzes: React.FC<{ quizzes: QuizItem[] }> = ({ quizzes }) => {
   const [quizItem, setQuizItem] = useRecoilState(quizItemState);
-  const [user, setUser] = useState<any>(false);
-  const router = useRouter();
-
-  useEffect(() => {
-    const unSub = auth.onAuthStateChanged((user) => {
-      setUser(user);
-    });
-    return () => unSub();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
-
+  const user = useGetUser();
   const uid = user?.uid;
+  const router = useRouter();
 
   const favoritesColor = (favorites: string[]) => {
     let favoriteExistence = false;
-    favorites.forEach((favorite) => {
-      if (favorite === uid) {
-        favoriteExistence = true;
-      }
-    });
+    if (favorites) {
+      favorites.forEach((favorite) => {
+        if (favorite === uid) {
+          favoriteExistence = true;
+        }
+      });
+    }
     return favoriteExistence;
   };
 
@@ -73,7 +68,8 @@ const WrapQuizzes: React.FC<{quizzes: QuizItem[]}> = ({quizzes}) => {
   const addFavorites = (id: string, favorites: string[]) => {
     if (favorites.length === 0) {
       favorites.push(uid);
-      db.collection("quizzes").doc(id).set(
+      setDoc(
+        doc(db, "quizzes", id),
         {
           favorites,
         },
@@ -82,18 +78,21 @@ const WrapQuizzes: React.FC<{quizzes: QuizItem[]}> = ({quizzes}) => {
     } else {
       let favoriteExistence = false;
       let favoritesIndex = 0;
-      favorites.forEach((favorite, index) => {
-        if (favorite === uid) {
-          favoriteExistence = true;
-          favoritesIndex = index;
-        }
-      });
+      if (favorites) {
+        favorites.forEach((favorite, index) => {
+          if (favorite === uid) {
+            favoriteExistence = true;
+            favoritesIndex = index;
+          }
+        });
+      }
       if (favoriteExistence) {
         favorites.splice(favoritesIndex, 1);
       } else {
         favorites.push(uid);
       }
-      db.collection("quizzes").doc(id).set(
+      setDoc(
+        doc(db, "quizzes", id),
         {
           favorites,
         },

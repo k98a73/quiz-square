@@ -1,5 +1,7 @@
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
+import { onAuthStateChanged } from "firebase/auth";
+
 import { auth } from "../lib/firebase";
 
 const useSignInUserRedirect = () => {
@@ -7,7 +9,7 @@ const useSignInUserRedirect = () => {
   const [user, setUser] = useState<any>("");
 
   useEffect(() => {
-    const unSub = auth.onAuthStateChanged((user) => {
+    const unSub = onAuthStateChanged(auth, user => {
       setUser(user);
       user && router.push("/quizzesIndex");
     });

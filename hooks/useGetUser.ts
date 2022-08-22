@@ -1,23 +1,17 @@
-import { useEffect, useState } from "react";
-import { useRouter } from "next/router";
 import { onAuthStateChanged } from "firebase/auth";
+import { useEffect, useState } from "react";
 
 import { auth } from "../lib/firebase";
 
-const useSignOutUserRedirect = () => {
-  const router = useRouter();
+const useGetUser = () => {
   const [user, setUser] = useState<any>("");
-
   useEffect(() => {
     const unSub = onAuthStateChanged(auth, (user) => {
       setUser(user);
-      !user && router.push("/signin");
     });
     return () => unSub();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
-
   return user;
 };
 
-export default useSignOutUserRedirect;
+export default useGetUser;

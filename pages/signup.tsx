@@ -20,11 +20,14 @@ import {
   Text,
   VStack,
 } from "@chakra-ui/react";
+import { ViewIcon, ViewOffIcon } from "@chakra-ui/icons";
+import { createUserWithEmailAndPassword, getAuth } from "firebase/auth";
+import { doc, setDoc } from "firebase/firestore";
+import { getDownloadURL, ref, uploadBytesResumable } from "firebase/storage";
 
 import Header from "../components/Header";
-import { db, auth } from "../lib/firebase";
-import firebase, { storage } from "../lib/firebase";
-import { ViewIcon, ViewOffIcon } from "@chakra-ui/icons";
+import { db } from "../lib/firebase";
+import { storage } from "../lib/firebase";
 import { inputTheme } from "../constants/inputTheme";
 import useSignInUserRedirect from "../hooks/useSignInUserRedirect";
 
@@ -70,25 +73,23 @@ export default function SignUp() {
     image,
   }) => {
     setIsLoading(true);
-    try {
-      await auth
-        .createUserWithEmailAndPassword(email, password)
-        .then(async (user) => {
-          const uid = user.user?.uid;
-          const imageName = new Date().toISOString() + image[0].name;
-          const imageUrl = await uploadTaskPromise(image[0], imageName, uid);
-          db.collection("users").doc(user.user?.uid).set({
-            uid,
-            userName,
-            imageUrl,
-            imageName,
-          });
-          setIsLoading(false);
-          router.push("/quizzesIndex");
+    const auth = getAuth();
+    createUserWithEmailAndPassword(auth, email, password)
+      .then(async (user) => {
+        const uid = user.user?.uid;
+        const imageName = new Date().toISOString() + image[0].name;
+        const imageUrl = await uploadTaskPromise(image[0], imageName, uid);
+        setDoc(doc(db, "users", user.user?.uid), {
+          uid,
+          userName,
+          imageUrl,
+          imageName,
         });
-    } catch (error: any) {
-      alert(error.message);
-    }
+        router.push("/quizzesIndex");
+      })
+      .catch((error: any) => {
+        alert(error);
+      });
   };
 
   async function uploadTaskPromise(
@@ -97,16 +98,17 @@ export default function SignUp() {
     uid: string | undefined
   ) {
     return new Promise(function (resolve, reject) {
-      const uploadTask = storage.ref(`/images/${uid}/${imageName}`).put(image);
+      const imageRef = ref(storage, `/images/${uid}/${imageName}`);
+      const uploadTask = uploadBytesResumable(imageRef, image);
       uploadTask.on(
-        firebase.storage.TaskEvent.STATE_CHANGED,
+        "state_changed",
         null,
         (error) => {
-          alert(error.message);
+          alert(error);
           reject();
         },
         () => {
-          uploadTask.snapshot.ref.getDownloadURL().then((fireBaseUrl) => {
+          getDownloadURL(uploadTask.snapshot.ref).then((fireBaseUrl) => {
             resolve(fireBaseUrl);
           });
         }
