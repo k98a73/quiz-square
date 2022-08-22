@@ -81,7 +81,7 @@ https://quiz-square.vercel.app/
   - React Hook Form
   - Chakra UI
 - バックエンド
-  - Firebase 8.10.0
+  - Firebase 9.9.2
 - その他
   - Vercel
 
