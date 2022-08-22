@@ -14,10 +14,10 @@ import { useRouter } from "next/router";
 import Head from "next/head";
 
 import MyPageSignOutContainer from "./MyPageSignOutContainer";
-import useUserGet from "../hooks/useUserGet";
+import useGetUser from "../hooks/useGetUser";
 
 const Header = () => {
-  const user = useUserGet();
+  const user = useGetUser();
   const router = useRouter();
   const iconButtonSize = useBreakpointValue({ base: "md", md: "lg" });
   const iconSize = useBreakpointValue({ base: 18, md: 23 });
@@ -46,7 +46,7 @@ const Header = () => {
         <ButtonGroup mr={{ base: "5px", md: "10px" }} alignItems="center">
           {user ? (
             <MyPageSignOutContainer
-              uid={user?.uid}
+              user={user}
               router={router}
               iconButtonSize={iconButtonSize}
               iconSize={iconSize}

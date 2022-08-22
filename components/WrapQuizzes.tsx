@@ -16,11 +16,11 @@ import { doc, setDoc } from "firebase/firestore";
 import { quizItemState } from "../constants/atom";
 import { db } from "../lib/firebase";
 import { QuizItem } from "../types/QuizItem";
-import useUserGet from "../hooks/useUserGet";
+import useGetUser from "../hooks/useGetUser";
 
 const WrapQuizzes: React.FC<{ quizzes: QuizItem[] }> = ({ quizzes }) => {
   const [quizItem, setQuizItem] = useRecoilState(quizItemState);
-  const user = useUserGet();
+  const user = useGetUser();
   const uid = user?.uid;
   const router = useRouter();
 

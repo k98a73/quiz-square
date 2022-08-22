@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 
 import { auth } from "../lib/firebase";
 
-const useUserGet = () => {
+const useGetUser = () => {
   const [user, setUser] = useState<any>("");
   useEffect(() => {
     const unSub = onAuthStateChanged(auth, (user) => {
@@ -14,4 +14,4 @@ const useUserGet = () => {
   return user;
 };
 
-export default useUserGet;
+export default useGetUser;

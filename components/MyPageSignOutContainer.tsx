@@ -15,7 +15,7 @@ import useIsMounted from "../hooks/useIsMounted";
 import SignOut from "../util/SignOut";
 
 const MyPageSignOutContainer = ({
-  uid,
+  user,
   router,
   iconButtonSize,
   iconSize,
@@ -24,21 +24,26 @@ const MyPageSignOutContainer = ({
   // マウントを監視するカスタムフック
   const isMountedRef = useIsMounted();
   const avatarSize = useBreakpointValue({ base: "sm", md: "md" });
+  const uid = user?.uid;
 
-  const docRef = doc(db, "users", uid);
-  getDoc(docRef)
-    .then((documentSnapshot) => {
-      if (documentSnapshot.exists()) {
-        // マウント時のみアバター画像を更新
-        if (isMountedRef.current)
-          setAvatarUrl(documentSnapshot.data()?.imageUrl);
-      } else {
-        if (isMountedRef.current) alert("No such document!");
-      }
-    })
-    .catch((error) => {
-      alert(error);
-    });
+
+  if (user) {
+    const docRef = doc(db, "users", uid);
+    getDoc(docRef)
+      .then((documentSnapshot) => {
+        if (documentSnapshot.exists()) {
+          // マウント時のみアバター画像を更新
+          if (isMountedRef.current)
+            setAvatarUrl(documentSnapshot.data()?.imageUrl);
+        } 
+        // else {
+        //   if (isMountedRef.current) alert("No such document!");
+        // }
+      })
+      .catch((error) => {
+        alert(error);
+      });
+  }
 
   return (
     <>

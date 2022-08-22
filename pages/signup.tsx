@@ -85,7 +85,6 @@ export default function SignUp() {
           imageUrl,
           imageName,
         });
-        setIsLoading(false);
         router.push("/quizzesIndex");
       })
       .catch((error: any) => {
