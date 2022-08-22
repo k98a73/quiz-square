@@ -90,7 +90,7 @@ https://quiz-square.vercel.app/
 以下のコマンドを順に実行  
 % git clone https://github.com/k98a73/quiz-square.git  
 % cd quiz-square  
-% yarn install  
+% yarn  
 % yarn dev
 
 # 工夫した点
