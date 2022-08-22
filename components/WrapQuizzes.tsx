@@ -26,11 +26,13 @@ const WrapQuizzes: React.FC<{ quizzes: QuizItem[] }> = ({ quizzes }) => {
 
   const favoritesColor = (favorites: string[]) => {
     let favoriteExistence = false;
-    favorites.forEach((favorite) => {
-      if (favorite === uid) {
-        favoriteExistence = true;
-      }
-    });
+    if (favorites) {
+      favorites.forEach((favorite) => {
+        if (favorite === uid) {
+          favoriteExistence = true;
+        }
+      });
+    }
     return favoriteExistence;
   };
 
@@ -76,12 +78,14 @@ const WrapQuizzes: React.FC<{ quizzes: QuizItem[] }> = ({ quizzes }) => {
     } else {
       let favoriteExistence = false;
       let favoritesIndex = 0;
-      favorites.forEach((favorite, index) => {
-        if (favorite === uid) {
-          favoriteExistence = true;
-          favoritesIndex = index;
-        }
-      });
+      if (favorites) {
+        favorites.forEach((favorite, index) => {
+          if (favorite === uid) {
+            favoriteExistence = true;
+            favoritesIndex = index;
+          }
+        });
+      }
       if (favoriteExistence) {
         favorites.splice(favoritesIndex, 1);
       } else {

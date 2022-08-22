@@ -93,11 +93,13 @@ const QuizzesIndex = () => {
 
   const favoritesQuizzes = quizzes.filter((quiz) => {
     let favoriteExistence = false;
-    quiz.favorites.forEach((favorite) => {
-      if (favorite === uid) {
-        favoriteExistence = true;
-      }
-    });
+    if (quiz.favorites) {
+      quiz.favorites.forEach((favorite) => {
+        if (favorite === uid) {
+          favoriteExistence = true;
+        }
+      });
+    }
     if (favoriteExistence) return quiz;
   });
 
