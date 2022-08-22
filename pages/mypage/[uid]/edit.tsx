@@ -131,7 +131,7 @@ export default function MyPageEdit() {
       const oldImageNameRef = ref(storage, `/images/${uid}/${oldImageName}`);
       await deleteObject(oldImageNameRef);
     } else {
-      setDoc(doc(db, "users", uid), { userName }, { merge: true });
+      await setDoc(doc(db, "users", uid), { userName }, { merge: true });
     }
     router.push("/quizzesIndex");
   };

@@ -26,7 +26,6 @@ const MyPageSignOutContainer = ({
   const avatarSize = useBreakpointValue({ base: "sm", md: "md" });
   const uid = user?.uid;
 
-
   if (user) {
     const docRef = doc(db, "users", uid);
     getDoc(docRef)
@@ -35,10 +34,9 @@ const MyPageSignOutContainer = ({
           // マウント時のみアバター画像を更新
           if (isMountedRef.current)
             setAvatarUrl(documentSnapshot.data()?.imageUrl);
-        } 
-        // else {
-        //   if (isMountedRef.current) alert("No such document!");
-        // }
+        } else {
+          if (isMountedRef.current) alert("No such document!");
+        }
       })
       .catch((error) => {
         alert(error);
