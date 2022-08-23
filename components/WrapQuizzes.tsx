@@ -1,7 +1,9 @@
 import React from "react";
 import {
   Box,
+  HStack,
   IconButton,
+  Spacer,
   Text,
   Tooltip,
   VStack,
@@ -9,6 +11,7 @@ import {
   WrapItem,
 } from "@chakra-ui/react";
 import { AiFillStar } from "react-icons/ai";
+import { FaHeart } from "react-icons/fa";
 import { useRecoilState } from "recoil";
 import { useRouter } from "next/router";
 import { doc, setDoc } from "firebase/firestore";
@@ -153,35 +156,63 @@ const WrapQuizzes: React.FC<{ quizzes: QuizItem[] }> = ({ quizzes }) => {
                 </Text>
               </Box>
               {user && (
-                <Tooltip
-                  label="お気に入り"
-                  fontSize="md"
-                  bg="gray.500"
-                  color="white"
-                  placement="bottom"
-                  hasArrow
-                >
-                  <IconButton
-                    aria-label="favorites"
-                    bg="rgba(0,0,0,0)"
-                    rounded="full"
-                    size="sm"
-                    _hover={{
-                      cursor: "pointer",
-                      backgroundColor: "#f4f4f4",
-                      color: "#c0ccce",
-                    }}
-                    icon={
-                      <AiFillStar
-                        color={
-                          favoritesColor(quiz.favorites) ? "yellow" : "white"
-                        }
-                        size="23"
-                      />
-                    }
-                    onClick={() => addFavorites(quiz.id, quiz.favorites)}
-                  />
-                </Tooltip>
+                <HStack w="80%">
+                  <Tooltip
+                    label="いいね"
+                    fontSize="md"
+                    bg="gray.500"
+                    color="white"
+                    placement="bottom"
+                    hasArrow
+                  >
+                    <IconButton
+                      aria-label="likes"
+                      bg="rgba(0,0,0,0)"
+                      rounded="full"
+                      size="sm"
+                      _hover={{
+                        cursor: "pointer",
+                        backgroundColor: "#f4f4f4",
+                        color: "#c0ccce",
+                      }}
+                      icon={
+                        <FaHeart
+                          size="23"
+                        />
+                      }
+                    />
+                  </Tooltip>
+                  <Spacer></Spacer>
+                  <Tooltip
+                    label="お気に入り"
+                    fontSize="md"
+                    bg="gray.500"
+                    color="white"
+                    placement="bottom"
+                    hasArrow
+                  >
+                    <IconButton
+                      aria-label="favorites"
+                      bg="rgba(0,0,0,0)"
+                      rounded="full"
+                      size="sm"
+                      _hover={{
+                        cursor: "pointer",
+                        backgroundColor: "#f4f4f4",
+                        color: "#c0ccce",
+                      }}
+                      icon={
+                        <AiFillStar
+                          color={
+                            favoritesColor(quiz.favorites) ? "yellow" : "white"
+                          }
+                          size="23"
+                        />
+                      }
+                      onClick={() => addFavorites(quiz.id, quiz.favorites)}
+                    />
+                  </Tooltip>
+                </HStack>
               )}
             </VStack>
           </WrapItem>
