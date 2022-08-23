@@ -20,7 +20,7 @@ const MyPageSignOutContainer = ({
   iconButtonSize,
   iconSize,
 }: any) => {
-  const [avatarUrl, setAvatarUrl] = useState<any>("");
+  const [avatarUrl, setAvatarUrl] = useState<any>(false);
   // マウントを監視するカスタムフック
   const isMountedRef = useIsMounted();
   const avatarSize = useBreakpointValue({ base: "sm", md: "md" });
