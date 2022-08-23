@@ -11,4 +11,5 @@ export interface QuizItem {
   answer: string;
   description: string;
   favorites: string[];
+  likes: string[];
 }

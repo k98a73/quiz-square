@@ -118,6 +118,7 @@ const QuizInputForm: React.FC<PROPS> = ({
         answer,
         description,
         favorites: [],
+        likes: [],
         createdAt: serverTimestamp(),
       });
     } else {
