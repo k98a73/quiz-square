@@ -39,6 +39,18 @@ const WrapQuizzes: React.FC<{ quizzes: QuizItem[] }> = ({ quizzes }) => {
     return favoriteExistence;
   };
 
+  const likesColor = (likes: string[]) => {
+    let likeExistence = false;
+    if (likes) {
+      likes.forEach((like) => {
+        if (like === uid) {
+          likeExistence = true;
+        }
+      });
+    }
+    return likeExistence;
+  };
+
   const handleSelectQuiz = (
     id: string,
     uid: string,
@@ -98,6 +110,42 @@ const WrapQuizzes: React.FC<{ quizzes: QuizItem[] }> = ({ quizzes }) => {
         doc(db, "quizzes", id),
         {
           favorites,
+        },
+        { merge: true }
+      );
+    }
+  };
+
+  const addLikes = (id: string, likes: string[]) => {
+    if (likes.length === 0) {
+      likes.push(uid);
+      setDoc(
+        doc(db, "quizzes", id),
+        {
+          likes,
+        },
+        { merge: true }
+      );
+    } else {
+      let likeExistence = false;
+      let likesIndex = 0;
+      if (likes) {
+        likes.forEach((like, index) => {
+          if (like === uid) {
+            likeExistence = true;
+            likesIndex = index;
+          }
+        });
+      }
+      if (likeExistence) {
+        likes.splice(likesIndex, 1);
+      } else {
+        likes.push(uid);
+      }
+      setDoc(
+        doc(db, "quizzes", id),
+        {
+          likes,
         },
         { merge: true }
       );
@@ -177,9 +225,13 @@ const WrapQuizzes: React.FC<{ quizzes: QuizItem[] }> = ({ quizzes }) => {
                       }}
                       icon={
                         <FaHeart
+                          color={
+                            likesColor(quiz.likes) ? "pink" : "white"
+                          }
                           size="23"
                         />
                       }
+                      onClick={() => addLikes(quiz.id, quiz.likes)}
                     />
                   </Tooltip>
                   <Spacer></Spacer>
