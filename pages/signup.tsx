@@ -79,7 +79,7 @@ export default function SignUp() {
         const uid = user.user?.uid;
         const imageName = new Date().toISOString() + image[0].name;
         const imageUrl = await uploadTaskPromise(image[0], imageName, uid);
-        setDoc(doc(db, "users", user.user?.uid), {
+        await setDoc(doc(db, "users", user.user?.uid), {
           uid,
           userName,
           imageUrl,
