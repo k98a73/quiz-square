@@ -205,35 +205,36 @@ const WrapQuizzes: React.FC<{ quizzes: QuizItem[] }> = ({ quizzes }) => {
               </Box>
               {user && (
                 <HStack w="80%">
-                  <Tooltip
-                    label="いいね"
-                    fontSize="md"
-                    bg="gray.500"
-                    color="white"
-                    placement="bottom"
-                    hasArrow
-                  >
-                    <IconButton
-                      aria-label="likes"
-                      bg="rgba(0,0,0,0)"
-                      rounded="full"
-                      size="sm"
-                      _hover={{
-                        cursor: "pointer",
-                        backgroundColor: "#f4f4f4",
-                        color: "#c0ccce",
-                      }}
-                      icon={
-                        <FaHeart
-                          color={
-                            likesColor(quiz.likes) ? "pink" : "white"
-                          }
-                          size="23"
-                        />
-                      }
-                      onClick={() => addLikes(quiz.id, quiz.likes)}
-                    />
-                  </Tooltip>
+                  <HStack>
+                    <Tooltip
+                      label="いいね"
+                      fontSize="md"
+                      bg="gray.500"
+                      color="white"
+                      placement="bottom"
+                      hasArrow
+                    >
+                      <IconButton
+                        aria-label="likes"
+                        bg="rgba(0,0,0,0)"
+                        rounded="full"
+                        size="sm"
+                        _hover={{
+                          cursor: "pointer",
+                          backgroundColor: "#f4f4f4",
+                          color: "#c0ccce",
+                        }}
+                        icon={
+                          <FaHeart
+                            color={likesColor(quiz.likes) ? "pink" : "white"}
+                            size="23"
+                          />
+                        }
+                        onClick={() => addLikes(quiz.id, quiz.likes)}
+                      />
+                    </Tooltip>
+                    <Text fontSize="lg">{quiz.likes.length}</Text>
+                  </HStack>
                   <Spacer></Spacer>
                   <Tooltip
                     label="お気に入り"
