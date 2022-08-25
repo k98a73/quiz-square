@@ -81,7 +81,7 @@ const QuizInputForm: React.FC<PROPS> = ({
     formState: { errors },
   } = useForm<Inputs>();
 
-  const onSubmit: SubmitHandler<Inputs> = ({
+  const onSubmit: SubmitHandler<Inputs> = async ({
     genre,
     content,
     optionA,
@@ -105,7 +105,7 @@ const QuizInputForm: React.FC<PROPS> = ({
       description,
     });
     if (contentDefaultValue === "") {
-      setDoc(doc(db, "quizzes", quizID), {
+      await setDoc(doc(db, "quizzes", quizID), {
         id: quizID,
         uid: user?.uid,
         userName,
@@ -122,7 +122,7 @@ const QuizInputForm: React.FC<PROPS> = ({
         createdAt: serverTimestamp(),
       });
     } else {
-      setDoc(
+      await setDoc(
         doc(db, "quizzes", quizID),
         {
           id: quizID,
