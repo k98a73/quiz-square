@@ -203,41 +203,10 @@ const WrapQuizzes: React.FC<{ quizzes: QuizItem[] }> = ({ quizzes }) => {
                   {`問題：${quiz.content}`}
                 </Text>
               </Box>
-              {user && (
-                <HStack w="80%">
-                  <HStack>
-                    <Tooltip
-                      label="いいね"
-                      fontSize="md"
-                      bg="gray.500"
-                      color="white"
-                      placement="bottom"
-                      hasArrow
-                    >
-                      <IconButton
-                        aria-label="likes"
-                        bg="rgba(0,0,0,0)"
-                        rounded="full"
-                        size="sm"
-                        _hover={{
-                          cursor: "pointer",
-                          backgroundColor: "#f4f4f4",
-                          color: "#c0ccce",
-                        }}
-                        icon={
-                          <FaHeart
-                            color={likesColor(quiz.likes) ? "pink" : "white"}
-                            size="23"
-                          />
-                        }
-                        onClick={() => addLikes(quiz.id, quiz.likes)}
-                      />
-                    </Tooltip>
-                    <Text fontSize="lg">{quiz.likes.length}</Text>
-                  </HStack>
-                  <Spacer></Spacer>
+              <HStack w="80%">
+                <HStack>
                   <Tooltip
-                    label="お気に入り"
+                    label="いいね"
                     fontSize="md"
                     bg="gray.500"
                     color="white"
@@ -245,28 +214,51 @@ const WrapQuizzes: React.FC<{ quizzes: QuizItem[] }> = ({ quizzes }) => {
                     hasArrow
                   >
                     <IconButton
-                      aria-label="favorites"
+                      aria-label="likes"
                       bg="rgba(0,0,0,0)"
                       rounded="full"
                       size="sm"
-                      _hover={{
-                        cursor: "pointer",
-                        backgroundColor: "#f4f4f4",
-                        color: "#c0ccce",
-                      }}
+                      isDisabled={!user}
+                      _hover={{ cursor: "pointer" }}
                       icon={
-                        <AiFillStar
-                          color={
-                            favoritesColor(quiz.favorites) ? "yellow" : "white"
-                          }
+                        <FaHeart
+                          color={likesColor(quiz.likes) ? "pink" : "white"}
                           size="23"
                         />
                       }
-                      onClick={() => addFavorites(quiz.id, quiz.favorites)}
+                      onClick={() => addLikes(quiz.id, quiz.likes)}
                     />
                   </Tooltip>
+                  <Text fontSize="lg">{quiz.likes.length}</Text>
                 </HStack>
-              )}
+                <Spacer></Spacer>
+                <Tooltip
+                  label="お気に入り"
+                  fontSize="md"
+                  bg="gray.500"
+                  color="white"
+                  placement="bottom"
+                  hasArrow
+                >
+                  <IconButton
+                    aria-label="favorites"
+                    bg="rgba(0,0,0,0)"
+                    rounded="full"
+                    size="sm"
+                    isDisabled={!user}
+                    _hover={{ cursor: "pointer" }}
+                    icon={
+                      <AiFillStar
+                        color={
+                          favoritesColor(quiz.favorites) ? "yellow" : "white"
+                        }
+                        size="23"
+                      />
+                    }
+                    onClick={() => addFavorites(quiz.id, quiz.favorites)}
+                  />
+                </Tooltip>
+              </HStack>
             </VStack>
           </WrapItem>
         );
