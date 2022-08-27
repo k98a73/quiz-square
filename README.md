@@ -75,14 +75,14 @@ https://quiz-square.vercel.app/
 # 開発環境
 
 - フロントエンド
-  - React 17.0.2
-  - Next.js 12.1.6
+  - React (v17.0.2)
+  - Next.js (v12.1.6)
   - TypeScript
   - Recoil
   - React Hook Form
   - Chakra UI
 - バックエンド
-  - Firebase 9.9.2
+  - Firebase (v9.9.2)
 - その他
   - Vercel
 
