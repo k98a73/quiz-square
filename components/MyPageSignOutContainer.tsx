@@ -34,8 +34,6 @@ const MyPageSignOutContainer = ({
           // マウント時のみアバター画像を更新
           if (isMountedRef.current)
             setAvatarUrl(documentSnapshot.data()?.imageUrl);
-        } else {
-          if (isMountedRef.current) alert("No such document!");
         }
       })
       .catch((error) => {

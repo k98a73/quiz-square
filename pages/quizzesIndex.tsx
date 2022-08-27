@@ -47,6 +47,7 @@ const QuizzesIndex = () => {
           answer: doc.data().answer,
           description: doc.data().description,
           favorites: doc.data().favorites,
+          likes: doc.data().likes,
         }))
       );
     });

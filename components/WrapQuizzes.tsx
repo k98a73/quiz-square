@@ -1,7 +1,9 @@
 import React from "react";
 import {
   Box,
+  HStack,
   IconButton,
+  Spacer,
   Text,
   Tooltip,
   VStack,
@@ -9,6 +11,7 @@ import {
   WrapItem,
 } from "@chakra-ui/react";
 import { AiFillStar } from "react-icons/ai";
+import { FaHeart } from "react-icons/fa";
 import { useRecoilState } from "recoil";
 import { useRouter } from "next/router";
 import { doc, setDoc } from "firebase/firestore";
@@ -34,6 +37,18 @@ const WrapQuizzes: React.FC<{ quizzes: QuizItem[] }> = ({ quizzes }) => {
       });
     }
     return favoriteExistence;
+  };
+
+  const likesColor = (likes: string[]) => {
+    let likeExistence = false;
+    if (likes) {
+      likes.forEach((like) => {
+        if (like === uid) {
+          likeExistence = true;
+        }
+      });
+    }
+    return likeExistence;
   };
 
   const handleSelectQuiz = (
@@ -101,6 +116,42 @@ const WrapQuizzes: React.FC<{ quizzes: QuizItem[] }> = ({ quizzes }) => {
     }
   };
 
+  const addLikes = (id: string, likes: string[]) => {
+    if (likes.length === 0) {
+      likes.push(uid);
+      setDoc(
+        doc(db, "quizzes", id),
+        {
+          likes,
+        },
+        { merge: true }
+      );
+    } else {
+      let likeExistence = false;
+      let likesIndex = 0;
+      if (likes) {
+        likes.forEach((like, index) => {
+          if (like === uid) {
+            likeExistence = true;
+            likesIndex = index;
+          }
+        });
+      }
+      if (likeExistence) {
+        likes.splice(likesIndex, 1);
+      } else {
+        likes.push(uid);
+      }
+      setDoc(
+        doc(db, "quizzes", id),
+        {
+          likes,
+        },
+        { merge: true }
+      );
+    }
+  };
+
   return (
     <Wrap align="start" justify="center">
       {quizzes.map((quiz) => {
@@ -152,7 +203,35 @@ const WrapQuizzes: React.FC<{ quizzes: QuizItem[] }> = ({ quizzes }) => {
                   {`問題：${quiz.content}`}
                 </Text>
               </Box>
-              {user && (
+              <HStack w="80%">
+                <HStack>
+                  <Tooltip
+                    label="いいね"
+                    fontSize="md"
+                    bg="gray.500"
+                    color="white"
+                    placement="bottom"
+                    hasArrow
+                  >
+                    <IconButton
+                      aria-label="likes"
+                      bg="rgba(0,0,0,0)"
+                      rounded="full"
+                      size="sm"
+                      isDisabled={!user}
+                      _hover={{ cursor: "pointer" }}
+                      icon={
+                        <FaHeart
+                          color={likesColor(quiz.likes) ? "pink" : "white"}
+                          size="23"
+                        />
+                      }
+                      onClick={() => addLikes(quiz.id, quiz.likes)}
+                    />
+                  </Tooltip>
+                  <Text fontSize="lg">{quiz.likes.length}</Text>
+                </HStack>
+                <Spacer></Spacer>
                 <Tooltip
                   label="お気に入り"
                   fontSize="md"
@@ -166,11 +245,8 @@ const WrapQuizzes: React.FC<{ quizzes: QuizItem[] }> = ({ quizzes }) => {
                     bg="rgba(0,0,0,0)"
                     rounded="full"
                     size="sm"
-                    _hover={{
-                      cursor: "pointer",
-                      backgroundColor: "#f4f4f4",
-                      color: "#c0ccce",
-                    }}
+                    isDisabled={!user}
+                    _hover={{ cursor: "pointer" }}
                     icon={
                       <AiFillStar
                         color={
@@ -182,7 +258,7 @@ const WrapQuizzes: React.FC<{ quizzes: QuizItem[] }> = ({ quizzes }) => {
                     onClick={() => addFavorites(quiz.id, quiz.favorites)}
                   />
                 </Tooltip>
-              )}
+              </HStack>
             </VStack>
           </WrapItem>
         );
