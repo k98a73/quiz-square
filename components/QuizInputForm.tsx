@@ -42,6 +42,7 @@ interface PROPS {
   optionDDefaultValue: string;
   answerDefaultValue: string;
   descriptionDefaultValue: string;
+  likes: string[];
   buttonSentence: string;
 }
 
@@ -67,6 +68,7 @@ const QuizInputForm: React.FC<PROPS> = ({
   optionDDefaultValue,
   answerDefaultValue,
   descriptionDefaultValue,
+  likes,
   buttonSentence,
 }) => {
   const router = useRouter();
@@ -119,6 +121,7 @@ const QuizInputForm: React.FC<PROPS> = ({
         description,
         favorites: [],
         likes: [],
+        likesCount: 0,
         createdAt: serverTimestamp(),
       });
     } else {
@@ -136,6 +139,7 @@ const QuizInputForm: React.FC<PROPS> = ({
           optionD,
           answer,
           description,
+          likesCount: likes.length,
           createdAt: serverTimestamp(),
         },
         { merge: true }
