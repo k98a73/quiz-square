@@ -4,7 +4,6 @@ import {
   Box,
   Container,
   Flex,
-  HStack,
   IconButton,
   Select,
   Spacer,
@@ -25,13 +24,13 @@ const QuizzesIndex = () => {
   const [quizzes, setQuizzes] = useState<QuizItem[]>([]);
   const [filteredQuizzes, setFilteredQuizzes] = useState<QuizItem[]>([]);
   const [genreFilter, setGenreFilter] = useState("全て");
-  // const [favoritesColor, setFavoritesColor] = useState<boolean>(false);
+  const [sortContent, setSortContent] = useState("createdAt");
   const [user, setUser] = useState<any>(false);
   const router = useRouter();
 
   useEffect(() => {
     const quizzesCollectionRef = collection(db, "quizzes");
-    const q = query(quizzesCollectionRef, orderBy("createdAt", "desc"));
+    const q = query(quizzesCollectionRef, orderBy(sortContent, "desc"));
     const unSub = onSnapshot(q, (querySnapshot) => {
       setQuizzes(
         querySnapshot.docs.map((doc) => ({
@@ -52,7 +51,7 @@ const QuizzesIndex = () => {
       );
     });
     return () => unSub();
-  }, []);
+  }, [sortContent]);
 
   useEffect(() => {
     const filteringQuizzesGenre = () => {
@@ -134,19 +133,21 @@ const QuizzesIndex = () => {
                 <WrapQuizzes quizzes={favoritesQuizzes} />
               </VStack>
             )}
-            <Flex mt="5" w="85%" alignItems="center">
-              <HStack>
-                <Box bg="white">
-                  <Text
-                    w="90px"
-                    fontSize="xl"
-                    fontWeight="bold"
-                    color="gray.600"
-                  >
-                    ジャンル:
-                  </Text>
-                </Box>
+            <Flex
+              mt="5"
+              w={{ base: "100%", sm: "70%", md: "85%" }}
+              alignItems="center"
+            >
+              <Tooltip
+                label="ジャンル"
+                fontSize="md"
+                bg="gray.500"
+                color="white"
+                placement="left"
+                hasArrow
+              >
                 <Select
+                  w="100px"
                   size="md"
                   color="gray.500"
                   mb="2"
@@ -154,6 +155,7 @@ const QuizzesIndex = () => {
                   textAlign="center"
                   variant="filled"
                   value={genreFilter}
+                  _focus={{ bgColor: "rgb(236, 241, 247)" }}
                   onChange={(e) => setGenreFilter(e.target.value)}
                 >
                   <option value="全て">全て</option>
@@ -164,7 +166,32 @@ const QuizzesIndex = () => {
                   <option value="英語">英語</option>
                   <option value="その他">その他</option>
                 </Select>
-              </HStack>
+              </Tooltip>
+              <Spacer />
+              <Tooltip
+                label="並び替え"
+                fontSize="md"
+                bg="gray.500"
+                color="white"
+                placement="left"
+                hasArrow
+              >
+                <Select
+                  w="180px"
+                  size="md"
+                  color="gray.500"
+                  mb="2"
+                  fontWeight="bold"
+                  textAlign="center"
+                  variant="filled"
+                  value={sortContent}
+                  _focus={{ bgColor: "rgb(236, 241, 247)" }}
+                  onChange={(e) => setSortContent(e.target.value)}
+                >
+                  <option value="createdAt">更新日時順</option>
+                  <option value="likesCount">いいねが多い順</option>
+                </Select>
+              </Tooltip>
               <Spacer />
               <Tooltip
                 label="問題作成"

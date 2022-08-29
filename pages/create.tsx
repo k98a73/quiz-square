@@ -18,6 +18,7 @@ export default function Create() {
       optionDDefaultValue=""
       answerDefaultValue={"1"}
       descriptionDefaultValue=""
+      likes={[]}
       buttonSentence={"問題の作成"}
     />
   );

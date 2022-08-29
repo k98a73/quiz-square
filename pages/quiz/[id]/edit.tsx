@@ -40,6 +40,7 @@ export default function QuizEdit() {
           optionDDefaultValue={quizItem.optionD}
           answerDefaultValue={quizItem.answer}
           descriptionDefaultValue={quizItem.description}
+          likes={quizItem.likes}
           buttonSentence={"問題の更新"}
         />
       )}
