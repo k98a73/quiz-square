@@ -155,6 +155,7 @@ const QuizzesIndex = () => {
                   textAlign="center"
                   variant="filled"
                   value={genreFilter}
+                  _focus={{ bgColor: "rgb(236, 241, 247)" }}
                   onChange={(e) => setGenreFilter(e.target.value)}
                 >
                   <option value="全て">全て</option>
@@ -184,6 +185,7 @@ const QuizzesIndex = () => {
                   textAlign="center"
                   variant="filled"
                   value={sortContent}
+                  _focus={{ bgColor: "rgb(236, 241, 247)" }}
                   onChange={(e) => setSortContent(e.target.value)}
                 >
                   <option value="createdAt">更新日時順</option>
