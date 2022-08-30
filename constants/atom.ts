@@ -18,6 +18,7 @@ export const quizItemState = atom<any>({
     answer: "",
     description: "",
     likes: [],
+    correctAnswerRate: [],
   },
   effects_UNSTABLE: [persistAtom],
 });
