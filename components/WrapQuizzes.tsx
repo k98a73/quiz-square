@@ -64,7 +64,7 @@ const WrapQuizzes: React.FC<{ quizzes: QuizItem[] }> = ({ quizzes }) => {
     answer: string,
     description: string,
     likes: string[],
-    correctAnswerRate: boolean[]
+    correctAnswerList: boolean[]
   ) => {
     setQuizItem({
       id,
@@ -79,7 +79,7 @@ const WrapQuizzes: React.FC<{ quizzes: QuizItem[] }> = ({ quizzes }) => {
       answer,
       description,
       likes,
-      correctAnswerRate,
+      correctAnswerList,
     });
     router.push(`/quiz/${quizItem.id}`);
   };
@@ -197,7 +197,7 @@ const WrapQuizzes: React.FC<{ quizzes: QuizItem[] }> = ({ quizzes }) => {
                     quiz.answer,
                     quiz.description,
                     quiz.likes,
-                    quiz.correctAnswerRate
+                    quiz.correctAnswerList
                   )
                 }
               >
