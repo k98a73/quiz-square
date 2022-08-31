@@ -83,10 +83,14 @@ export default function QuizIndex() {
 
   const answerButtonClick = () => {
     onOpen();
+    let correctAnswerList;
+    if (quizItem.correctAnswerList.length === 0) {
+      correctAnswerList = [correctnessDecision];
+    }
     setDoc(
       doc(db, "quizzes", quizItem.id),
       {
-        correctAnswerRate: [],
+        correctAnswerList,
       },
       { merge: true }
     );
