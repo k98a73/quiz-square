@@ -158,6 +158,18 @@ const WrapQuizzes: React.FC<{ quizzes: QuizItem[] }> = ({ quizzes }) => {
     }
   };
 
+  const answerRate = (answerList: Array<boolean>) => {
+    const answerTotal = answerList.length;
+    let answerRate: number;
+    if (answerTotal === 0) {
+      answerRate = 0;
+    } else {
+      const correctAnswerList = answerList.filter((answer) => answer === true);
+      answerRate = Math.round(correctAnswerList.length / answerTotal * 100);
+    }
+    return answerRate;
+  }
+
   return (
     <Wrap align="start" justify="center">
       {quizzes.map((quiz) => {
@@ -209,6 +221,9 @@ const WrapQuizzes: React.FC<{ quizzes: QuizItem[] }> = ({ quizzes }) => {
                 </Text>
                 <Text fontSize="lg" py="1" noOfLines={3}>
                   {`問題：${quiz.content}`}
+                </Text>
+                <Text fontSize="lg" py="1">
+                  {`正解率：${answerRate(quiz.correctAnswerList)}%`}
                 </Text>
               </Box>
               <HStack w="80%">
