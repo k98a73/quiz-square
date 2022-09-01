@@ -79,13 +79,15 @@ export default function QuizIndex() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  const correctnessDecision = getValues("answer") === quizItem.answer;
-
   const answerButtonClick = () => {
     onOpen();
+    const correctnessDecision = getValues("answer") === quizItem.answer;
+    console.log("correctnessDecision", correctnessDecision);
     let correctAnswerList;
     if (quizItem.correctAnswerList.length === 0) {
       correctAnswerList = [correctnessDecision];
+    } else {
+      correctAnswerList = [...quizItem.correctAnswerList, correctnessDecision];
     }
     setDoc(
       doc(db, "quizzes", quizItem.id),
@@ -166,7 +168,7 @@ export default function QuizIndex() {
                     <ModalOverlay />
                     <ModalContent>
                       <ModalHeader textAlign="center">
-                        {correctnessDecision ? (
+                        {getValues("answer") === quizItem.answer ? (
                           <Text color="blue.400">○正解！</Text>
                         ) : (
                           <Text color="red.500">Ｘ不正解</Text>
@@ -174,7 +176,7 @@ export default function QuizIndex() {
                       </ModalHeader>
                       <ModalCloseButton />
                       <ModalBody>
-                        {correctnessDecision && (
+                        {getValues("answer") === quizItem.answer && (
                           <>
                             <Center>
                               <Text
