@@ -64,7 +64,7 @@ const WrapQuizzes: React.FC<{ quizzes: QuizItem[] }> = ({ quizzes }) => {
     answer: string,
     description: string,
     likes: string[],
-    correctAnswerList: boolean[]
+    answerList: boolean[]
   ) => {
     setQuizItem({
       id,
@@ -79,7 +79,7 @@ const WrapQuizzes: React.FC<{ quizzes: QuizItem[] }> = ({ quizzes }) => {
       answer,
       description,
       likes,
-      correctAnswerList,
+      answerList,
     });
     router.push(`/quiz/${quizItem.id}`);
   };
@@ -158,16 +158,16 @@ const WrapQuizzes: React.FC<{ quizzes: QuizItem[] }> = ({ quizzes }) => {
     }
   };
 
-  const answerRate = (answerList: Array<boolean>) => {
+  const getCorrectAnswerRate = (answerList: Array<boolean>) => {
     const answerTotal = answerList.length;
-    let answerRate: number;
+    let correctAnswerRate: number;
     if (answerTotal === 0) {
-      answerRate = 0;
+      correctAnswerRate = 0;
     } else {
       const correctAnswerList = answerList.filter((answer) => answer === true);
-      answerRate = Math.round(correctAnswerList.length / answerTotal * 100);
+      correctAnswerRate = Math.round(correctAnswerList.length / answerTotal * 100);
     }
-    return answerRate;
+    return correctAnswerRate;
   }
 
   return (
@@ -209,7 +209,7 @@ const WrapQuizzes: React.FC<{ quizzes: QuizItem[] }> = ({ quizzes }) => {
                     quiz.answer,
                     quiz.description,
                     quiz.likes,
-                    quiz.correctAnswerList
+                    quiz.answerList
                   )
                 }
               >
@@ -223,7 +223,7 @@ const WrapQuizzes: React.FC<{ quizzes: QuizItem[] }> = ({ quizzes }) => {
                   {`問題：${quiz.content}`}
                 </Text>
                 <Text fontSize="lg" py="1">
-                  {`正解率：${answerRate(quiz.correctAnswerList)}%`}
+                  {`正解率：${getCorrectAnswerRate(quiz.answerList)}%`}
                 </Text>
               </Box>
               <HStack w="80%">
