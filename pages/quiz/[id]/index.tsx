@@ -27,7 +27,7 @@ import { useRecoilState } from "recoil";
 import { useForm } from "react-hook-form";
 import useWindowSize from "react-use/lib/useWindowSize";
 import Confetti from "react-confetti";
-import { deleteDoc, doc, setDoc } from "firebase/firestore";
+import { deleteDoc, doc, getDoc, setDoc } from "firebase/firestore";
 
 import Header from "../../../components/Header";
 import { quizItemState } from "../../../constants/atom";
@@ -95,6 +95,39 @@ export default function QuizIndex() {
       },
       { merge: true }
     );
+    if (user) {
+      const uid = user.uid;
+      const userAnswerList = getUserAnswerList(uid, correctnessDecision);
+      setDoc(
+        doc(db, "users", uid),
+        {
+          userAnswerList,
+        },
+        { merge: true }
+      );
+    }
+  };
+
+  const getUserAnswerList = (uid: any, correctnessDecision: boolean) => {
+    const docRef = doc(db, "users", uid);
+    let userAnswerList: boolean[] = [];
+    getDoc(docRef)
+      .then((documentSnapshot) => {
+        if (documentSnapshot.exists()) {
+          userAnswerList = [...documentSnapshot.data()?.userAnswerList];
+        } else {
+          alert("No such document!");
+        }
+      })
+      .catch((error) => {
+        alert(error);
+      });
+    if (userAnswerList.length === 0) {
+      userAnswerList = [correctnessDecision];
+    } else {
+      userAnswerList = [...userAnswerList, correctnessDecision];
+    }
+    return userAnswerList;
   };
 
   return (
