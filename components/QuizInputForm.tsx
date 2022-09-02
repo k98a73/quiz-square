@@ -105,6 +105,8 @@ const QuizInputForm: React.FC<PROPS> = ({
       optionD,
       answer,
       description,
+      likes: [],
+      answerList: [],
     });
     if (contentDefaultValue === "") {
       await setDoc(doc(db, "quizzes", quizID), {
@@ -122,6 +124,7 @@ const QuizInputForm: React.FC<PROPS> = ({
         favorites: [],
         likes: [],
         likesCount: 0,
+        answerList: [],
         createdAt: serverTimestamp(),
       });
     } else {

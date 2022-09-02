@@ -27,7 +27,7 @@ import { useRecoilState } from "recoil";
 import { useForm } from "react-hook-form";
 import useWindowSize from "react-use/lib/useWindowSize";
 import Confetti from "react-confetti";
-import { deleteDoc, doc } from "firebase/firestore";
+import { deleteDoc, doc, setDoc } from "firebase/firestore";
 
 import Header from "../../../components/Header";
 import { quizItemState } from "../../../constants/atom";
@@ -78,6 +78,24 @@ export default function QuizIndex() {
     return unSubWindow(), unSubAuth();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+  const answerButtonClick = () => {
+    onOpen();
+    const correctnessDecision = getValues("answer") === quizItem.answer;
+    let answerList;
+    if (quizItem.answerList.length === 0) {
+      answerList = [correctnessDecision];
+    } else {
+      answerList = [...quizItem.answerList, correctnessDecision];
+    }
+    setDoc(
+      doc(db, "quizzes", quizItem.id),
+      {
+        answerList,
+      },
+      { merge: true }
+    );
+  };
 
   return (
     <ChakraProvider theme={modalTheme}>
@@ -139,7 +157,7 @@ export default function QuizIndex() {
                 </VStack>
                 <Center>
                   <Button
-                    onClick={onOpen}
+                    onClick={answerButtonClick}
                     colorScheme="blackAlpha"
                     variant="solid"
                   >
