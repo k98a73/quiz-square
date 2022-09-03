@@ -79,7 +79,7 @@ export default function QuizIndex() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  const answerButtonClick = () => {
+  const answerButtonClick = async () => {
     onOpen();
     const correctnessDecision = getValues("answer") === quizItem.answer;
     let answerList;
@@ -97,7 +97,7 @@ export default function QuizIndex() {
     );
     if (user) {
       const uid = user.uid;
-      const userAnswerList = getUserAnswerList(uid, correctnessDecision);
+      const userAnswerList = await getUserAnswerList(uid, correctnessDecision);
       setDoc(
         doc(db, "users", uid),
         {
@@ -108,13 +108,15 @@ export default function QuizIndex() {
     }
   };
 
-  const getUserAnswerList = (uid: any, correctnessDecision: boolean) => {
+  const getUserAnswerList = async (uid: any, correctnessDecision: boolean) => {
     const docRef = doc(db, "users", uid);
     let userAnswerList: boolean[] = [];
-    getDoc(docRef)
+    await getDoc(docRef)
       .then((documentSnapshot) => {
         if (documentSnapshot.exists()) {
-          userAnswerList = [...documentSnapshot.data()?.userAnswerList];
+          userAnswerList = documentSnapshot
+            .data()
+            ?.userAnswerList.map((answer: boolean) => answer);
         } else {
           alert("No such document!");
         }
