@@ -19,6 +19,7 @@ import Header from "../components/Header";
 import { auth, db } from "../lib/firebase";
 import WrapQuizzes from "../components/WrapQuizzes";
 import { QuizItem } from "../types/QuizItem";
+import UserRanking from "../components/UserRanking";
 
 const QuizzesIndex = () => {
   const [quizzes, setQuizzes] = useState<QuizItem[]>([]);
@@ -119,6 +120,7 @@ const QuizzesIndex = () => {
           maxW={{ base: "800px", xl: "1100px" }}
         >
           <VStack>
+            <UserRanking />
             {user && (
               <VStack w="100%">
                 <Box bg="white">
