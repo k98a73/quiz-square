@@ -5,7 +5,7 @@ import { FaCrown } from "react-icons/fa";
 const UserRanking = () => {
   return (
     <>
-      <HStack spacing="5px">
+      <HStack bg="white" spacing="5px">
         <Icon as={FaCrown} w={{ base: "24px", md: "36px" }} h={8} color='cyan.600' />
         <Text
           fontSize={{ base: "2xl", md: "4xl" }}
